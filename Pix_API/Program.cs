@@ -27,8 +27,13 @@ namespace Pix_API
             var editQuestionProvider = new QuestionEditsProvider(question_edits_saver);
 
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
-                usersProvider,questionResultProvider,editQuestionProvider));
+                usersProvider, questionResultProvider, editQuestionProvider));
+            Start_Lisening(resolver);
 
+        }
+
+        private static void Start_Lisening(APIServerResolver resolver)
+        {
             var lisner = new HttpListener();
             lisner.Prefixes.Add("http://*:8080/");
             lisner.Start();
@@ -36,7 +41,7 @@ namespace Pix_API
             {
                 var request = lisner.GetContext();
                 var server_fasade_method_name = request.Request.QueryString["me"];
-                var parameters = new string[]{ 
+                var parameters = new string[]{
                     request.Request.QueryString["p1"].CleanPixString(),
                     request.Request.QueryString["p2"].CleanPixString(),
                     request.Request.QueryString["p3"].CleanPixString(),
@@ -64,8 +69,6 @@ namespace Pix_API
                 }
 
             }
-
         }
-
     }
 }

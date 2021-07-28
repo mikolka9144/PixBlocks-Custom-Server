@@ -9,7 +9,7 @@ using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
 namespace Pix_API
 {
-    internal class Main_Logic
+    public class Main_Logic
     {
         private readonly ICountriesProvider countriesProvider;
         private readonly IUserDatabaseProvider databaseProvider;
@@ -51,6 +51,7 @@ namespace Pix_API
                     {
                         User = user_in_question,
                         IsPasswordCorrect = true,
+                        PixBlocksLicense = new PixBlocksLicense(LicenseType.Free)
                     };
                 }
             }
@@ -109,6 +110,17 @@ namespace Pix_API
                 var question_guid = parameters[0];
                 var question_edit = questionEditsProvider.GetQuestionEditByGuid(auth.UserId,question_guid);
                 return question_edit;
+            }
+            return null;
+        }
+        public User UpdateOrDeleteUser(string[] parameters)
+        {
+            //User user, AuthorizeData authorize
+            var user = JsonConvert.DeserializeObject<User>(parameters[0]);
+            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
+            if (databaseProvider.IsAuthorizeValid(auth) && auth.UserId == user.Id)
+            {
+                databaseProvider.UpdateUser(user);
             }
             return null;
         }
