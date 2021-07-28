@@ -39,6 +39,7 @@ namespace Pix_API.Providers
         {
             var file_path = Path.Combine(path, Convert.ToString(obj.Id));
             var json_content = JsonConvert.SerializeObject(obj.Obj);
+            File.WriteAllText(file_path, json_content);
         }
     }
 

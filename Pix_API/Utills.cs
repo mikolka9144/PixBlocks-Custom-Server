@@ -31,14 +31,10 @@ namespace Pix_API
             }
             return pixString;
         }
-        public static bool MatchesPasswordWith(this AuthorizeData auth,User user)
-        {
-            return auth.PasswordMD5 == user.Md5Password;
-        }
         public static bool IsAuthorizeValid(this IUserDatabaseProvider databaseProvider,AuthorizeData auth)
         {
             var server_user = databaseProvider.GetUser(auth.UserId);
-            return auth.MatchesPasswordWith(server_user);
+            return auth.PasswordMD5 == server_user.Md5Password;
         }
     }
 }

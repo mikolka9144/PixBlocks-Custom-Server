@@ -40,7 +40,9 @@ namespace Pix_API.Providers
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            var user_holder = users.RemoveAll((obj) => obj.Id == user.Id);
+            users.Add(user);
+            saver.SaveInBackground(new IdObjectBinder<User>(user.Id.Value, user));
         }
 
     }
