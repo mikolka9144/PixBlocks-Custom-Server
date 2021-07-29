@@ -10,6 +10,7 @@ using PixBlocks.Server.DataModels.DataModels;
 using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using Pix_API.Providers.StaticProviders;
+using Pix_API.Providers.ContainersProviders;
 
 namespace Pix_API
 {
@@ -21,6 +22,7 @@ namespace Pix_API
 
             var users_saver = new DiskDataSaver<User>("./Users/");
             var question_result_saver = new DiskDataSaver<List<QuestionResult>>("./QuestionResults/");
+            var studentClassesSaver = new DiskDataSaver<List<StudentsClass>>("./Classes/");
             var question_edits_saver = new DiskDataSaver<List<EditedQuestionCode>>("./QuestionsCodes/");
             var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
 
@@ -28,12 +30,14 @@ namespace Pix_API
             var questionResultProvider = new QuestionResultProvider(question_result_saver);
             var editQuestionProvider = new QuestionEditsProvider(question_edits_saver);
             var toyShopProvider = new ToyShopProvider(toyShop_saver);
+            var studentClassesProvider = new StudentClassesProvider(studentClassesSaver);
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
             var staticChampionshipsProvider = new StaticChampionshipProvider();//TODO
 
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
-                toyShopProvider,staticNotyficationProvider,staticChampionshipsProvider));
+                toyShopProvider,staticNotyficationProvider,
+                staticChampionshipsProvider,studentClassesProvider));
 
             Start_Lisening(resolver);
         }

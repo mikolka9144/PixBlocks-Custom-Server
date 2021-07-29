@@ -8,9 +8,15 @@ namespace Pix_API.Providers.ContainersProviders
         public StudentClassesProvider(DataSaver<List<StudentsClass>> saver) : base(saver)
         {
         }
+
+        public List<StudentsClass> GetClassesForUser(int Id)
+        {
+            return GetAllObjectsForUser(Id);
+        }
     }
 
-    internal interface IStudentClassProvider
+    public interface IStudentClassProvider
     {
+        List<StudentsClass> GetClassesForUser(int Id);
     }
 }
