@@ -8,6 +8,7 @@ using PixBlocks.Server.DataModels.DataModels.Woocommerce;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using System;
+using Pix_API.Providers.ContainersProviders;
 
 namespace Pix_API
 {
@@ -20,11 +21,13 @@ namespace Pix_API
         private readonly IToyShopProvider toyShopProvider;
         private readonly INotyficationProvider notyficationProvider;
         private readonly IChampionshipsProvider championshipsProvider;
+        private readonly IStudentClassProvider studentClassProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
-            INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider)
+            INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
+            IStudentClassProvider studentClassProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -33,6 +36,7 @@ namespace Pix_API
             this.toyShopProvider = toyShopProvider;
             this.notyficationProvider = notyficationProvider;
             this.championshipsProvider = championshipsProvider;
+            this.studentClassProvider = studentClassProvider;
         }
 
         public List<Countrie> GetAllCountries(string[] parameters)
@@ -190,7 +194,16 @@ namespace Pix_API
             }
             return null;
         }
-
+        public List<StudentsClass> GetAllStudentsClasses(string[] parameters)
+        {
+            //int teacherID, AuthorizeData authorize
+            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
+            if (databaseProvider.IsAuthorizeValid(auth))
+            {
+                return studentClassProvider.GetClassesForUser(auth.UserId);
+            }
+            return null;
+        }
     }
 
 }
