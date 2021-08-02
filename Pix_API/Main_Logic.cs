@@ -9,6 +9,7 @@ using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using System;
 using Pix_API.Providers.ContainersProviders;
+using PixBlocks.Server.DataModels.Tools;
 
 namespace Pix_API
 {
@@ -39,11 +40,10 @@ namespace Pix_API
             this.studentClassProvider = studentClassProvider;
         }
 
-        public List<Countrie> GetAllCountries(string[] parameters)
+        public List<Countrie> GetAllCountries()
         => countriesProvider.GetAllCountries();
-        public UserAddingResult RegisterNewUser(string[] parameters)
+        public UserAddingResult RegisterNewUser(User user)
         {
-            var user = JsonConvert.DeserializeObject<User>(parameters[0]);
             if (databaseProvider.ContainsUserWithEmail(user.Email))
             {
                 return new UserAddingResult() { IsEmailExist = true };
@@ -51,14 +51,13 @@ namespace Pix_API
             databaseProvider.AddUser(user);
             return new UserAddingResult() { User = user };
         }
-        public UserAuthorizeResult AuthorizeUser(string[] parameters)
+        public UserAuthorizeResult AuthorizeUser(string loginOrEmail, string password, bool md5, LicenseData licenseData)
         {
-            var email = parameters[0];
-            var password_md5 = Utills.ConvertPasswordToMD5(parameters[1]);
-            var user_in_question = databaseProvider.GetUser(email);
+            var user_in_question = databaseProvider.GetUser(loginOrEmail);
             if (user_in_question != null)
             {
-                if (user_in_question.Md5Password == password_md5)
+                var Md5Password = Utills.ConvertPasswordToMD5(password);
+                if (user_in_question.Md5Password == Md5Password)
                 {
                     return new UserAuthorizeResult()
                     {
@@ -70,80 +69,48 @@ namespace Pix_API
             }
             return new UserAuthorizeResult() { IsPasswordCorrect = false };
         }
-        public List<QuestionResult> GetAllQuestionsResults(string[] parameters)
+        [RequiresAuthentication]
+        public List<QuestionResult> GetAllQuestionsResults(User user, AuthorizeData authorize)
         {
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                return questionResultsProvider.GetAllQuestionsReultsForUser(auth.UserId);
-            }
-            return null;
-        }
-        public QuestionResult AddOrUpdateQuestionResult(string[] parameters)
-        {
-            //(QuestionResult questionResult, AuthorizeData authorize
-            var question_result = JsonConvert.DeserializeObject<QuestionResult>(parameters[0]);
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                questionResultsProvider.AddOrUpdateQuestionResult(question_result, auth.UserId);
-            }
-            return question_result;
-        }
+                return questionResultsProvider.GetAllQuestionsReultsForUser(authorize.UserId);
 
-        public List<EditedQuestionCode> GetAllQuestionsCodes(string[] parameters)
-        {
-            //User user, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                return questionEditsProvider.GetAllQuestionCodes(auth.UserId);
-            }
-            return null;
         }
-        public EditedQuestionCode AddOrUpdateEditedQuestionCode(string[] parameters)
+        [RequiresAuthentication]
+        public QuestionResult AddOrUpdateQuestionResult(QuestionResult questionResult, AuthorizeData authorize)
         {
-            //EditedQuestionCode editedQuestionCode, User user, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[2]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                var question_code = JsonConvert
-                .DeserializeObject<EditedQuestionCode>(parameters[0]);
-                questionEditsProvider.AddOrRemoveQuestionCode(question_code, auth.UserId);
-                return question_code;
-            }
-            return null;
+            questionResultsProvider.AddOrUpdateQuestionResult(questionResult, authorize.UserId);
+            return questionResult;
         }
-        public EditedQuestionCode GetQuestionCode(string[] parameters)
+        [RequiresAuthentication]
+        public List<EditedQuestionCode> GetAllQuestionsCodes(User user, AuthorizeData authorize)
         {
-            //string questionGuid, int? examId, int? editedCodeId, bool isTeacherShared, DateTime? lastUpdateTime, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[5]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                var question_guid = parameters[0];
-                var question_edit = questionEditsProvider.GetQuestionEditByGuid(auth.UserId, question_guid);
+            return questionEditsProvider.GetAllQuestionCodes(authorize.UserId);
+        }
+        [RequiresAuthentication]
+        public EditedQuestionCode AddOrUpdateEditedQuestionCode(EditedQuestionCode editedQuestionCode, User user, AuthorizeData authorize)
+        {
+                questionEditsProvider.AddOrRemoveQuestionCode(editedQuestionCode, authorize.UserId);
+                return editedQuestionCode;
+        }
+        [RequiresAuthentication]
+        public EditedQuestionCode GetQuestionCode(string questionGuid, int? examId, int? editedCodeId, bool isTeacherShared, DateTime? lastUpdateTime, AuthorizeData authorize)
+        {
+                var question_edit = questionEditsProvider.GetQuestionEditByGuid(authorize.UserId, questionGuid);
                 return question_edit;
-            }
-            return null;
         }
-        public User UpdateOrDeleteUser(string[] parameters)
+        [RequiresAuthentication]
+        public User UpdateOrDeleteUser(User user, AuthorizeData authorize)
         {
-            //User user, AuthorizeData authorize
-            var user = JsonConvert.DeserializeObject<User>(parameters[0]);
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth) && auth.UserId == user.Id)
+            if (authorize.UserId == user.Id)
             {
                 databaseProvider.UpdateUser(user);
             }
             return null;
         }
-        public GetToyShopDataResult GetUserToysShopInfo(string[] parameters)
+        [RequiresAuthentication]
+        public GetToyShopDataResult GetUserToysShopInfo(User user, AuthorizeData authorize)
         {
-            //User user, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                var toyShop = toyShopProvider.GetToyShop(auth.UserId);
+                var toyShop = toyShopProvider.GetToyShop(authorize.UserId);
                 if (toyShop != null)
                 {
                     return new GetToyShopDataResult()
@@ -156,53 +123,64 @@ namespace Pix_API
                 {
                     IsToyShopExist = false
                 };
-            }
-            return null;
         }
-        public ToyShopData AddOrUpdateToyShopInfo(string[] parameters)
+        [RequiresAuthentication]
+        public ToyShopData AddOrUpdateToyShopInfo(ToyShopData toyShopData, AuthorizeData authorize)
         {
-            //ToyShopData toyShopData, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            var clientToyShop = JsonConvert.DeserializeObject<ToyShopData>(parameters[0]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                toyShopProvider.SaveOrUpdateToyShop(clientToyShop, auth.UserId);
-            }
-            return clientToyShop;
+            toyShopProvider.SaveOrUpdateToyShop(toyShopData, authorize.UserId);
+            return toyShopData;
         }
-        public List<Notification> GetNotificationForUser(string[] parameters)
+        [RequiresAuthentication]
+        public List<Notification> GetNotificationForUser(string LanguageKey, AuthorizeData authorizeData)
         {
-            //string LanguageKey, AuthorizeData authorizeData
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                var user = databaseProvider.GetUser(auth.UserId);
+                var user = databaseProvider.GetUser(authorizeData.UserId);
                 return new List<Notification>{
-                notyficationProvider.GetNotyficationForUser(parameters[0], user) 
+                notyficationProvider.GetNotyficationForUser(LanguageKey, user) 
                 };
-            }
+        }
+        [RequiresAuthentication]
+        public List<Championship> GetActiveChampionshipsInCountry(int countryId, AuthorizeData authorize)
+        {
+            var user = databaseProvider.GetUser(authorize.UserId);
+            return championshipsProvider.GetAllChampionshipsForUser(Convert.ToInt32(countryId), user);
+        }
+        //Pixblocks Students Classes
+        [RequiresAuthentication]
+        public List<StudentsClass> GetAllStudentsClasses(int teacherID, AuthorizeData authorize)
+        {
+            return studentClassProvider.GetClassesForUser(authorize.UserId);
+        }
+        [RequiresAuthentication]
+        public StudentsClass AddStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            studentClassProvider.AddClassForUser(studentsClass, authorize.UserId);
+            return studentsClass;
+        }
+        [RequiresAuthentication]
+        public StudentsClass GetStudentsClassById(int id, AuthorizeData authorize)
+        {
+            return studentClassProvider.GetStudentsClassForUser(authorize.UserId, id);
+        }
+        [RequiresAuthentication]
+        public StudentsClass EditStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            studentClassProvider.EditClassForUser(studentsClass, authorize.UserId);
             return null;
         }
-        public List<Championship> GetActiveChampionshipsInCountry(string[] parameters)
+        [RequiresAuthentication]
+        public StudentsClass DeleteStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            //int countryId, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                var user = databaseProvider.GetUser(auth.UserId);
-                return championshipsProvider.GetAllChampionshipsForUser(Convert.ToInt32(parameters[0]), user);
-            }
+            studentClassProvider.RemoveClassForUser(studentsClass, authorize.UserId);
             return null;
         }
-        public List<StudentsClass> GetAllStudentsClasses(string[] parameters)
+        [RequiresAuthentication]
+        public List<User> GetAllStudentsInClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            //int teacherID, AuthorizeData authorize
-            var auth = JsonConvert.DeserializeObject<AuthorizeData>(parameters[1]);
-            if (databaseProvider.IsAuthorizeValid(auth))
-            {
-                return studentClassProvider.GetClassesForUser(auth.UserId);
-            }
-            return null;
+            var user_ids = studentClassProvider.GetStudentsClassForUserInClassOfUser(authorize.UserId, studentsClass.Id.Value);
+            var users = new List<User>();
+            user_ids.ForEach(s => users.Add(databaseProvider.GetUser(s)));
+            return users;
+
         }
     }
 

@@ -41,6 +41,7 @@ namespace Pix_API.Providers
             var json_content = JsonConvert.SerializeObject(obj.Obj);
             File.WriteAllText(file_path, json_content);
         }
+
     }
 
     public abstract class DataSaver<T>
