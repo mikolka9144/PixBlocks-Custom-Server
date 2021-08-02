@@ -12,24 +12,32 @@ namespace Pix_API.Providers.ContainersProviders
             storage = saver.LoadAll();
         }
         protected List<IdObjectBinder<List<T>>> storage;
-        private readonly DataSaver<List<T>> saver;
+        protected DataSaver<List<T>> saver;
 
         protected void AddOrUpdateObject(T questionResult, int Id,Func<T,T,bool> id_equalizer)
         {
-            var AllQuestionResults = GetUserQuestionResultsOrCreateNew(Id);
-            if (AllQuestionResults.Obj.Any(s => id_equalizer(s, questionResult)))
-            {
-                AllQuestionResults.Obj.RemoveAll(s => id_equalizer(s, questionResult));
-            }
+            var AllQuestionResults = GetUserObjectOrCreateNew(Id);
+            AllQuestionResults.Obj.RemoveAll(s => id_equalizer(s, questionResult));
+            AddObject(questionResult, Id);
+
+        }
+        protected void AddObject(T questionResult, int Id)
+        {
+            var AllQuestionResults = GetUserObjectOrCreateNew(Id);
             AllQuestionResults.Obj.Add(questionResult);
             saver.SaveInBackground(AllQuestionResults);
         }
-
+        protected void RemoveAllObjects(Predicate<T> obj,int Id)
+        {
+            var AllQuestionResults = GetUserObjectOrCreateNew(Id);
+            AllQuestionResults.Obj.RemoveAll(obj);
+            saver.SaveInBackground(AllQuestionResults);
+        }
         protected List<T> GetAllObjectsForUser(int Id)
         {
-            return GetUserQuestionResultsOrCreateNew(Id).Obj;
+            return GetUserObjectOrCreateNew(Id).Obj;
         }
-        private IdObjectBinder<List<T>> GetUserQuestionResultsOrCreateNew(int Id)
+        protected IdObjectBinder<List<T>> GetUserObjectOrCreateNew(int Id)
         {
             var user_results = storage.FirstOrDefault(s => s.Id == Id);
             if (user_results == null)

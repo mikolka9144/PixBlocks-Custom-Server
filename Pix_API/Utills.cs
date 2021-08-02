@@ -3,11 +3,13 @@ using System.Security.Cryptography;
 using System.Text;
 using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
+using PixBlocks.ServerFasade.ServerAPI;
 
 namespace Pix_API
 {
     public static class Utills
     {
+        private static ServerApi api_documentation;
         public static void SetupUser(this User user,int id)
         {
             user.Id = id;
@@ -22,19 +24,6 @@ namespace Pix_API
                 stringBuilder.Append(array[i].ToString("x3"));
             }
             return stringBuilder.ToString();
-        }
-        public static string CleanPixString(this string pixString)
-        {
-            if (pixString[0] == '\"')
-            {
-                return pixString.Substring(1, pixString.Length - 2);
-            }
-            return pixString;
-        }
-        public static bool IsAuthorizeValid(this IUserDatabaseProvider databaseProvider,AuthorizeData auth)
-        {
-            var server_user = databaseProvider.GetUser(auth.UserId);
-            return auth.PasswordMD5 == server_user.Md5Password;
         }
     }
 }
