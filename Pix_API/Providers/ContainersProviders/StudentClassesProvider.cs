@@ -6,19 +6,25 @@ namespace Pix_API.Providers.ContainersProviders
 {
     public class StudentClassesProvider : Storage_Provider<StudentsClass>, IStudentClassProvider
     {
-        private readonly IStudentClassBinding classBinding;
 
-        public StudentClassesProvider(DataSaver<List<StudentsClass>> saver, IStudentClassBinding classBinding) : base(saver)
+        private int _next_empty_id;
+        private readonly IUserDatabaseProvider userDatabase;
+
+        private int NextEmptyId {
+            get => _next_empty_id++;
+        }
+        public StudentClassesProvider(DataSaver<List<StudentsClass>> saver,IUserDatabaseProvider userDatabase) : base(saver)
         {
-            this.classBinding = classBinding;
+            var next_empty_id = storage.SelectMany((arg) => arg.Obj).Select((arg) => arg.Id).Max();
+            if (next_empty_id.HasValue) _next_empty_id = next_empty_id.Value + 1;
+            this.userDatabase = userDatabase;
         }
 
         public void AddClassForUser(StudentsClass studentsClass, int userId)
         {
-                var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-                studentsClass.Id = AllQuestionResults.Obj.Count;
-                AddObject(studentsClass, userId);
-                classBinding.Add(userId, studentsClass.Id.Value);
+            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
+            studentsClass.Id = NextEmptyId;
+            AddObject(studentsClass, userId);
         }
 
         public void EditClassForUser(StudentsClass studentsClass, int userId)
@@ -30,32 +36,39 @@ namespace Pix_API.Providers.ContainersProviders
         {
             return GetAllObjectsForUser(Id);
         }
-        public StudentsClass GetStudentsClassForUser(int userId,int classId)
+        public StudentsClass GetStudentsClassById(int userId,int classId)
         {
             var AllQuestionResults = GetUserObjectOrCreateNew(userId);
             return AllQuestionResults.Obj.FirstOrDefault(s => s.Id == classId);
         }
 
-        public List<int> GetStudentsClassForUserInClassOfUser(int userId, int classId)
+        public List<User> GetStudentsInClassForUser(int userId, int classId)
         {
             var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            return classBinding.Get(userId,classId).students_ids;
+            return AllQuestionResults.Obj.Any((arg) => arg.Id.Value == classId) ?
+            userDatabase.GetAllUsersBelongingToClass(classId) : null; 
         }
 
         public void RemoveClassForUser(StudentsClass studentsClass, int userId)
         {
             var AllQuestionResults = GetUserObjectOrCreateNew(userId);
             AllQuestionResults.Obj.RemoveAll((obj) => obj.Id == studentsClass.Id);
-            classBinding.Remove(userId, studentsClass.Id.Value );
+        }
+
+        public bool IsClassBelongsToUser(int userId, int classId)
+        {
+            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
+            return AllQuestionResults.Obj.Any(s => s.Id == classId);
         }
     }
     public interface IStudentClassProvider
     {
         List<StudentsClass> GetClassesForUser(int Id);
-        StudentsClass GetStudentsClassForUser(int userId, int classId);
+        StudentsClass GetStudentsClassById(int userId, int classId);
         void AddClassForUser(StudentsClass studentsClass, int userId);
         void EditClassForUser(StudentsClass studentsClass, int userId);
         void RemoveClassForUser(StudentsClass studentsClass, int userId);
-        List<int> GetStudentsClassForUserInClassOfUser(int userID,int classID);
+        List<User> GetStudentsInClassForUser(int userID,int classID);
+        bool IsClassBelongsToUser(int userId, int classId);
     }
 }

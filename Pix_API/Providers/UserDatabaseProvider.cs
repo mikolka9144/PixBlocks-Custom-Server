@@ -28,6 +28,16 @@ namespace Pix_API.Providers
             return users.Any(s => s.Email == email);
         }
 
+        public bool ContainsUserWithLogin(string login)
+        {
+            return users.Any(s => s.Student_login == login);
+        }
+
+        public List<User> GetAllUsersBelongingToClass(int classId)
+        {
+            return users.FindAll((arg) => arg.Student_studentsClassId == classId).ToList();
+        }
+
         public User GetUser(string email)
         {
             return users.Find(s => s.Email == email);
@@ -54,5 +64,7 @@ namespace Pix_API.Providers
         void AddUser(User user);
         void UpdateUser(User user);
         bool ContainsUserWithEmail(string email);
+        bool ContainsUserWithLogin(string login);
+        List<User> GetAllUsersBelongingToClass(int classId);
     }
 }
