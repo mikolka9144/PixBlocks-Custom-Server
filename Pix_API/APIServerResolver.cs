@@ -50,8 +50,9 @@ namespace Pix_API
                 var auth = method_arguments.Last() as AuthorizeData;
                 var server_user = userDatabaseProvider.GetUser(auth.UserId);
 
-                var IsAuthenticationValid = auth.PasswordMD5 == server_user.Md5Password;
-                return IsAuthenticationValid;
+                var IsAuthenticationValid = auth.PasswordMD5 == server_user.Md5Password; 
+                var IsStudentLoginValid = auth.ExplicitPassword == server_user.Student_explicitPassword && server_user.Student_isStudent == true;
+                return IsAuthenticationValid || IsStudentLoginValid;
             }
             return true;
         }

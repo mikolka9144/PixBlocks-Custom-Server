@@ -57,7 +57,8 @@ namespace Pix_API
             if (user_in_question != null)
             {
                 var Md5Password = Utills.ConvertPasswordToMD5(password);
-                if (user_in_question.Md5Password == Md5Password)
+                var IsStudentLoginValid = password == user_in_question.Student_explicitPassword && user_in_question.Student_isStudent == true;
+                if (user_in_question.Md5Password == Md5Password || IsStudentLoginValid)
                 {
                     return new UserAuthorizeResult()
                     {
@@ -68,6 +69,10 @@ namespace Pix_API
                 }
             }
             return new UserAuthorizeResult() { IsPasswordCorrect = false };
+        }
+        public bool StudentsLoginsCheckAvaible(string studentLogin)
+        {
+            return !databaseProvider.ContainsUserWithLogin(studentLogin);
         }
         [RequiresAuthentication]
         public List<QuestionResult> GetAllQuestionsResults(User user, AuthorizeData authorize)
@@ -104,6 +109,16 @@ namespace Pix_API
             if (authorize.UserId == user.Id)
             {
                 databaseProvider.UpdateUser(user);
+            }
+            else
+            {
+                var user_in_question = databaseProvider.GetUser(user.Id.Value);
+                var userBelongsToTeacher = studentClassProvider.IsClassBelongsToUser(authorize.UserId, 
+                    user_in_question.Student_studentsClassId.Value);
+                if(userBelongsToTeacher)
+                {
+                    databaseProvider.UpdateUser(user);
+                }
             }
             return null;
         }
@@ -159,7 +174,7 @@ namespace Pix_API
         [RequiresAuthentication]
         public StudentsClass GetStudentsClassById(int id, AuthorizeData authorize)
         {
-            return studentClassProvider.GetStudentsClassForUser(authorize.UserId, id);
+            return studentClassProvider.GetStudentsClassById(authorize.UserId, id);
         }
         [RequiresAuthentication]
         public StudentsClass EditStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
@@ -176,11 +191,7 @@ namespace Pix_API
         [RequiresAuthentication]
         public List<User> GetAllStudentsInClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            var user_ids = studentClassProvider.GetStudentsClassForUserInClassOfUser(authorize.UserId, studentsClass.Id.Value);
-            var users = new List<User>();
-            user_ids.ForEach(s => users.Add(databaseProvider.GetUser(s)));
-            return users;
-
+            return studentClassProvider.GetStudentsInClassForUser(authorize.UserId, studentsClass.Id.Value);
         }
     }
 

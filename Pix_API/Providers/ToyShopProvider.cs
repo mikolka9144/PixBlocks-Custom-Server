@@ -8,23 +8,24 @@ namespace Pix_API.Providers
     public class ToyShopProvider:IToyShopProvider
     {
         private readonly DataSaver<ToyShopData> saver;
-        private List<IdObjectBinder<ToyShopData>> toyShops;
+        private List<ToyShopData> toyShops;
         public ToyShopProvider(DataSaver<ToyShopData> saver)
         {
             this.saver = saver;
-            toyShops = saver.LoadAll();
+            toyShops = saver.LoadAll().Select(s => s.Obj).ToList();
         }
 
         public ToyShopData GetToyShop(int Id)
         {
-            return toyShops.FirstOrDefault(s => s.Id == Id).Obj;
+            return toyShops.FirstOrDefault(s => s.UserID == Id);
         }
 
         public void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id)
         {
             var binder = new IdObjectBinder<ToyShopData>(Id, toyShopData);
-            toyShops.RemoveAll(s => s.Id == Id);
-            toyShops.Add(binder);
+            toyShops.RemoveAll(s => s.UserID == Id);
+            binder.Obj.UserID = Id;
+            toyShops.Add(binder.Obj);
             saver.Save(binder);
         }
     }
