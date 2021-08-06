@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
+using System.Diagnostics;
 
 namespace Pix_API
 {
@@ -28,15 +29,18 @@ namespace Pix_API
                 Console.WriteLine($"method {name} not implemented");
                 return "";
             }
-            Console.WriteLine($"method {name} was issued to be called");
 
             var method = logic_type.GetMethod(name);
             var deserialized_parameters = ParseParameters(parameters,method.GetParameters());
 
             if (!CallerhasPermissionToRun(method,deserialized_parameters)) return "";
 
+            var profilingTimer = new Stopwatch();
             Console.WriteLine($"method {name} was called");
+            profilingTimer.Start();
             var object_response = method.Invoke(logic,deserialized_parameters);
+            profilingTimer.Stop();
+            Console.WriteLine($"calling method {name} done in {profilingTimer.ElapsedMilliseconds} ms");
 
             var object_json = JsonConvert.SerializeObject(object_response);
             return object_json;

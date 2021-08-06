@@ -4,7 +4,7 @@ using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using Pix_API.Providers.ContainersProviders;
 namespace Pix_API.Providers
 {
-    public class QuestionResultProvider : Storage_Provider<QuestionResult>, IQuestionResultsProvider
+    public class QuestionResultProvider : MultiplePoolStorageProvider<QuestionResult>, IQuestionResultsProvider
     {
         public QuestionResultProvider(DataSaver<List<QuestionResult>> saver) : base(saver)
         {
@@ -17,7 +17,7 @@ namespace Pix_API.Providers
 
         public List<QuestionResult> GetAllQuestionsReultsForUser(int Id)
         {
-            return GetAllObjectsForUser(Id);
+            return GetObjectOrCreateNew(Id);
         }
     }
 

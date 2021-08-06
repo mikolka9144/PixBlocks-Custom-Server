@@ -41,23 +41,25 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="APIServerResolver.cs" />
-    <Compile Include="Main_Logic.cs" />
     <Compile Include="Providers\CountriesProvider.cs" />
-    <Compile Include="Providers\UserDatabaseProvider.cs" />
-    <Compile Include="Utills.cs" />
     <Compile Include="Providers\ContainersProviders\QuestionEditsProvider.cs" />
     <Compile Include="Providers\ContainersProviders\QuestionResultProvider.cs" />
     <Compile Include="Providers\DiskDataSaver.cs" />
-    <Compile Include="Providers\ToyShopProvider.cs" />
     <Compile Include="Providers\INotyficationProvider.cs" />
     <Compile Include="Providers\StaticProviders\StaticNotyficationProvider.cs" />
     <Compile Include="Providers\IChampionshipsProvider.cs" />
     <Compile Include="Providers\StaticProviders\StaticChampionshipProvider.cs" />
     <Compile Include="Providers\ContainersProviders\StudentClassesProvider.cs" />
     <Compile Include="Providers\ContainersProviders\StudentClassExamsProvider.cs" />
-    <Compile Include="IdAssigner.cs" />
-    <Compile Include="Providers\BaseClasses\Storage Provider.cs" />
+    <Compile Include="Providers\BaseClasses\MultiplePoolStorageProvider.cs" />
+    <Compile Include="Providers\BaseClasses\SinglePoolStorageProvider.cs" />
+    <Compile Include="Providers\BaseClasses\IdObjectBinder.cs" />
+    <Compile Include="Providers\SinglePoolProviders\ToyShopProvider.cs" />
+    <Compile Include="Providers\SinglePoolProviders\UserDatabaseProvider.cs" />
+    <Compile Include="CoreComponents\APIServerResolver.cs" />
+    <Compile Include="CoreComponents\Main_Logic.cs" />
+    <Compile Include="Utills\IdAssigner.cs" />
+    <Compile Include="Utills\Utills.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +69,9 @@
     <Folder Include="Providers\ContainersProviders\" />
     <Folder Include="Providers\StaticProviders\" />
     <Folder Include="Providers\BaseClasses\" />
+    <Folder Include="Providers\SinglePoolProviders\" />
+    <Folder Include="CoreComponents\" />
+    <Folder Include="Utills\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

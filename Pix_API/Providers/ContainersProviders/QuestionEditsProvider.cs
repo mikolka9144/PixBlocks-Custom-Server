@@ -6,7 +6,7 @@ using Pix_API.Providers.ContainersProviders;
 
 namespace Pix_API.Providers
 {
-    public class QuestionEditsProvider : Storage_Provider<EditedQuestionCode>, IQuestionEditsProvider
+    public class QuestionEditsProvider :MultiplePoolStorageProvider<EditedQuestionCode>, IQuestionEditsProvider
     {
         public QuestionEditsProvider(DataSaver<List<EditedQuestionCode>> saver) : base(saver)
         {
@@ -20,12 +20,12 @@ namespace Pix_API.Providers
 
         public List<EditedQuestionCode> GetAllQuestionCodes(int Id)
         {
-            return GetAllObjectsForUser(Id);
+            return GetObjectOrCreateNew(Id);
         }
 
         public EditedQuestionCode GetQuestionEditByGuid(int Id, string guid)
         {
-            var questionCodes = GetAllObjectsForUser(Id);
+            var questionCodes = GetObjectOrCreateNew(Id);
             return questionCodes.FirstOrDefault(s => s.QuesionGuid == guid);
         }
     }
