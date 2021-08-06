@@ -38,9 +38,9 @@ namespace Pix_API.Providers
             return users.FindAll((arg) => arg.Student_studentsClassId == classId).ToList();
         }
 
-        public User GetUser(string email)
+        public User GetUser(string EmailOrLogin)
         {
-            return users.Find(s => s.Email == email);
+            return users.Find(s => s.Email == EmailOrLogin || s.Student_login == EmailOrLogin);
         }
 
         public User GetUser(int Id)
@@ -59,7 +59,7 @@ namespace Pix_API.Providers
 
     public interface IUserDatabaseProvider
     {
-        User GetUser(string email);
+        User GetUser(string EmailOrLogin);
         User GetUser(int Id);
         void AddUser(User user);
         void UpdateUser(User user);

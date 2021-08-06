@@ -46,7 +46,6 @@
     <Compile Include="Providers\CountriesProvider.cs" />
     <Compile Include="Providers\UserDatabaseProvider.cs" />
     <Compile Include="Utills.cs" />
-    <Compile Include="Providers\ContainersProviders\Storage Provider.cs" />
     <Compile Include="Providers\ContainersProviders\QuestionEditsProvider.cs" />
     <Compile Include="Providers\ContainersProviders\QuestionResultProvider.cs" />
     <Compile Include="Providers\DiskDataSaver.cs" />
@@ -56,6 +55,9 @@
     <Compile Include="Providers\IChampionshipsProvider.cs" />
     <Compile Include="Providers\StaticProviders\StaticChampionshipProvider.cs" />
     <Compile Include="Providers\ContainersProviders\StudentClassesProvider.cs" />
+    <Compile Include="Providers\ContainersProviders\StudentClassExamsProvider.cs" />
+    <Compile Include="IdAssigner.cs" />
+    <Compile Include="Providers\BaseClasses\Storage Provider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -64,6 +66,7 @@
     <Folder Include="Providers\" />
     <Folder Include="Providers\ContainersProviders\" />
     <Folder Include="Providers\StaticProviders\" />
+    <Folder Include="Providers\BaseClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

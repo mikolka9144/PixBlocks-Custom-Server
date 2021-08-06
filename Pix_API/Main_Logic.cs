@@ -10,6 +10,8 @@ using PixBlocks.Server.DataModels.DataModels.Championsships;
 using System;
 using Pix_API.Providers.ContainersProviders;
 using PixBlocks.Server.DataModels.Tools;
+using PixBlocks.Server.DataModels.DataModels.ExamInfo;
+using System.Linq;
 
 namespace Pix_API
 {
@@ -23,12 +25,13 @@ namespace Pix_API
         private readonly INotyficationProvider notyficationProvider;
         private readonly IChampionshipsProvider championshipsProvider;
         private readonly IStudentClassProvider studentClassProvider;
+        private readonly IStudentClassExamsProvider studentClassExamsProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
             INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
-            IStudentClassProvider studentClassProvider)
+            IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -38,6 +41,7 @@ namespace Pix_API
             this.notyficationProvider = notyficationProvider;
             this.championshipsProvider = championshipsProvider;
             this.studentClassProvider = studentClassProvider;
+            this.studentClassExamsProvider = studentClassExamsProvider;
         }
 
         public List<Countrie> GetAllCountries()
@@ -74,36 +78,33 @@ namespace Pix_API
         {
             return !databaseProvider.ContainsUserWithLogin(studentLogin);
         }
-        [RequiresAuthentication]
+
         public List<QuestionResult> GetAllQuestionsResults(User user, AuthorizeData authorize)
         {
                 return questionResultsProvider.GetAllQuestionsReultsForUser(authorize.UserId);
 
         }
-        [RequiresAuthentication]
+
         public QuestionResult AddOrUpdateQuestionResult(QuestionResult questionResult, AuthorizeData authorize)
         {
             questionResultsProvider.AddOrUpdateQuestionResult(questionResult, authorize.UserId);
             return questionResult;
         }
-        [RequiresAuthentication]
+
         public List<EditedQuestionCode> GetAllQuestionsCodes(User user, AuthorizeData authorize)
         {
             return questionEditsProvider.GetAllQuestionCodes(authorize.UserId);
         }
-        [RequiresAuthentication]
         public EditedQuestionCode AddOrUpdateEditedQuestionCode(EditedQuestionCode editedQuestionCode, User user, AuthorizeData authorize)
         {
                 questionEditsProvider.AddOrRemoveQuestionCode(editedQuestionCode, authorize.UserId);
                 return editedQuestionCode;
         }
-        [RequiresAuthentication]
         public EditedQuestionCode GetQuestionCode(string questionGuid, int? examId, int? editedCodeId, bool isTeacherShared, DateTime? lastUpdateTime, AuthorizeData authorize)
         {
                 var question_edit = questionEditsProvider.GetQuestionEditByGuid(authorize.UserId, questionGuid);
                 return question_edit;
         }
-        [RequiresAuthentication]
         public User UpdateOrDeleteUser(User user, AuthorizeData authorize)
         {
             if (authorize.UserId == user.Id)
@@ -122,7 +123,6 @@ namespace Pix_API
             }
             return null;
         }
-        [RequiresAuthentication]
         public GetToyShopDataResult GetUserToysShopInfo(User user, AuthorizeData authorize)
         {
                 var toyShop = toyShopProvider.GetToyShop(authorize.UserId);
@@ -139,13 +139,11 @@ namespace Pix_API
                     IsToyShopExist = false
                 };
         }
-        [RequiresAuthentication]
         public ToyShopData AddOrUpdateToyShopInfo(ToyShopData toyShopData, AuthorizeData authorize)
         {
             toyShopProvider.SaveOrUpdateToyShop(toyShopData, authorize.UserId);
             return toyShopData;
         }
-        [RequiresAuthentication]
         public List<Notification> GetNotificationForUser(string LanguageKey, AuthorizeData authorizeData)
         {
                 var user = databaseProvider.GetUser(authorizeData.UserId);
@@ -153,45 +151,73 @@ namespace Pix_API
                 notyficationProvider.GetNotyficationForUser(LanguageKey, user) 
                 };
         }
-        [RequiresAuthentication]
         public List<Championship> GetActiveChampionshipsInCountry(int countryId, AuthorizeData authorize)
         {
             var user = databaseProvider.GetUser(authorize.UserId);
             return championshipsProvider.GetAllChampionshipsForUser(Convert.ToInt32(countryId), user);
         }
         //Pixblocks Students Classes
-        [RequiresAuthentication]
         public List<StudentsClass> GetAllStudentsClasses(int teacherID, AuthorizeData authorize)
         {
             return studentClassProvider.GetClassesForUser(authorize.UserId);
         }
-        [RequiresAuthentication]
         public StudentsClass AddStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
             studentClassProvider.AddClassForUser(studentsClass, authorize.UserId);
             return studentsClass;
         }
-        [RequiresAuthentication]
         public StudentsClass GetStudentsClassById(int id, AuthorizeData authorize)
         {
             return studentClassProvider.GetStudentsClassById(authorize.UserId, id);
         }
-        [RequiresAuthentication]
         public StudentsClass EditStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
             studentClassProvider.EditClassForUser(studentsClass, authorize.UserId);
             return null;
         }
-        [RequiresAuthentication]
         public StudentsClass DeleteStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
             studentClassProvider.RemoveClassForUser(studentsClass, authorize.UserId);
             return null;
         }
-        [RequiresAuthentication]
         public List<User> GetAllStudentsInClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
             return studentClassProvider.GetStudentsInClassForUser(authorize.UserId, studentsClass.Id.Value);
+        }
+        public List<Exam> GetAllExamsInClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            return studentClassExamsProvider.GetAllExamsInClass(studentsClass.Id.Value).Select(s => s.Exam_metadata).ToList();
+        }
+        public List<ExamQuestion> GetAllQuestionsInAllExamsInStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            if(studentClassProvider.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value))
+            {
+                return studentClassExamsProvider.GetAllExamsInClass(studentsClass.Id.Value).SelectMany(s => s.questions).ToList();
+            }
+            return null;
+        }
+        public Exam AddNewExam(Exam exam, AuthorizeData authorize)
+        {
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, exam.StudentsClassId))
+            {
+                exam.SetupExam();
+                studentClassExamsProvider.AddExam(new ServerExam(exam));
+            }
+            return exam;
+        }
+        public List<ExamQuestion> GetAllQuestionsInExam(Exam exam, AuthorizeData authorize)
+        {
+            return studentClassExamsProvider.GetExam( exam.Id).questions;
+        }
+        public bool AddQuestionInExam(ExamQuestion examQuestion, AuthorizeData authorize)
+        {
+            var class_id = studentClassExamsProvider.GetExam(examQuestion.ExamId).Exam_metadata.StudentsClassId;
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, class_id))
+            {
+                studentClassExamsProvider.AddQuestionInExam(examQuestion, examQuestion.ExamId);
+                return true;
+            }
+            return false;
         }
     }
 

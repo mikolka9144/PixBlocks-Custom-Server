@@ -4,6 +4,7 @@ using System.Text;
 using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
 using PixBlocks.ServerFasade.ServerAPI;
+using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
 namespace Pix_API
 {
@@ -24,6 +25,10 @@ namespace Pix_API
                 stringBuilder.Append(array[i].ToString("x3"));
             }
             return stringBuilder.ToString();
+        }
+        public static void SetupExam(this Exam exam)
+        {
+            exam.CreationDate = DateTime.Now;
         }
     }
 }

@@ -6,24 +6,18 @@ namespace Pix_API.Providers.ContainersProviders
 {
     public class StudentClassesProvider : Storage_Provider<StudentsClass>, IStudentClassProvider
     {
-
-        private int _next_empty_id;
+        private readonly IdAssigner idAssigner;
         private readonly IUserDatabaseProvider userDatabase;
-
-        private int NextEmptyId {
-            get => _next_empty_id++;
-        }
         public StudentClassesProvider(DataSaver<List<StudentsClass>> saver,IUserDatabaseProvider userDatabase) : base(saver)
         {
-            var next_empty_id = storage.SelectMany((arg) => arg.Obj).Select((arg) => arg.Id).Max();
-            if (next_empty_id.HasValue) _next_empty_id = next_empty_id.Value + 1;
+            var id_list = storage.SelectMany((arg) => arg.Obj).Select((arg) => arg.Id.Value).ToList();
+            idAssigner = new IdAssigner(id_list);
             this.userDatabase = userDatabase;
         }
 
         public void AddClassForUser(StudentsClass studentsClass, int userId)
         {
-            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            studentsClass.Id = NextEmptyId;
+            studentsClass.Id = idAssigner.NextEmptyId;
             AddObject(studentsClass, userId);
         }
 
