@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Pix_API.Providers.ContainersProviders;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Pix_API.Providers.BaseClasses;
+
 namespace Pix_API.Providers
 {
     public class DiskDataSaver<T>:DataSaver<T>

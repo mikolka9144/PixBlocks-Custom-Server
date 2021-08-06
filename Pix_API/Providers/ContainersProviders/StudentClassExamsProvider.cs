@@ -4,7 +4,7 @@ using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using System.Linq;
 namespace Pix_API.Providers.ContainersProviders
 {
-    public class StudentClassExamsProvider : Storage_Provider<ServerExam>,IStudentClassExamsProvider
+    public class StudentClassExamsProvider : MultiplePoolStorageProvider<ServerExam>,IStudentClassExamsProvider
     {
         private IdAssigner idAssigner;
 
@@ -16,7 +16,7 @@ namespace Pix_API.Providers.ContainersProviders
 
         public void AddExam(ServerExam serverExam)
         {
-            var class_exams = GetAllObjectsForUser(serverExam.Exam_metadata.StudentsClassId);
+            var class_exams = GetObjectOrCreateNew(serverExam.Exam_metadata.StudentsClassId);
             serverExam.Exam_metadata.Id = idAssigner.NextEmptyId;
 
             AddObject(serverExam, serverExam.Exam_metadata.StudentsClassId);
@@ -31,8 +31,8 @@ namespace Pix_API.Providers.ContainersProviders
 
         public List<ServerExam> GetAllExamsInClass(int class_id)
         {
-            var exams = GetUserObjectOrCreateNew(class_id);
-            return exams.Obj;
+            var exams = GetObjectOrCreateNew(class_id);
+            return exams;
         }
 
         public ServerExam GetExam(int exam_id)

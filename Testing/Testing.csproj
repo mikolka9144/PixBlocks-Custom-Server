@@ -39,7 +39,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UpdateOrDeleteUserTests.cs" />
     <Compile Include="MainLogicBuilder.cs" />
     <Compile Include="IdAssignerTests.cs" />
   </ItemGroup>

@@ -4,7 +4,7 @@ using System.Linq;
 using PixBlocks.Server.DataModels.DataModels;
 namespace Pix_API.Providers.ContainersProviders
 {
-    public class StudentClassesProvider : Storage_Provider<StudentsClass>, IStudentClassProvider
+    public class StudentClassesProvider : MultiplePoolStorageProvider<StudentsClass>, IStudentClassProvider
     {
         private readonly IdAssigner idAssigner;
         private readonly IUserDatabaseProvider userDatabase;
@@ -28,31 +28,31 @@ namespace Pix_API.Providers.ContainersProviders
 
         public List<StudentsClass> GetClassesForUser(int Id)
         {
-            return GetAllObjectsForUser(Id);
+            return GetObjectOrCreateNew(Id);
         }
         public StudentsClass GetStudentsClassById(int userId,int classId)
         {
-            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            return AllQuestionResults.Obj.FirstOrDefault(s => s.Id == classId);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            return AllQuestionResults.FirstOrDefault(s => s.Id == classId);
         }
 
         public List<User> GetStudentsInClassForUser(int userId, int classId)
         {
-            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            return AllQuestionResults.Obj.Any((arg) => arg.Id.Value == classId) ?
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            return AllQuestionResults.Any((arg) => arg.Id.Value == classId) ?
             userDatabase.GetAllUsersBelongingToClass(classId) : null; 
         }
 
         public void RemoveClassForUser(StudentsClass studentsClass, int userId)
         {
-            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            AllQuestionResults.Obj.RemoveAll((obj) => obj.Id == studentsClass.Id);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            AllQuestionResults.RemoveAll((obj) => obj.Id == studentsClass.Id);
         }
 
         public bool IsClassBelongsToUser(int userId, int classId)
         {
-            var AllQuestionResults = GetUserObjectOrCreateNew(userId);
-            return AllQuestionResults.Obj.Any(s => s.Id == classId);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            return AllQuestionResults.Any(s => s.Id == classId);
         }
     }
     public interface IStudentClassProvider

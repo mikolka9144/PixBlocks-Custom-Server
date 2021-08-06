@@ -3,56 +3,49 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using System.Linq;
 using Pix_API.Providers.ContainersProviders;
+using Pix_API.Providers.BaseClasses;
 
 namespace Pix_API.Providers
 {
-    public class UserDatabaseProvider:IUserDatabaseProvider
+    public class UserDatabaseProvider:SinglePoolStorageProvider<User>,IUserDatabaseProvider
     {
-        private readonly DataSaver<User> saver;
-        private List<User> users = new List<User>();
-        public UserDatabaseProvider(DataSaver<User>saver)
+        public UserDatabaseProvider(DataSaver<User>saver):base(saver)
         {
-            var id_users = saver.LoadAll();
-            users = id_users.Select((arg) => arg.Obj).ToList();
-            this.saver = saver;
         }
         public void AddUser(User user)
         {
-            user.SetupUser(users.Count);
-            users.Add(user);
-            saver.SaveInBackground(new IdObjectBinder<User>(user.Id.Value, user));
+            user.SetupUser(storage.Count);
+            AddObject(user, user.Id.Value);
         }
 
         public bool ContainsUserWithEmail(string email)
         {
-            return users.Any(s => s.Email == email);
+            return storage.Any(s => s.Obj.Email == email);
         }
 
         public bool ContainsUserWithLogin(string login)
         {
-            return users.Any(s => s.Student_login == login);
+            return storage.Any(s => s.Obj.Student_login == login);
         }
 
         public List<User> GetAllUsersBelongingToClass(int classId)
         {
-            return users.FindAll((arg) => arg.Student_studentsClassId == classId).ToList();
+            return storage.FindAll((arg) => arg.Obj.Student_studentsClassId == classId).Select(s => s.Obj).ToList();
         }
 
         public User GetUser(string EmailOrLogin)
         {
-            return users.Find(s => s.Email == EmailOrLogin || s.Student_login == EmailOrLogin);
+            return storage.Find(s => s.Obj.Email == EmailOrLogin || s.Obj.Student_login == EmailOrLogin).Obj;
         }
 
         public User GetUser(int Id)
         {
-            return users.Find(s => s.Id == Id);
+            return GetObjectOrCreateNew(Id);
         }
 
         public void UpdateUser(User user)
         {
-            var user_holder = users.RemoveAll((obj) => obj.Id == user.Id);
-            users.Add(user);
-            saver.SaveInBackground(new IdObjectBinder<User>(user.Id.Value, user));
+            AddOrUpdateObject(user, user.Id.Value);
         }
 
     }
