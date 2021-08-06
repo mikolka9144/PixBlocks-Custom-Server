@@ -44,7 +44,7 @@ namespace Pix_API
 
         private bool CallerhasPermissionToRun(MethodInfo method,object[] method_arguments)
         {
-            var IsReuiredAuthentication = Attribute.IsDefined(method, typeof(RequiresAuthentication));
+            var IsReuiredAuthentication = method.GetParameters().Last().ParameterType == typeof(AuthorizeData);
             if (IsReuiredAuthentication)
             {
                 var auth = method_arguments.Last() as AuthorizeData;
@@ -72,6 +72,4 @@ namespace Pix_API
             return output.ToArray();
         }
     }
-    public class RequiresAuthentication : Attribute { }
-
 }

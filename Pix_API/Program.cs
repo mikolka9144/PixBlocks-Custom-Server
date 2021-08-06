@@ -24,6 +24,7 @@ namespace Pix_API
             var question_result_saver = new DiskDataSaver<List<QuestionResult>>("./QuestionResults/");
             var studentClassesSaver = new DiskDataSaver<List<StudentsClass>>("./Classes/");
             var question_edits_saver = new DiskDataSaver<List<EditedQuestionCode>>("./QuestionsCodes/");
+            var student_class_exams_saver = new DiskDataSaver<List<ServerExam>>("./Exams/");
             var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
 
             var usersProvider = new UserDatabaseProvider(users_saver);
@@ -31,13 +32,14 @@ namespace Pix_API
             var editQuestionProvider = new QuestionEditsProvider(question_edits_saver);
             var toyShopProvider = new ToyShopProvider(toyShop_saver);
             var studentClassesProvider = new StudentClassesProvider(studentClassesSaver,usersProvider);
+            var studentClassExamsProvider = new StudentClassExamsProvider(student_class_exams_saver);
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
             var staticChampionshipsProvider = new StaticChampionshipProvider();//TODO
 
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
                 toyShopProvider,staticNotyficationProvider,
-                staticChampionshipsProvider,studentClassesProvider),usersProvider);
+                staticChampionshipsProvider,studentClassesProvider,studentClassExamsProvider),usersProvider);
 
             Start_Lisening(resolver);
         }
