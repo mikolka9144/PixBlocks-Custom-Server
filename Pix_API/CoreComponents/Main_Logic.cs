@@ -12,6 +12,7 @@ using Pix_API.Providers.ContainersProviders;
 using PixBlocks.Server.DataModels.Tools;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using System.Linq;
+using Pix_API.Providers.MultiplePoolProviders;
 
 namespace Pix_API
 {
@@ -26,12 +27,13 @@ namespace Pix_API
         private readonly IChampionshipsProvider championshipsProvider;
         private readonly IStudentClassProvider studentClassProvider;
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
+        private readonly IUserCommentsProvider userCommentsProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
             INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
-            IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider)
+            IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider,IUserCommentsProvider userCommentsProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -42,6 +44,7 @@ namespace Pix_API
             this.championshipsProvider = championshipsProvider;
             this.studentClassProvider = studentClassProvider;
             this.studentClassExamsProvider = studentClassExamsProvider;
+            this.userCommentsProvider = userCommentsProvider;
         }
 
         public List<Countrie> GetAllCountries()
@@ -102,7 +105,7 @@ namespace Pix_API
         }
         public EditedQuestionCode GetQuestionCode(string questionGuid, int? examId, int? editedCodeId, bool isTeacherShared, DateTime? lastUpdateTime, AuthorizeData authorize)
         {
-                var question_edit = questionEditsProvider.GetQuestionEditByGuid(authorize.UserId, questionGuid);
+                var question_edit = questionEditsProvider.GetQuestionEditByGuid(authorize.UserId, questionGuid,examId);
                 return question_edit;
         }
         public User UpdateOrDeleteUser(User user, AuthorizeData authorize)
@@ -218,6 +221,68 @@ namespace Pix_API
                 return true;
             }
             return false;
+        }
+        public bool DeleteQuestionInExam(ExamQuestion examQuestion, AuthorizeData authorize)
+        {
+            var class_id = studentClassExamsProvider.GetExam(examQuestion.ExamId).Exam_metadata.StudentsClassId;
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, class_id))
+            {
+                studentClassExamsProvider.RemoveQuestionInExam(examQuestion, examQuestion.ExamId);
+                return true;
+            }
+            return false;
+        }
+        public List<Exam> GetAllActiveExamsForStudent(User participant, AuthorizeData authorizeData)
+        {
+            return studentClassExamsProvider.
+                GetAllExamsInClass(participant.Student_studentsClassId.Value).Select(s => s.Exam_metadata).Where(s => s.IsActive).ToList();
+        }
+        public Exam UpdateOrDeleteExam(Exam exam, AuthorizeData authorize)
+        {
+            if (studentClassProvider.IsExamCreatedByUser(studentClassExamsProvider.GetExam(exam.Id), authorize.UserId))
+            {
+                var server_exam = studentClassExamsProvider.GetExam(exam.Id);
+                server_exam.Exam_metadata = exam;
+                studentClassExamsProvider.UpdateExam(server_exam);
+            }
+            return null;
+        }
+        public List<QuestionResult> GetAllResultsForStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value))
+            {
+                var results = new List<QuestionResult>();
+                var users = studentClassProvider.GetStudentsInClassForUser(authorize.UserId, studentsClass.Id.Value);
+                foreach (var user in users)
+                {
+                    results.AddRange(questionResultsProvider.GetAllQuestionsReultsForUser(user.Id.Value));
+                }
+                return results;
+            }
+            return null;
+        }
+        public List<Comment> GetAllCommentsFromStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
+        {
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value))
+            {
+                var results = new List<Comment>();
+                var users = studentClassProvider.GetStudentsInClassForUser(authorize.UserId, studentsClass.Id.Value);
+                foreach (var user in users)
+                {
+                    results.AddRange(userCommentsProvider.GetAllCommentsForUser(user.Id.Value));
+                }
+                return results;
+            }
+            return null;
+        }
+        public Comment AddOrUpdateComment(Comment comment, AuthorizeData authorize)
+        {
+            var user = databaseProvider.GetUser(comment.UserID);
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, user.Student_studentsClassId.Value))
+            {
+                userCommentsProvider.AddOrUpdateComment(comment, comment.UserID);
+            }
+            return null;
         }
     }
 

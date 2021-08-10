@@ -5,6 +5,9 @@ using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
 using PixBlocks.ServerFasade.ServerAPI;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
+using Pix_API.Providers.ContainersProviders;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pix_API
 {
@@ -29,6 +32,15 @@ namespace Pix_API
         public static void SetupExam(this Exam exam)
         {
             exam.CreationDate = DateTime.Now;
+        }
+        public static bool IsExamCreatedByUser(this IStudentClassProvider classProvider, ServerExam exam, int UserId)
+        {
+            var class_id = exam.Exam_metadata.StudentsClassId;
+            return classProvider.IsClassBelongsToUser(UserId, class_id);
+        }
+        public static bool IsClassBelongsToUser(this IStudentClassProvider classProvider, int userId, int classId)
+        {
+            return classProvider.GetClassesForUser(userId).Any(s => s.Id == classId);
         }
     }
 }

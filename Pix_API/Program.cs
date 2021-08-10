@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using Pix_API.Providers.StaticProviders;
 using Pix_API.Providers.ContainersProviders;
+using Pix_API.Providers.MultiplePoolProviders;
 
 namespace Pix_API
 {
@@ -24,7 +25,8 @@ namespace Pix_API
             var question_result_saver = new DiskDataSaver<List<QuestionResult>>("./QuestionResults/");
             var studentClassesSaver = new DiskDataSaver<List<StudentsClass>>("./Classes/");
             var question_edits_saver = new DiskDataSaver<List<EditedQuestionCode>>("./QuestionsCodes/");
-            var student_class_exams_saver = new DiskDataSaver<List<ServerExam>>("./Exams/");
+            var comments_saver = new DiskDataSaver<List<Comment>>("./Comments/");
+            var student_class_exams_saver = new DiskDataSaver<ServerExam>("./Exams/");
             var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
 
             var usersProvider = new UserDatabaseProvider(users_saver);
@@ -33,13 +35,14 @@ namespace Pix_API
             var toyShopProvider = new ToyShopProvider(toyShop_saver);
             var studentClassesProvider = new StudentClassesProvider(studentClassesSaver,usersProvider);
             var studentClassExamsProvider = new StudentClassExamsProvider(student_class_exams_saver);
+            var userCommentsProvider = new UserCommentsProvider(comments_saver);
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
             var staticChampionshipsProvider = new StaticChampionshipProvider();//TODO
 
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
                 toyShopProvider,staticNotyficationProvider,
-                staticChampionshipsProvider,studentClassesProvider,studentClassExamsProvider),usersProvider);
+                staticChampionshipsProvider,studentClassesProvider,studentClassExamsProvider,userCommentsProvider),usersProvider);
 
             Start_Lisening(resolver);
         }

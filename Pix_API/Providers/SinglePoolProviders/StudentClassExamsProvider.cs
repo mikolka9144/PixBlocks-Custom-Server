@@ -2,42 +2,51 @@
 using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using System.Linq;
+using Pix_API.Providers.BaseClasses;
 namespace Pix_API.Providers.ContainersProviders
 {
-    public class StudentClassExamsProvider : MultiplePoolStorageProvider<ServerExam>,IStudentClassExamsProvider
+    public class StudentClassExamsProvider : SinglePoolStorageProvider<ServerExam>,IStudentClassExamsProvider
     {
         private IdAssigner idAssigner;
 
-        public StudentClassExamsProvider(DataSaver<List<ServerExam>> saver) : base(saver)
+        public StudentClassExamsProvider(DataSaver<ServerExam> saver) : base(saver)
         {
-            var id_list = storage.SelectMany(s => s.Obj).Select(s => s.Exam_metadata.Id).ToList();
+            var id_list = storage.Select(s => s.Obj).Select(s => s.Exam_metadata.Id).ToList();
             idAssigner = new IdAssigner(id_list);
         }
 
         public void AddExam(ServerExam serverExam)
-        {
-            var class_exams = GetObjectOrCreateNew(serverExam.Exam_metadata.StudentsClassId);
+        { 
             serverExam.Exam_metadata.Id = idAssigner.NextEmptyId;
 
-            AddObject(serverExam, serverExam.Exam_metadata.StudentsClassId);
+            AddSingleObject(serverExam, serverExam.Exam_metadata.Id);
         }
 
         public void AddQuestionInExam(ExamQuestion question, int exam_id)
         {
             var exam = GetExam(exam_id);
             exam.questions.Add(question);
-            AddOrUpdateObject(exam, exam.Exam_metadata.StudentsClassId, ((a, b) => a.Exam_metadata.Id == b.Exam_metadata.Id));
+            AddOrUpdateSingleObject(exam, exam_id);
         }
 
         public List<ServerExam> GetAllExamsInClass(int class_id)
         {
-            var exams = GetObjectOrCreateNew(class_id);
-            return exams;
+            return storage.FindAll(s =>s.Obj.Exam_metadata
+                .StudentsClassId == class_id).Select(s => s.Obj).ToList();
         }
 
-        public ServerExam GetExam(int exam_id)
+        public ServerExam GetExam(int exam_id) => GetSingleObject(exam_id)?.Obj;
+
+        public void RemoveQuestionInExam(ExamQuestion examQuestion, int examId)
         {
-            return storage.SelectMany(s => s.Obj).FirstOrDefault(s => s.Exam_metadata.Id == exam_id);
+            var exam = GetExam(examId);
+            exam.questions.RemoveAll(s => s.QuestionGuid == examQuestion.QuestionGuid);
+            AddOrUpdateSingleObject(exam, examId);
+        }
+
+        public void UpdateExam(ServerExam server_exam)
+        {
+            AddOrUpdateSingleObject(server_exam, server_exam.Exam_metadata.Id);
         }
     }
 
@@ -47,6 +56,8 @@ namespace Pix_API.Providers.ContainersProviders
         void AddExam(ServerExam serverExam);
         ServerExam GetExam(int exam_id);
         void AddQuestionInExam(ExamQuestion question, int exam_id);
+        void RemoveQuestionInExam(ExamQuestion examQuestion, int examId);
+        void UpdateExam(ServerExam server_exam);
     }
 
     public class ServerExam

@@ -6,18 +6,25 @@ namespace Pix_API.Providers
 {
     public class QuestionResultProvider : MultiplePoolStorageProvider<QuestionResult>, IQuestionResultsProvider
     {
+        private bool AreEqual(QuestionResult result,QuestionResult result2)
+        {
+            var AreSameExamQuestions = result.ExamId == result2.ExamId;
+            var AreSameQuestionRelated = result.QuestionGuid == result2.QuestionGuid;
+            return AreSameExamQuestions && AreSameQuestionRelated;
+        }
+
         public QuestionResultProvider(DataSaver<List<QuestionResult>> saver) : base(saver)
         {
         }
 
         public void AddOrUpdateQuestionResult(QuestionResult questionResult, int Id)
         {
-            AddOrUpdateObject(questionResult, Id, (arg1, arg2) => arg1.ID == arg2.ID);
+            AddOrUpdateObject(questionResult, Id,AreEqual);
         }
 
         public List<QuestionResult> GetAllQuestionsReultsForUser(int Id)
         {
-            return GetObjectOrCreateNew(Id);
+            return GetSingleObjectOrCreateNew(Id);
         }
     }
 
