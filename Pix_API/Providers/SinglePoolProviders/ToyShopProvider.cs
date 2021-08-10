@@ -13,12 +13,12 @@ namespace Pix_API.Providers
         {
         }
 
-        public ToyShopData GetToyShop(int Id) => GetObjectOrCreateNew(Id);
+        public ToyShopData GetToyShop(int Id) => GetSingleObjectOrCreateNew(Id);
 
         public void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id)
         {
             toyShopData.UserID = Id;
-            AddOrUpdateObject(toyShopData, Id);
+            AddOrUpdateSingleObject(toyShopData, Id);
         }
     }
 

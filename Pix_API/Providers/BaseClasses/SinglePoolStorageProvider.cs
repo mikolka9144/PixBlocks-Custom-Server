@@ -15,21 +15,21 @@ namespace Pix_API.Providers.BaseClasses
             this.saver = saver;
             storage = saver.LoadAll();
         }
-        protected void AddOrUpdateObject(T obj, int Id)
+        protected void AddOrUpdateSingleObject(T obj, int Id)
         {
             storage.RemoveAll(s => s.Id == Id);
-            AddObject(obj, Id);
+            AddSingleObject(obj, Id);
 
         }
-        protected void AddObject(T questionResult, int Id)
+        protected void AddSingleObject(T questionResult, int Id)
         {
             var obj = new IdObjectBinder<T>(Id, questionResult);
             storage.Add(obj);
             saver.SaveInBackground(obj);
         }
-        protected virtual T GetObjectOrCreateNew(int Id)
+        protected virtual T GetSingleObjectOrCreateNew(int Id)
         {
-            var user_results = storage.FirstOrDefault(s => s.Id == Id);
+            var user_results = GetSingleObject(Id);
             if (user_results == null)
             {
                 var newUserResults = new IdObjectBinder<T>(Id,default(T));
@@ -38,5 +38,6 @@ namespace Pix_API.Providers.BaseClasses
             }
             return user_results.Obj;
         }
+        protected IdObjectBinder<T> GetSingleObject(int Id) => storage.FirstOrDefault(s => s.Id == Id);
     }
 }

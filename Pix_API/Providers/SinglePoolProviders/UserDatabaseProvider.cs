@@ -15,7 +15,7 @@ namespace Pix_API.Providers
         public void AddUser(User user)
         {
             user.SetupUser(storage.Count);
-            AddObject(user, user.Id.Value);
+            AddSingleObject(user, user.Id.Value);
         }
 
         public bool ContainsUserWithEmail(string email)
@@ -40,12 +40,12 @@ namespace Pix_API.Providers
 
         public User GetUser(int Id)
         {
-            return GetObjectOrCreateNew(Id);
+            return GetSingleObjectOrCreateNew(Id);
         }
 
         public void UpdateUser(User user)
         {
-            AddOrUpdateObject(user, user.Id.Value);
+            AddOrUpdateSingleObject(user, user.Id.Value);
         }
 
     }

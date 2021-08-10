@@ -28,31 +28,25 @@ namespace Pix_API.Providers.ContainersProviders
 
         public List<StudentsClass> GetClassesForUser(int Id)
         {
-            return GetObjectOrCreateNew(Id);
+            return GetSingleObjectOrCreateNew(Id);
         }
         public StudentsClass GetStudentsClassById(int userId,int classId)
         {
-            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
             return AllQuestionResults.FirstOrDefault(s => s.Id == classId);
         }
 
         public List<User> GetStudentsInClassForUser(int userId, int classId)
         {
-            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
             return AllQuestionResults.Any((arg) => arg.Id.Value == classId) ?
             userDatabase.GetAllUsersBelongingToClass(classId) : null; 
         }
 
         public void RemoveClassForUser(StudentsClass studentsClass, int userId)
         {
-            var AllQuestionResults = GetObjectOrCreateNew(userId);
+            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
             AllQuestionResults.RemoveAll((obj) => obj.Id == studentsClass.Id);
-        }
-
-        public bool IsClassBelongsToUser(int userId, int classId)
-        {
-            var AllQuestionResults = GetObjectOrCreateNew(userId);
-            return AllQuestionResults.Any(s => s.Id == classId);
         }
     }
     public interface IStudentClassProvider
@@ -63,6 +57,5 @@ namespace Pix_API.Providers.ContainersProviders
         void EditClassForUser(StudentsClass studentsClass, int userId);
         void RemoveClassForUser(StudentsClass studentsClass, int userId);
         List<User> GetStudentsInClassForUser(int userID,int classID);
-        bool IsClassBelongsToUser(int userId, int classId);
     }
 }

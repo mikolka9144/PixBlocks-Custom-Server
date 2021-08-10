@@ -12,21 +12,28 @@ namespace Pix_API.Providers
         {
         }
 
+        private bool AreEqual(EditedQuestionCode result, EditedQuestionCode result2)
+        {
+            var AreSameExamQuestions = result.ExamId == result2.ExamId;
+            var AreSameQuestionRelated = result.QuesionGuid == result2.QuesionGuid;
+            return AreSameExamQuestions && AreSameQuestionRelated;
+        }
+
         public void AddOrRemoveQuestionCode(EditedQuestionCode questionCode, int Id)
         {
             if (!questionCode.ID.HasValue) questionCode.ID = storage.Count;
-            AddOrUpdateObject(questionCode, Id, (arg1, arg2) => arg1.QuesionGuid == arg2.QuesionGuid);
+            AddOrUpdateObject(questionCode, Id,AreEqual);
         }
 
         public List<EditedQuestionCode> GetAllQuestionCodes(int Id)
         {
-            return GetObjectOrCreateNew(Id);
+            return GetSingleObjectOrCreateNew(Id);
         }
 
-        public EditedQuestionCode GetQuestionEditByGuid(int Id, string guid)
+        public EditedQuestionCode GetQuestionEditByGuid(int Id, string guid, int? examId)
         {
-            var questionCodes = GetObjectOrCreateNew(Id);
-            return questionCodes.FirstOrDefault(s => s.QuesionGuid == guid);
+            var questionCodes = GetSingleObjectOrCreateNew(Id);
+            return questionCodes.FirstOrDefault(s => s.QuesionGuid == guid && s.ExamId == examId);
         }
     }
 
@@ -34,6 +41,6 @@ namespace Pix_API.Providers
     {
         void AddOrRemoveQuestionCode(EditedQuestionCode questionCode, int Id);
         List<EditedQuestionCode> GetAllQuestionCodes(int Id);
-        EditedQuestionCode GetQuestionEditByGuid(int Id,string guid);
+        EditedQuestionCode GetQuestionEditByGuid(int Id,string guid, int? examId);
     }
 }
