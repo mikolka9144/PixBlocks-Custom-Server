@@ -29,14 +29,13 @@ namespace Pix_API.CoreComponents.ServerCommands
         private readonly IStudentClassProvider studentClassProvider;
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
         private readonly IUserCommentsProvider userCommentsProvider;
-        private readonly ICoursesVisibilityProvider coursesVisibilityProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
             INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
             IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider
-            ,IUserCommentsProvider userCommentsProvider,ICoursesVisibilityProvider coursesVisibilityProvider)
+            ,IUserCommentsProvider userCommentsProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -48,7 +47,6 @@ namespace Pix_API.CoreComponents.ServerCommands
             this.studentClassProvider = studentClassProvider;
             this.studentClassExamsProvider = studentClassExamsProvider;
             this.userCommentsProvider = userCommentsProvider;
-            this.coursesVisibilityProvider = coursesVisibilityProvider;
         }
 
         public List<Countrie> GetAllCountries()
@@ -274,21 +272,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             }
             return null;
         }
-        public string GetCoursesVisibility(int idClass, DateTime currentUpdatedateTime, AuthorizeData authorizeData)
-        {
-            return coursesVisibilityProvider.GetCoursesVisibilityForClass(idClass);
-        }
-        public string AddOrEditCoursesVisibility(string coursesVisibility, AuthorizeData authorizeData)
-        {
         
-            /* Escaping VisibilityObject brackets
-            var valid_string = coursesVisibility.Replace("\\", "\\\\");
-            coursesVisibility = valid_string;
-            */
-            var courses_object = JsonConvert.DeserializeObject<CoursesVisibility>(coursesVisibility);
-            coursesVisibilityProvider.AddOrUpdateCoursesVisibility(coursesVisibility,courses_object.IdClass);
-            return coursesVisibility;
-        }
     }
 
 }
