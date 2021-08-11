@@ -56,11 +56,13 @@
     <Compile Include="Providers\SinglePoolProviders\ToyShopProvider.cs" />
     <Compile Include="Providers\SinglePoolProviders\UserDatabaseProvider.cs" />
     <Compile Include="CoreComponents\APIServerResolver.cs" />
-    <Compile Include="CoreComponents\Main_Logic.cs" />
     <Compile Include="Utills\IdAssigner.cs" />
     <Compile Include="Utills\Utills.cs" />
     <Compile Include="Providers\SinglePoolProviders\StudentClassExamsProvider.cs" />
     <Compile Include="Providers\MultiplePoolProviders\UserCommentsProvider.cs" />
+    <Compile Include="CoreComponents\ServerCommands\QuestionEdits.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Main_Logic.cs" />
+    <Compile Include="CoreComponents\ServerCommands\QuestionResults.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -73,6 +75,7 @@
     <Folder Include="Providers\SinglePoolProviders\" />
     <Folder Include="CoreComponents\" />
     <Folder Include="Utills\" />
+    <Folder Include="CoreComponents\ServerCommands\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

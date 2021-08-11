@@ -30,6 +30,12 @@ namespace Pix_API.Providers.ContainersProviders
         {
             return GetSingleObjectOrCreateNew(Id);
         }
+
+        public StudentsClass GetStudentsClassByGlobalId(int classId)
+        {
+            return storage.SelectMany(s => s.Obj).FirstOrDefault(s => s.Id == classId);
+        }
+
         public StudentsClass GetStudentsClassById(int userId,int classId)
         {
             var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
@@ -53,6 +59,7 @@ namespace Pix_API.Providers.ContainersProviders
     {
         List<StudentsClass> GetClassesForUser(int Id);
         StudentsClass GetStudentsClassById(int userId, int classId);
+        StudentsClass GetStudentsClassByGlobalId(int classId);
         void AddClassForUser(StudentsClass studentsClass, int userId);
         void EditClassForUser(StudentsClass studentsClass, int userId);
         void RemoveClassForUser(StudentsClass studentsClass, int userId);
