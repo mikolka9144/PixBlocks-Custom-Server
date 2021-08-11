@@ -13,10 +13,11 @@ using PixBlocks.Server.DataModels.Tools;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using System.Linq;
 using Pix_API.Providers.MultiplePoolProviders;
+using Pix_API.Providers.SinglePoolProviders;
 
-namespace Pix_API
+namespace Pix_API.CoreComponents.ServerCommands
 {
-    public class Main_Logic
+    public partial class Main_Logic
     {
         private readonly ICountriesProvider countriesProvider;
         private readonly IUserDatabaseProvider databaseProvider;
@@ -28,12 +29,14 @@ namespace Pix_API
         private readonly IStudentClassProvider studentClassProvider;
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
         private readonly IUserCommentsProvider userCommentsProvider;
+        private readonly ICoursesVisibilityProvider coursesVisibilityProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
             INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
-            IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider,IUserCommentsProvider userCommentsProvider)
+            IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider
+            ,IUserCommentsProvider userCommentsProvider,ICoursesVisibilityProvider coursesVisibilityProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -45,13 +48,14 @@ namespace Pix_API
             this.studentClassProvider = studentClassProvider;
             this.studentClassExamsProvider = studentClassExamsProvider;
             this.userCommentsProvider = userCommentsProvider;
+            this.coursesVisibilityProvider = coursesVisibilityProvider;
         }
 
         public List<Countrie> GetAllCountries()
         => countriesProvider.GetAllCountries();
         public UserAddingResult RegisterNewUser(User user)
         {
-            if (databaseProvider.ContainsUserWithEmail(user.Email))
+            if ( user.Email != null && databaseProvider.ContainsUserWithEmail(user.Email))
             {
                 return new UserAddingResult() { IsEmailExist = true };
             }
@@ -82,32 +86,9 @@ namespace Pix_API
             return !databaseProvider.ContainsUserWithLogin(studentLogin);
         }
 
-        public List<QuestionResult> GetAllQuestionsResults(User user, AuthorizeData authorize)
-        {
-                return questionResultsProvider.GetAllQuestionsReultsForUser(authorize.UserId);
 
-        }
 
-        public QuestionResult AddOrUpdateQuestionResult(QuestionResult questionResult, AuthorizeData authorize)
-        {
-            questionResultsProvider.AddOrUpdateQuestionResult(questionResult, authorize.UserId);
-            return questionResult;
-        }
 
-        public List<EditedQuestionCode> GetAllQuestionsCodes(User user, AuthorizeData authorize)
-        {
-            return questionEditsProvider.GetAllQuestionCodes(authorize.UserId);
-        }
-        public EditedQuestionCode AddOrUpdateEditedQuestionCode(EditedQuestionCode editedQuestionCode, User user, AuthorizeData authorize)
-        {
-                questionEditsProvider.AddOrRemoveQuestionCode(editedQuestionCode, authorize.UserId);
-                return editedQuestionCode;
-        }
-        public EditedQuestionCode GetQuestionCode(string questionGuid, int? examId, int? editedCodeId, bool isTeacherShared, DateTime? lastUpdateTime, AuthorizeData authorize)
-        {
-                var question_edit = questionEditsProvider.GetQuestionEditByGuid(authorize.UserId, questionGuid,examId);
-                return question_edit;
-        }
         public User UpdateOrDeleteUser(User user, AuthorizeData authorize)
         {
             if (authorize.UserId == user.Id)
@@ -171,7 +152,7 @@ namespace Pix_API
         }
         public StudentsClass GetStudentsClassById(int id, AuthorizeData authorize)
         {
-            return studentClassProvider.GetStudentsClassById(authorize.UserId, id);
+            return studentClassProvider.GetStudentsClassByGlobalId(id);
         }
         public StudentsClass EditStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
@@ -283,6 +264,30 @@ namespace Pix_API
                 userCommentsProvider.AddOrUpdateComment(comment, comment.UserID);
             }
             return null;
+        }
+        public List<Comment> GetAllCommentsForUser(User user, AuthorizeData authorize)
+        {
+            var server_user = databaseProvider.GetUser(user.Id.Value);
+            if (studentClassProvider.IsClassBelongsToUser(authorize.UserId, server_user.Student_studentsClassId.Value))
+            {
+                return userCommentsProvider.GetAllCommentsForUser(user.Id.Value);
+            }
+            return null;
+        }
+        public string GetCoursesVisibility(int idClass, DateTime currentUpdatedateTime, AuthorizeData authorizeData)
+        {
+            return coursesVisibilityProvider.GetCoursesVisibilityForClass(idClass);
+        }
+        public string AddOrEditCoursesVisibility(string coursesVisibility, AuthorizeData authorizeData)
+        {
+        
+            /* Escaping VisibilityObject brackets
+            var valid_string = coursesVisibility.Replace("\\", "\\\\");
+            coursesVisibility = valid_string;
+            */
+            var courses_object = JsonConvert.DeserializeObject<CoursesVisibility>(coursesVisibility);
+            coursesVisibilityProvider.AddOrUpdateCoursesVisibility(coursesVisibility,courses_object.IdClass);
+            return coursesVisibility;
         }
     }
 

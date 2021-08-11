@@ -12,6 +12,7 @@ using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using Pix_API.Providers.StaticProviders;
 using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.MultiplePoolProviders;
+using Pix_API.CoreComponents.ServerCommands;
 
 namespace Pix_API
 {
@@ -77,11 +78,12 @@ namespace Pix_API
                     request.Response.OutputStream.Write(encoded_result, 0, encoded_result.Length);
                     request.Response.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     request.Response.StatusCode = 500;
                     request.Response.Close();
-                    throw; //TODO
+                    Console.WriteLine($"Exception occured: {ex.Message}");
+                    if (System.Diagnostics.Debugger.IsAttached) throw; 
                 }
 
             }
