@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Pix_API</RootNamespace>
     <AssemblyName>Pix_API</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,10 +32,10 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PixBlocks.Server.DataModels">
-      <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
+      <HintPath>..\..\..\Desktop\pixb..tion_5a4361b1093aba82_0001.0001_b96ce072cdd7fe1d\PixBlocks.Server.DataModels.dll</HintPath>
     </Reference>
     <Reference Include="PixBlocks.ServerFasade">
-      <HintPath>..\packages\PixBlocks.ServerFasade.dll</HintPath>
+      <HintPath>..\..\..\Desktop\pixb..tion_5a4361b1093aba82_0001.0001_b96ce072cdd7fe1d\PixBlocks.ServerFasade.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -44,7 +44,6 @@
     <Compile Include="Providers\CountriesProvider.cs" />
     <Compile Include="Providers\MultiplePoolProviders\QuestionEditsProvider.cs" />
     <Compile Include="Providers\MultiplePoolProviders\QuestionResultProvider.cs" />
-    <Compile Include="Providers\DiskDataSaver.cs" />
     <Compile Include="Providers\INotyficationProvider.cs" />
     <Compile Include="Providers\StaticProviders\StaticNotyficationProvider.cs" />
     <Compile Include="Providers\IChampionshipsProvider.cs" />
@@ -60,12 +59,22 @@
     <Compile Include="Utills\Utills.cs" />
     <Compile Include="Providers\SinglePoolProviders\StudentClassExamsProvider.cs" />
     <Compile Include="Providers\MultiplePoolProviders\UserCommentsProvider.cs" />
-    <Compile Include="CoreComponents\ServerCommands\QuestionEdits.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Main_Logic.cs" />
-    <Compile Include="CoreComponents\ServerCommands\QuestionResults.cs" />
+    <Compile Include="Providers\SinglePoolProviders\SchoolsProvider.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Other.cs" />
+    <Compile Include="CoreComponents\MainLogicConstructor.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\Comments.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\Exams.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\School.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\ToyShop.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\Questions\QuestionEdits.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\Questions\QuestionResults.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentClass_Student.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentsClass_Teacher.cs" />
+    <Compile Include="Providers\BaseClasses\DiskDataSaver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="Properties\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
@@ -76,6 +85,9 @@
     <Folder Include="CoreComponents\" />
     <Folder Include="Utills\" />
     <Folder Include="CoreComponents\ServerCommands\" />
+    <Folder Include="CoreComponents\ServerCommands\Containers\" />
+    <Folder Include="CoreComponents\ServerCommands\Containers\Questions\" />
+    <Folder Include="CoreComponents\ServerCommands\Containers\StudentsClass\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

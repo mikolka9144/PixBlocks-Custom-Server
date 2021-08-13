@@ -5,8 +5,6 @@ namespace Pix_API.Providers
 {
     public class CountriesProvider:ICountriesProvider
     {
-
-
         public List<Countrie> GetAllCountries()
         {
             return new List<Countrie>()
