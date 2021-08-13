@@ -13,6 +13,7 @@ using Pix_API.Providers.StaticProviders;
 using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.MultiplePoolProviders;
 using Pix_API.CoreComponents.ServerCommands;
+using Pix_API.Providers.SinglePoolProviders;
 
 namespace Pix_API
 {
@@ -29,6 +30,7 @@ namespace Pix_API
             var comments_saver = new DiskDataSaver<List<Comment>>("./Comments/");
             var student_class_exams_saver = new DiskDataSaver<ServerExam>("./Exams/");
             var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
+            var schools_saver = new DiskDataSaver<School>("./Schools/");
 
             var usersProvider = new UserDatabaseProvider(users_saver);
             var questionResultProvider = new QuestionResultProvider(question_result_saver);
@@ -37,13 +39,15 @@ namespace Pix_API
             var studentClassesProvider = new StudentClassesProvider(studentClassesSaver,usersProvider);
             var studentClassExamsProvider = new StudentClassExamsProvider(student_class_exams_saver);
             var userCommentsProvider = new UserCommentsProvider(comments_saver);
+            var SchoolsProvider = new SchoolsProvider(schools_saver);
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
             var staticChampionshipsProvider = new StaticChampionshipProvider();//TODO
 
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
                 toyShopProvider,staticNotyficationProvider,
-                staticChampionshipsProvider,studentClassesProvider,studentClassExamsProvider,userCommentsProvider),usersProvider);
+                staticChampionshipsProvider,studentClassesProvider,
+                studentClassExamsProvider,userCommentsProvider,SchoolsProvider),usersProvider);
 
             Start_Lisening(resolver);
         }
