@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using System.Text;
 using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
-using PixBlocks.ServerFasade.ServerAPI;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using Pix_API.Providers.ContainersProviders;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace Pix_API
 {
     public static class Utills
     {
-        private static ServerApi api_documentation;
         public static void SetupUser(this User user,int id)
         {
             user.Id = id;

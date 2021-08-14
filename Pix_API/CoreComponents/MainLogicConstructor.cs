@@ -13,7 +13,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         private readonly IQuestionEditsProvider questionEditsProvider;
         private readonly IToyShopProvider toyShopProvider;
         private readonly INotyficationProvider notyficationProvider;
-        private readonly IChampionshipsProvider championshipsProvider;
+        private readonly IChampionshipsMetadataProvider championshipsProvider;
         private readonly IStudentClassProvider studentClassProvider;
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
         private readonly IUserCommentsProvider userCommentsProvider;
@@ -22,7 +22,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
-            INotyficationProvider notyficationProvider,IChampionshipsProvider championshipsProvider,
+            INotyficationProvider notyficationProvider,IChampionshipsMetadataProvider championshipsProvider,
             IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider
             ,IUserCommentsProvider userCommentsProvider,ISchoolProvider schoolProvider)
         {

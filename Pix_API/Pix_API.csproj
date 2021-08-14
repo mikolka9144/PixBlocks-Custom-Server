@@ -41,25 +41,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\CountriesProvider.cs" />
-    <Compile Include="Providers\MultiplePoolProviders\QuestionEditsProvider.cs" />
-    <Compile Include="Providers\MultiplePoolProviders\QuestionResultProvider.cs" />
-    <Compile Include="Providers\INotyficationProvider.cs" />
-    <Compile Include="Providers\StaticProviders\StaticNotyficationProvider.cs" />
-    <Compile Include="Providers\IChampionshipsProvider.cs" />
-    <Compile Include="Providers\StaticProviders\StaticChampionshipProvider.cs" />
-    <Compile Include="Providers\MultiplePoolProviders\StudentClassesProvider.cs" />
-    <Compile Include="Providers\BaseClasses\MultiplePoolStorageProvider.cs" />
-    <Compile Include="Providers\BaseClasses\SinglePoolStorageProvider.cs" />
-    <Compile Include="Providers\BaseClasses\IdObjectBinder.cs" />
-    <Compile Include="Providers\SinglePoolProviders\ToyShopProvider.cs" />
-    <Compile Include="Providers\SinglePoolProviders\UserDatabaseProvider.cs" />
     <Compile Include="CoreComponents\APIServerResolver.cs" />
-    <Compile Include="Utills\IdAssigner.cs" />
-    <Compile Include="Utills\Utills.cs" />
-    <Compile Include="Providers\SinglePoolProviders\StudentClassExamsProvider.cs" />
-    <Compile Include="Providers\MultiplePoolProviders\UserCommentsProvider.cs" />
-    <Compile Include="Providers\SinglePoolProviders\SchoolsProvider.cs" />
     <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
     <Compile Include="CoreComponents\ServerCommands\Other.cs" />
     <Compile Include="CoreComponents\MainLogicConstructor.cs" />
@@ -71,23 +53,25 @@
     <Compile Include="CoreComponents\ServerCommands\Containers\Questions\QuestionResults.cs" />
     <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentClass_Student.cs" />
     <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentsClass_Teacher.cs" />
-    <Compile Include="Providers\BaseClasses\DiskDataSaver.cs" />
+    <Compile Include="CoreComponents\ConnectionRecever.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\packages.config" />
+    <None Include="countries.csv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
-    <Folder Include="Providers\MultiplePoolProviders\" />
-    <Folder Include="Providers\StaticProviders\" />
-    <Folder Include="Providers\BaseClasses\" />
-    <Folder Include="Providers\SinglePoolProviders\" />
     <Folder Include="CoreComponents\" />
-    <Folder Include="Utills\" />
     <Folder Include="CoreComponents\ServerCommands\" />
     <Folder Include="CoreComponents\ServerCommands\Containers\" />
     <Folder Include="CoreComponents\ServerCommands\Containers\Questions\" />
     <Folder Include="CoreComponents\ServerCommands\Containers\StudentsClass\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pix_API.Providers2\Pix_API.Providers.csproj">
+      <Project>{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}</Project>
+      <Name>Pix_API.Providers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

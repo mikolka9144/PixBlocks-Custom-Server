@@ -14,6 +14,9 @@ using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.MultiplePoolProviders;
 using Pix_API.CoreComponents.ServerCommands;
 using Pix_API.Providers.SinglePoolProviders;
+using PixBlocks.Server.DataModels.DataModels.Championsships;
+using System.Reflection;
+using Pix_API.CoreComponents;
 
 namespace Pix_API
 {
@@ -21,7 +24,7 @@ namespace Pix_API
     {
         public static void Main(string[] args)
         {
-            var countriesProvider = new CountriesProvider();
+            var raw_countries_csv = File.ReadAllText("./countries.csv");
 
             var users_saver = new DiskDataSaver<User>("./Users/");
             var question_result_saver = new DiskDataSaver<List<QuestionResult>>("./QuestionResults/");
@@ -31,6 +34,7 @@ namespace Pix_API
             var student_class_exams_saver = new DiskDataSaver<ServerExam>("./Exams/");
             var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
             var schools_saver = new DiskDataSaver<School>("./Schools/");
+            var championshipsMetadata_saver = new DiskDataSaver<Championship>("./Championships/");
 
             var usersProvider = new UserDatabaseProvider(users_saver);
             var questionResultProvider = new QuestionResultProvider(question_result_saver);
@@ -40,56 +44,42 @@ namespace Pix_API
             var studentClassExamsProvider = new StudentClassExamsProvider(student_class_exams_saver);
             var userCommentsProvider = new UserCommentsProvider(comments_saver);
             var SchoolsProvider = new SchoolsProvider(schools_saver);
+            var countriesProvider = new CountriesProvider(raw_countries_csv);
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
-            var staticChampionshipsProvider = new StaticChampionshipProvider();//TODO
+            var staticChampionshipsProvider = new ChampionshipProvider(championshipsMetadata_saver);
 
+            var server = new ConnectionRecever();
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
                 toyShopProvider,staticNotyficationProvider,
                 staticChampionshipsProvider,studentClassesProvider,
                 studentClassExamsProvider,userCommentsProvider,SchoolsProvider),usersProvider);
 
-            Start_Lisening(resolver);
+            server.OnCommandReceved += (a, b, c) => OnCommand(a, b, c, resolver);
+            server.Start_Lisening("http://*:8080/");
         }
 
-        private static void Start_Lisening(APIServerResolver resolver)
+        private static void OnCommand(string method_name, string[] parameters,HttpListenerResponse response,APIServerResolver resolver)
         {
-            var lisner = new HttpListener();
-            lisner.Prefixes.Add("http://*:8080/");
-            lisner.Start();
-            while (true)
+            try
             {
-                var request = lisner.GetContext();
-                var server_fasade_method_name = request.Request.QueryString["me"];
-                var parameters = new string[]{
-                    request.Request.QueryString["p1"],
-                    request.Request.QueryString["p2"],
-                    request.Request.QueryString["p3"],
-                    request.Request.QueryString["p4"],
-                    request.Request.QueryString["p5"],
-                    request.Request.QueryString["p6"],
-                    request.Request.QueryString["p7"]
-                    };
-                request.Response.ContentType = "application/json";
-                request.Response.ContentEncoding = Encoding.UTF8;
-                request.Response.SendChunked = false;
-                try
-                {
-                    var result = resolver.Execute_API_Method(server_fasade_method_name, parameters);
-                    var formatted_result = $"\"{result.Replace("\"", "\\\"")}\"";
-                    var encoded_result = Encoding.UTF8.GetBytes(formatted_result);
+                var result = resolver.Execute_API_Method(method_name, parameters);
+                var formatted_result = $"\"{result.Replace("\"", "\\\"")}\"";
+                var encoded_result = Encoding.UTF8.GetBytes(formatted_result);
 
-                    request.Response.OutputStream.Write(encoded_result, 0, encoded_result.Length);
-                    request.Response.Close();
-                }
-                catch (Exception ex)
-                {
-                    request.Response.StatusCode = 500;
-                    request.Response.Close();
-                    Console.WriteLine($"Exception occured: {ex.Message}");
-                    if (System.Diagnostics.Debugger.IsAttached) throw; 
-                }
-
+                response.OutputStream.Write(encoded_result, 0, encoded_result.Length);
+            }
+            catch (TargetInvocationException ex)
+            {
+                response.StatusCode = 500;
+                Console.WriteLine($"Exception occured: {ex.InnerException.Message}");
+                if (System.Diagnostics.Debugger.IsAttached) throw ex.InnerException;
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = 500;
+                Console.WriteLine($"Exception occured: {ex.Message}");
+                if (System.Diagnostics.Debugger.IsAttached) throw;
             }
         }
     }

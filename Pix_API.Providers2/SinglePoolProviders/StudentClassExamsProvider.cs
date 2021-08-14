@@ -35,6 +35,18 @@ namespace Pix_API.Providers.ContainersProviders
                 .StudentsClassId == class_id).Select(s => s.Obj).ToList();
         }
 
+        public List<ServerExam> GetChampionshipExams(int championshipId)
+        {
+            return storage.FindAll(s =>
+            {
+                if (s.Obj.Exam_metadata.ChampionshipId.HasValue)
+                {
+                    return s.Obj.Exam_metadata.ChampionshipId.Value == championshipId;
+                }
+                return false;
+            }).Select(s => s.Obj).ToList();
+        }
+
         public ServerExam GetExam(int exam_id) => GetSingleObject(exam_id)?.Obj;
 
         public void RemoveQuestionInExam(ExamQuestion examQuestion, int examId)
@@ -58,6 +70,7 @@ namespace Pix_API.Providers.ContainersProviders
         void AddQuestionInExam(ExamQuestion question, int exam_id);
         void RemoveQuestionInExam(ExamQuestion examQuestion, int examId);
         void UpdateExam(ServerExam server_exam);
+        List<ServerExam> GetChampionshipExams(int championshipId);
     }
 
     public class ServerExam
