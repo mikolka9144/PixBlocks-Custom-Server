@@ -55,8 +55,16 @@ namespace Pix_API.CoreComponents.ServerCommands
     }
     public List<Exam> GetAllActiveExamsForStudent(User participant, AuthorizeData authorizeData)
     {
-        return studentClassExamsProvider.
-            GetAllExamsInClass(participant.Student_studentsClassId.Value).Select(s => s.Exam_metadata).Where(s => s.IsActive).ToList();
+            var student_exams = new List<Exam>();
+            if (participant.Student_studentsClassId.HasValue)
+            {
+                 student_exams.AddRange(studentClassExamsProvider.GetAllExamsInClass(participant.Student_studentsClassId.Value).Select(s => s.Exam_metadata).Where(s => s.IsActive));
+            }
+            if (participant.ChampionshipId.HasValue)
+            {
+                student_exams.AddRange(studentClassExamsProvider.GetChampionshipExams(participant.ChampionshipId.Value).Select(s => s.Exam_metadata));
+            }
+            return student_exams;
     }
     public Exam UpdateOrDeleteExam(Exam exam, AuthorizeData authorize)
     {
