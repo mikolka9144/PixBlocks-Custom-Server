@@ -34,6 +34,9 @@
     <Reference Include="PixBlocks.Server.DataModels">
       <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +56,7 @@
     <Compile Include="StaticProviders\StaticNotyficationProvider.cs" />
     <Compile Include="CountriesProvider.cs" />
     <Compile Include="StaticProviders\BrandingProvider.cs" />
+    <Compile Include="NinfectManifest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

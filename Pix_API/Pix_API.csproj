@@ -34,6 +34,9 @@
     <Reference Include="PixBlocks.Server.DataModels">
       <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -55,6 +58,7 @@
   <ItemGroup>
     <None Include="Properties\packages.config" />
     <None Include="countries.csv" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

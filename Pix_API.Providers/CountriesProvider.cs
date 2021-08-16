@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using System.Linq;
 using Pix_API.Interfaces;
+using System.IO;
 
 namespace Pix_API.Providers
 {
@@ -13,6 +14,7 @@ namespace Pix_API.Providers
         {
             // country_name,Code
             // Polska,PL
+            var raw_csv = File.ReadAllText("./countries.csv");
             var lines = raw_csv.Split('\n').Skip(1);
             lines = lines.Take(lines.Count() - 1);
             for (int i = 0; i < lines.Count(); i++)
