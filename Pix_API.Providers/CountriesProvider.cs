@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using System.Linq;
+using Pix_API.Interfaces;
+
 namespace Pix_API.Providers
 {
     public class CountriesProvider:ICountriesProvider
     {
         private List<Countrie> countries = new List<Countrie>();
-        public CountriesProvider(string raw_csv)
+        public CountriesProvider()
         {
             // country_name,Code
             // Polska,PL
@@ -26,8 +28,5 @@ namespace Pix_API.Providers
         }
         public List<Countrie> GetAllCountries() => countries;
     }
-    public interface ICountriesProvider
-    {
-        List<Countrie> GetAllCountries();
-    }
+
 }

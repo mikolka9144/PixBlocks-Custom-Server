@@ -5,6 +5,7 @@ using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using Pix_API.Providers.BaseClasses;
 using System.Linq;
+using Pix_API.Interfaces;
 
 namespace Pix_API.Providers.StaticProviders
 {

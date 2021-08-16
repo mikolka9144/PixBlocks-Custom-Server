@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixApiDebugConsole", "PixApiDebugConsole\PixApiDebugConsole.csproj", "{D0F237D2-B369-4A3B-B2FB-EFC7899A3517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Providers", "Pix_API.Providers2\Pix_API.Providers.csproj", "{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Providers", "Pix_API.Providers\Pix_API.Providers.csproj", "{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Utills", "Pix_API.Utills\Pix_API.Utills.csproj", "{64F89E6E-B720-4228-BBD8-E1B34558DD52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Interfaces", "Pix_API.Interfaces\Pix_API.Interfaces.csproj", "{14A390F7-728B-461C-A97F-B841E4933EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,5 +76,29 @@ Global
 		{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}.Release|x64.Build.0 = Release|Any CPU
 		{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}.Release|x86.Build.0 = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|x64.Build.0 = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Debug|x86.Build.0 = Debug|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x64.ActiveCfg = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x64.Build.0 = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x86.ActiveCfg = Release|Any CPU
+		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x86.Build.0 = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|x64.Build.0 = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x64.ActiveCfg = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x64.Build.0 = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

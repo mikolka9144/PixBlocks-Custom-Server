@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.DBModels;
 using PixBlocks.Server.DataModels.DataModels.Woocommerce;
@@ -19,6 +20,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             {
                 return new UserAddingResult() { IsEmailExist = true };
             }
+            user.CreationDate = DateTime.Now;
             databaseProvider.AddUser(user);
             return new UserAddingResult() { User = user };
         }
@@ -31,11 +33,15 @@ namespace Pix_API.CoreComponents.ServerCommands
                 var IsStudentLoginValid = password == user_in_question.Student_explicitPassword && user_in_question.Student_isStudent == true;
                 if (user_in_question.Md5Password == Md5Password || IsStudentLoginValid)
                 {
+                    user_in_question.RegisterLogin();
+                    databaseProvider.UpdateUser(user_in_question);
+
                     return new UserAuthorizeResult()
                     {
                         User = user_in_question,
                         IsPasswordCorrect = true,
-                        PixBlocksLicense = new PixBlocksLicense(LicenseType.Free)
+                        PixBlocksLicense = new PixBlocksLicense(LicenseType.Free),
+                        SchoolLogoInBase64 = brandingProvider.GetBase64LogoForUser(user_in_question.Id.Value)
                     };
                 }
             }

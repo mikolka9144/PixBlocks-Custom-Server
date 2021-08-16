@@ -1,4 +1,5 @@
-﻿using Pix_API.Providers;
+﻿using Pix_API.Interfaces;
+using Pix_API.Providers;
 using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.MultiplePoolProviders;
 using Pix_API.Providers.SinglePoolProviders;
@@ -18,13 +19,14 @@ namespace Pix_API.CoreComponents.ServerCommands
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
         private readonly IUserCommentsProvider userCommentsProvider;
         private readonly ISchoolProvider schoolProvider;
+        private readonly IBrandingProvider brandingProvider;
 
         public Main_Logic(ICountriesProvider countriesProvider,
             IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider,
             IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider,
             INotyficationProvider notyficationProvider,IChampionshipsMetadataProvider championshipsProvider,
             IStudentClassProvider studentClassProvider,IStudentClassExamsProvider studentClassExamsProvider
-            ,IUserCommentsProvider userCommentsProvider,ISchoolProvider schoolProvider)
+            ,IUserCommentsProvider userCommentsProvider,ISchoolProvider schoolProvider,IBrandingProvider brandingProvider)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -37,6 +39,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             this.studentClassExamsProvider = studentClassExamsProvider;
             this.userCommentsProvider = userCommentsProvider;
             this.schoolProvider = schoolProvider;
+            this.brandingProvider = brandingProvider;
         }
     }
 

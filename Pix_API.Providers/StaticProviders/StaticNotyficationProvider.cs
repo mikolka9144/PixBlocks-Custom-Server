@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 
 namespace Pix_API.Providers

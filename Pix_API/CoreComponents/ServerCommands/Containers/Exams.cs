@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using Pix_API.Providers.ContainersProviders;
+using Pix_API.Interfaces;
 
 namespace Pix_API.CoreComponents.ServerCommands
 {
@@ -68,7 +69,7 @@ namespace Pix_API.CoreComponents.ServerCommands
     }
     public Exam UpdateOrDeleteExam(Exam exam, AuthorizeData authorize)
     {
-        if (studentClassProvider.IsExamCreatedByUser(studentClassExamsProvider.GetExam(exam.Id), authorize.UserId))
+        if (studentClassProvider.IsExamCreatedByUser(studentClassExamsProvider.GetExam(exam.Id).Exam_metadata, authorize.UserId))
         {
             var server_exam = studentClassExamsProvider.GetExam(exam.Id);
             server_exam.Exam_metadata = exam;
