@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Pix_API.Interfaces;
 using Pix_API.Providers.BaseClasses;
 using PixBlocks.Server.DataModels.DataModels;
 namespace Pix_API.Providers.SinglePoolProviders
@@ -27,10 +28,5 @@ namespace Pix_API.Providers.SinglePoolProviders
         }
     }
 
-    public interface ISchoolProvider
-    {
-        void AddSchool(School school);
-        void UpdateSchool(School school,int UserOwner_Id);
-        School GetSchool(int UserOwner_Id);
-    }
+
 }

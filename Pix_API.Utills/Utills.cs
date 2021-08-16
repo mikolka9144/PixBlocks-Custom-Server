@@ -2,11 +2,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using PixBlocks.Server.DataModels.DataModels;
-using Pix_API.Providers;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
-using Pix_API.Providers.ContainersProviders;
 using System.Collections.Generic;
 using System.Linq;
+using Pix_API.Interfaces;
 
 namespace Pix_API
 {
@@ -31,14 +30,19 @@ namespace Pix_API
         {
             exam.CreationDate = DateTime.Now;
         }
-        public static bool IsExamCreatedByUser(this IStudentClassProvider classProvider, ServerExam exam, int UserId)
+        public static bool IsExamCreatedByUser(this IStudentClassProvider classProvider, Exam exam, int UserId)
         {
-            var class_id = exam.Exam_metadata.StudentsClassId;
+            var class_id = exam.StudentsClassId;
             return classProvider.IsClassBelongsToUser(UserId, class_id);
         }
         public static bool IsClassBelongsToUser(this IStudentClassProvider classProvider, int userId, int classId)
         {
             return classProvider.GetClassesForUser(userId).Any(s => s.Id == classId);
+        }
+        public static void RegisterLogin(this User user)
+        {
+            user.LoginsCounter++;
+            user.LastLoginDate = DateTime.Now;
         }
     }
 }

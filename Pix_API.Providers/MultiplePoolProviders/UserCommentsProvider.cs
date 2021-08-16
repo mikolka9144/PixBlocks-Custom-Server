@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pix_API.Interfaces;
 using Pix_API.Providers.ContainersProviders;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 namespace Pix_API.Providers.MultiplePoolProviders
@@ -21,9 +22,5 @@ namespace Pix_API.Providers.MultiplePoolProviders
         }
     }
 
-    public interface IUserCommentsProvider
-    {
-        List<Comment> GetAllCommentsForUser(int user_id);
-        void AddOrUpdateComment(Comment comment, int user_id);
-    }
+
 }

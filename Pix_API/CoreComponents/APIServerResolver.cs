@@ -7,6 +7,7 @@ using PixBlocks.Server.DataModels.DataModels;
 using Pix_API.Providers;
 using System.Diagnostics;
 using Pix_API.CoreComponents.ServerCommands;
+using Pix_API.Interfaces;
 
 namespace Pix_API
 {

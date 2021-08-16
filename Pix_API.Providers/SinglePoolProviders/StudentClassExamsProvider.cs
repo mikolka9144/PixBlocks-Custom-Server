@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using System.Linq;
 using Pix_API.Providers.BaseClasses;
+using Pix_API.Interfaces;
+
 namespace Pix_API.Providers.ContainersProviders
 {
     public class StudentClassExamsProvider : SinglePoolStorageProvider<ServerExam>,IStudentClassExamsProvider
@@ -62,30 +64,7 @@ namespace Pix_API.Providers.ContainersProviders
         }
     }
 
-    public interface IStudentClassExamsProvider
-    {
-        List<ServerExam> GetAllExamsInClass(int class_id);
-        void AddExam(ServerExam serverExam);
-        ServerExam GetExam(int exam_id);
-        void AddQuestionInExam(ExamQuestion question, int exam_id);
-        void RemoveQuestionInExam(ExamQuestion examQuestion, int examId);
-        void UpdateExam(ServerExam server_exam);
-        List<ServerExam> GetChampionshipExams(int championshipId);
-    }
 
-    public class ServerExam
-    {
 
-        public ServerExam(Exam exam)
-        {
-            this.Exam_metadata = exam;
-            questions = new List<ExamQuestion>();
-        }
-        public ServerExam()
-        {
 
-        }
-        public Exam Exam_metadata { get; set; }
-        public List<ExamQuestion> questions { get; set; }
-    }
 }

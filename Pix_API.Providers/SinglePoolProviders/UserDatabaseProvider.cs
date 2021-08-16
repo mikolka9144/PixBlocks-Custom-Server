@@ -4,6 +4,7 @@ using PixBlocks.Server.DataModels.DataModels;
 using System.Linq;
 using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.BaseClasses;
+using Pix_API.Interfaces;
 
 namespace Pix_API.Providers
 {
@@ -35,7 +36,7 @@ namespace Pix_API.Providers
 
         public User GetUser(string EmailOrLogin)
         {
-            return storage.Find(s => s.Obj.Email == EmailOrLogin || s.Obj.Student_login == EmailOrLogin).Obj;
+            return storage.Find(s => s.Obj.Email == EmailOrLogin || s.Obj.Student_login == EmailOrLogin)?.Obj;
         }
 
         public User GetUser(int Id)
@@ -50,14 +51,5 @@ namespace Pix_API.Providers
 
     }
 
-    public interface IUserDatabaseProvider
-    {
-        User GetUser(string EmailOrLogin);
-        User GetUser(int Id);
-        void AddUser(User user);
-        void UpdateUser(User user);
-        bool ContainsUserWithEmail(string email);
-        bool ContainsUserWithLogin(string login);
-        List<User> GetAllUsersBelongingToClass(int classId);
-    }
+
 }

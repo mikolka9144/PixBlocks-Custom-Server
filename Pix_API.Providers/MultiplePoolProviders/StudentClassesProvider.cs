@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 namespace Pix_API.Providers.ContainersProviders
 {
@@ -55,14 +56,5 @@ namespace Pix_API.Providers.ContainersProviders
             AllQuestionResults.RemoveAll((obj) => obj.Id == studentsClass.Id);
         }
     }
-    public interface IStudentClassProvider
-    {
-        List<StudentsClass> GetClassesForUser(int Id);
-        StudentsClass GetStudentsClassById(int userId, int classId);
-        StudentsClass GetStudentsClassByGlobalId(int classId);
-        void AddClassForUser(StudentsClass studentsClass, int userId);
-        void EditClassForUser(StudentsClass studentsClass, int userId);
-        void RemoveClassForUser(StudentsClass studentsClass, int userId);
-        List<User> GetStudentsInClassForUser(int userID,int classID);
-    }
+
 }

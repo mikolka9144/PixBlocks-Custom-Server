@@ -17,6 +17,7 @@ using Pix_API.Providers.SinglePoolProviders;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using System.Reflection;
 using Pix_API.CoreComponents;
+using Pix_API.Interfaces;
 
 namespace Pix_API
 {
@@ -44,16 +45,17 @@ namespace Pix_API
             var studentClassExamsProvider = new StudentClassExamsProvider(student_class_exams_saver);
             var userCommentsProvider = new UserCommentsProvider(comments_saver);
             var SchoolsProvider = new SchoolsProvider(schools_saver);
-            var countriesProvider = new CountriesProvider(raw_countries_csv);
+            var countriesProvider = new CountriesProvider();
             var staticNotyficationProvider = new StaticNotyficationProvider();//TODO
             var staticChampionshipsProvider = new ChampionshipProvider(championshipsMetadata_saver);
+            var brandingProvider = new BrandingProvider();
 
             var server = new ConnectionRecever();
             var resolver = new APIServerResolver(new Main_Logic(countriesProvider,
                 usersProvider, questionResultProvider, editQuestionProvider,
                 toyShopProvider,staticNotyficationProvider,
                 staticChampionshipsProvider,studentClassesProvider,
-                studentClassExamsProvider,userCommentsProvider,SchoolsProvider),usersProvider);
+                studentClassExamsProvider,userCommentsProvider,SchoolsProvider,brandingProvider),usersProvider);
 
             server.OnCommandReceved += (a, b, c) => OnCommand(a, b, c, resolver);
             server.Start_Lisening("http://*:8080/");

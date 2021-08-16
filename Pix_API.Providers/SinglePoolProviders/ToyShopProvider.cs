@@ -4,6 +4,7 @@ using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 using Pix_API.Providers.ContainersProviders;
 using System.Linq;
 using Pix_API.Providers.BaseClasses;
+using Pix_API.Interfaces;
 
 namespace Pix_API.Providers
 {
@@ -22,9 +23,5 @@ namespace Pix_API.Providers
         }
     }
 
-    public interface IToyShopProvider
-    {
-        ToyShopData GetToyShop(int Id);
-        void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id);
-    }
+
 }
