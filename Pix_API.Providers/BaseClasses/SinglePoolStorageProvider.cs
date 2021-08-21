@@ -8,36 +8,31 @@ namespace Pix_API.Providers.BaseClasses
     public class SinglePoolStorageProvider<T>
     {
         protected DataSaver<T> saver;
-        protected List<IdObjectBinder<T>> storage;
+        private List<IdObjectBinder<T>> storage_rw;
+        protected IEnumerable<T> storage { get => storage_rw.Select((arg) => arg.Obj); }
 
         public SinglePoolStorageProvider(DataSaver<T> saver)
         {
             this.saver = saver;
-            storage = saver.LoadAll();
+            storage_rw = saver.LoadAll();
         }
         protected void AddOrUpdateSingleObject(T obj, int Id)
         {
-            storage.RemoveAll(s => s.Id == Id);
+            storage_rw.RemoveAll(s => s.Id == Id);
             AddSingleObject(obj, Id);
 
         }
         protected void AddSingleObject(T questionResult, int Id)
         {
             var obj = new IdObjectBinder<T>(Id, questionResult);
-            storage.Add(obj);
+            storage_rw.Add(obj);
             saver.SaveInBackground(obj);
         }
-        protected virtual T GetSingleObjectOrCreateNew(int Id)
+        protected T GetSingleObject(int Id)
         {
-            var user_results = GetSingleObject(Id);
-            if (user_results == null)
-            {
-                var newUserResults = new IdObjectBinder<T>(Id,default(T));
-                storage.Add(newUserResults);
-                return newUserResults.Obj;
-            }
-            return user_results.Obj;
+            var id_obj = storage_rw.FirstOrDefault(s => s.Id == Id);
+            if (id_obj != null) return id_obj.Obj;
+            return default(T);
         }
-        protected IdObjectBinder<T> GetSingleObject(int Id) => storage.FirstOrDefault(s => s.Id == Id);
     }
 }

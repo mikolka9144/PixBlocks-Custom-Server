@@ -1,9 +1,5 @@
 ﻿using Pix_API.Interfaces;
 using Pix_API.Providers;
-using Pix_API.Providers.ContainersProviders;
-using Pix_API.Providers.MultiplePoolProviders;
-using Pix_API.Providers.SinglePoolProviders;
-
 namespace Pix_API.CoreComponents.ServerCommands
 {
     public partial class Main_Logic

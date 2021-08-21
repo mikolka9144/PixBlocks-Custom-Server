@@ -9,7 +9,7 @@ namespace Pix_API.Providers.SinglePoolProviders
     {
         public SchoolsProvider(DataSaver<School> saver) : base(saver)
         {
-            var id_list = storage.Select(s => s.Obj).Select(s => s.Id).ToList();
+            var id_list = storage.Select(s => s.Id).ToList();
         }
 
         public void AddSchool(School school)
@@ -19,7 +19,7 @@ namespace Pix_API.Providers.SinglePoolProviders
 
         public School GetSchool(int UserOwner_Id)
         {
-            return storage.FirstOrDefault(s => s.Id == UserOwner_Id).Obj;
+            return storage.FirstOrDefault(s => s.Id == UserOwner_Id);
         }
 
         public void UpdateSchool(School school, int UserOwner_Id)

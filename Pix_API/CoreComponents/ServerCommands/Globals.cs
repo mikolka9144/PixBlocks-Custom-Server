@@ -20,8 +20,10 @@ namespace Pix_API.CoreComponents.ServerCommands
             {
                 return new UserAddingResult() { IsEmailExist = true };
             }
-            user.CreationDate = DateTime.Now;
+
+            user.SetupUser();
             databaseProvider.AddUser(user);
+
             return new UserAddingResult() { User = user };
         }
         public UserAuthorizeResult AuthorizeUser(string loginOrEmail, string password, bool md5, LicenseData licenseData)

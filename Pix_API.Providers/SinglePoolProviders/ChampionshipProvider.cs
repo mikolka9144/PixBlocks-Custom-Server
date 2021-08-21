@@ -17,7 +17,7 @@ namespace Pix_API.Providers.StaticProviders
 
         public List<Championship> GetAllChampionshipsForUser(int countryId, User authorize)
         {
-            return storage.FindAll(s => s.Obj.CountryId == countryId).Select(s => s.Obj).ToList();
+            return storage.Where(s => s.CountryId == countryId).ToList();
         }
     }
 }

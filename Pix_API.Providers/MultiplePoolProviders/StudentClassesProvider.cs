@@ -11,7 +11,7 @@ namespace Pix_API.Providers.ContainersProviders
         private readonly IUserDatabaseProvider userDatabase;
         public StudentClassesProvider(DataSaver<List<StudentsClass>> saver,IUserDatabaseProvider userDatabase) : base(saver)
         {
-            var id_list = storage.SelectMany((arg) => arg.Obj).Select((arg) => arg.Id.Value).ToList();
+            var id_list = storage.SelectMany((arg) => arg).Select((arg) => arg.Id.Value).ToList();
             idAssigner = new IdAssigner(id_list);
             this.userDatabase = userDatabase;
         }
@@ -29,30 +29,30 @@ namespace Pix_API.Providers.ContainersProviders
 
         public List<StudentsClass> GetClassesForUser(int Id)
         {
-            return GetSingleObjectOrCreateNew(Id);
+            return GetObjectOrCreateNew(Id);
         }
 
         public StudentsClass GetStudentsClassByGlobalId(int classId)
         {
-            return storage.SelectMany(s => s.Obj).FirstOrDefault(s => s.Id == classId);
+            return storage.SelectMany(s => s).FirstOrDefault(s => s.Id == classId);
         }
 
         public StudentsClass GetStudentsClassById(int userId,int classId)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
             return AllQuestionResults.FirstOrDefault(s => s.Id == classId);
         }
 
         public List<User> GetStudentsInClassForUser(int userId, int classId)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
             return AllQuestionResults.Any((arg) => arg.Id.Value == classId) ?
             userDatabase.GetAllUsersBelongingToClass(classId) : null; 
         }
 
         public void RemoveClassForUser(StudentsClass studentsClass, int userId)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(userId);
+            var AllQuestionResults = GetObjectOrCreateNew(userId);
             AllQuestionResults.RemoveAll((obj) => obj.Id == studentsClass.Id);
         }
     }

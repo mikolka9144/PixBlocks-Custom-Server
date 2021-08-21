@@ -18,8 +18,8 @@ namespace Pix_API.Interfaces
     }
     public interface IToyShopProvider
     {
-        ToyShopData GetToyShop(int Id);
-        void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id);
+        ToyShopData GetToyShop(int UserId);
+        void SaveOrUpdateToyShop(ToyShopData toyShopData, int UserId);
     }
     public interface IStudentClassExamsProvider
     {
@@ -43,7 +43,7 @@ namespace Pix_API.Interfaces
     }
     public interface IQuestionEditsProvider
     {
-        void AddOrRemoveQuestionCode(EditedQuestionCode questionCode, int Id);
+        void AddOrRemoveQuestionCode(EditedQuestionCode questionCode, int User_Id);
         List<EditedQuestionCode> GetAllQuestionCodes(int Id);
         EditedQuestionCode GetQuestionEditByGuid(int Id, string guid, int? examId);
     }

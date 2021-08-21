@@ -14,7 +14,7 @@ namespace Pix_API.Providers
         {
         }
 
-        public ToyShopData GetToyShop(int Id) => GetSingleObjectOrCreateNew(Id);
+        public ToyShopData GetToyShop(int Id) => GetSingleObject(Id);
 
         public void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id)
         {

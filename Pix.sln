@@ -7,11 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API", "Pix_API\Pix_API.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixApiDebugConsole", "PixApiDebugConsole\PixApiDebugConsole.csproj", "{D0F237D2-B369-4A3B-B2FB-EFC7899A3517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Providers", "Pix_API.Providers\Pix_API.Providers.csproj", "{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Providers.Disk", "Pix_API.Providers\Pix_API.Providers.Disk.csproj", "{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Utills", "Pix_API.Utills\Pix_API.Utills.csproj", "{64F89E6E-B720-4228-BBD8-E1B34558DD52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Interfaces", "Pix_API.Interfaces\Pix_API.Interfaces.csproj", "{14A390F7-728B-461C-A97F-B841E4933EEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pix_API.Providers.MongoDB", "Pix_API.Providers.MongoDB\Pix_API.Providers.MongoDB.csproj", "{916F4648-B186-421E-A044-78B7BCEBC0A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,5 +88,17 @@ Global
 		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x64.Build.0 = Release|Any CPU
 		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x86.ActiveCfg = Release|Any CPU
 		{14A390F7-728B-461C-A97F-B841E4933EEF}.Release|x86.Build.0 = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|x64.Build.0 = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Debug|x86.Build.0 = Debug|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|x64.ActiveCfg = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|x64.Build.0 = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{916F4648-B186-421E-A044-78B7BCEBC0A3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

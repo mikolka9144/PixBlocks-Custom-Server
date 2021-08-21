@@ -11,10 +11,10 @@ namespace Pix_API
 {
     public static class Utills
     {
-        public static void SetupUser(this User user,int id)
+        public static void SetupUser(this User user)
         {
-            user.Id = id;
             user.IsEmailActivated = true;
+            user.CreationDate = DateTime.Now;
         }
         public static string ConvertPasswordToMD5(string input)
         {
@@ -43,6 +43,11 @@ namespace Pix_API
         {
             user.LoginsCounter++;
             user.LastLoginDate = DateTime.Now;
+        }
+        public static void set_Id(this ServerExam exam,int Id)
+        {
+            exam.Id = Id;
+            exam.Exam_metadata.Id = Id;
         }
     }
 }
