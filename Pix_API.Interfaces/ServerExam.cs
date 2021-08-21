@@ -18,5 +18,7 @@ namespace Pix_API.Interfaces
         }
         public Exam Exam_metadata { get; set; }
         public List<ExamQuestion> questions { get; set; }
+        public int Id;
+
     }
 }

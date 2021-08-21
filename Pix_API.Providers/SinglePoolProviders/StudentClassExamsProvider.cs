@@ -13,7 +13,7 @@ namespace Pix_API.Providers.ContainersProviders
 
         public StudentClassExamsProvider(DataSaver<ServerExam> saver) : base(saver)
         {
-            var id_list = storage.Select(s => s.Obj).Select(s => s.Exam_metadata.Id).ToList();
+            var id_list = storage.Select(s => s.Exam_metadata.Id).ToList();
             idAssigner = new IdAssigner(id_list);
         }
 
@@ -33,23 +33,23 @@ namespace Pix_API.Providers.ContainersProviders
 
         public List<ServerExam> GetAllExamsInClass(int class_id)
         {
-            return storage.FindAll(s =>s.Obj.Exam_metadata
-                .StudentsClassId == class_id).Select(s => s.Obj).ToList();
+            return storage.Where(s =>s.Exam_metadata
+                .StudentsClassId == class_id).ToList();
         }
 
         public List<ServerExam> GetChampionshipExams(int championshipId)
         {
-            return storage.FindAll(s =>
+            return storage.Where(s =>
             {
-                if (s.Obj.Exam_metadata.ChampionshipId.HasValue)
+                if (s.Exam_metadata.ChampionshipId.HasValue)
                 {
-                    return s.Obj.Exam_metadata.ChampionshipId.Value == championshipId;
+                    return s.Exam_metadata.ChampionshipId.Value == championshipId;
                 }
                 return false;
-            }).Select(s => s.Obj).ToList();
+            }).ToList();
         }
 
-        public ServerExam GetExam(int exam_id) => GetSingleObject(exam_id)?.Obj;
+        public ServerExam GetExam(int exam_id) => GetSingleObject(exam_id);
 
         public void RemoveQuestionInExam(ExamQuestion examQuestion, int examId)
         {

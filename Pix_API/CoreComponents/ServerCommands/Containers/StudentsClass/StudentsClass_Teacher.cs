@@ -43,6 +43,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         }
         public StudentsClass AddStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
+            studentsClass.TeacherID = authorize.UserId;
             studentClassProvider.AddClassForUser(studentsClass, authorize.UserId);
             return studentsClass;
         }

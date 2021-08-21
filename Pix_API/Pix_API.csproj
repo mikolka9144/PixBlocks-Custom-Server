@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Pix_API</RootNamespace>
     <AssemblyName>Pix_API</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +54,7 @@
     <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentClass_Student.cs" />
     <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentsClass_Teacher.cs" />
     <Compile Include="CoreComponents\ConnectionRecever.cs" />
+    <Compile Include="ServerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\packages.config" />
@@ -61,7 +62,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Providers\" />
     <Folder Include="CoreComponents\" />
     <Folder Include="CoreComponents\ServerCommands\" />
     <Folder Include="CoreComponents\ServerCommands\Containers\" />
@@ -71,7 +71,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pix_API.Providers\Pix_API.Providers.csproj">
       <Project>{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}</Project>
-      <Name>Pix_API.Providers</Name>
+      <Name>Pix_API.Providers.Disk</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
@@ -80,6 +80,10 @@
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
       <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
       <Name>Pix_API.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pix_API.Providers.MongoDB\Pix_API.Providers.MongoDB.csproj">
+      <Project>{916F4648-B186-421E-A044-78B7BCEBC0A3}</Project>
+      <Name>Pix_API.Providers.MongoDB</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

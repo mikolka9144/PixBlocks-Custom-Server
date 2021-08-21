@@ -22,18 +22,18 @@ namespace Pix_API.Providers
 
         public void AddOrRemoveQuestionCode(EditedQuestionCode questionCode, int Id)
         {
-            if (!questionCode.ID.HasValue) questionCode.ID = storage.Count;
+            if (!questionCode.ID.HasValue) questionCode.ID = storage.Count();
             AddOrUpdateObject(questionCode, Id,AreEqual);
         }
 
         public List<EditedQuestionCode> GetAllQuestionCodes(int Id)
         {
-            return GetSingleObjectOrCreateNew(Id);
+            return GetObjectOrCreateNew(Id);
         }
 
         public EditedQuestionCode GetQuestionEditByGuid(int Id, string guid, int? examId)
         {
-            var questionCodes = GetSingleObjectOrCreateNew(Id);
+            var questionCodes = GetObjectOrCreateNew(Id);
             return questionCodes.FirstOrDefault(s => s.QuesionGuid == guid && s.ExamId == examId);
         }
     }

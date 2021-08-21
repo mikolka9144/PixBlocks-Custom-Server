@@ -13,26 +13,26 @@ namespace Pix_API.Providers.ContainersProviders
 
         protected void AddOrUpdateObject(T questionResult, int Id,Func<T,T,bool> id_equalizer)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(Id);
+            var AllQuestionResults = GetObjectOrCreateNew(Id);
             AllQuestionResults.RemoveAll(s => id_equalizer(s, questionResult));
             AddObject(questionResult, Id);
         }
         protected void AddObject(T questionResult, int Id)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(Id);
+            var AllQuestionResults = GetObjectOrCreateNew(Id);
 
             AllQuestionResults.Add(questionResult);
             AddOrUpdateSingleObject(AllQuestionResults, Id);
         }
         protected void RemoveAllObjects(Predicate<T> obj,int Id)
         {
-            var AllQuestionResults = GetSingleObjectOrCreateNew(Id);
+            var AllQuestionResults = GetObjectOrCreateNew(Id);
             AllQuestionResults.RemoveAll(obj);
             AddOrUpdateSingleObject(AllQuestionResults, Id);
         }
-        protected override List<T> GetSingleObjectOrCreateNew(int Id)
+        protected List<T> GetObjectOrCreateNew(int Id)
         {
-            var obj = base.GetSingleObjectOrCreateNew(Id);
+            var obj = GetSingleObject(Id);
             return obj ?? new List<T>();
         }
     }

@@ -26,7 +26,7 @@ namespace Pix_API.Providers
 
         public List<QuestionResult> GetAllQuestionsReultsForUser(int Id)
         {
-            return GetSingleObjectOrCreateNew(Id);
+            return GetObjectOrCreateNew(Id);
         }
     }
 

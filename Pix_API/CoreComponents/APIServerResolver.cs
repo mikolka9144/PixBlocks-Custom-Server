@@ -38,11 +38,11 @@ namespace Pix_API
             if (!CallerhasPermissionToRun(method,deserialized_parameters)) return "";
 
             var profilingTimer = new Stopwatch();
-            Console.WriteLine($"method {name} was called");
+            Console.Write($"method {name} was called");
             profilingTimer.Start();
             var object_response = method.Invoke(logic,deserialized_parameters);
             profilingTimer.Stop();
-            Console.WriteLine($"calling method {name} done in {profilingTimer.ElapsedMilliseconds} ms");
+            Console.WriteLine($" and done in {profilingTimer.ElapsedMilliseconds} ms");
 
             var object_json = JsonConvert.SerializeObject(object_response);
             return object_json;

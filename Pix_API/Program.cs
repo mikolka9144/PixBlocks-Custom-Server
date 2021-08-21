@@ -9,16 +9,13 @@ using System.Text;
 using PixBlocks.Server.DataModels.DataModels;
 using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
-using Pix_API.Providers.StaticProviders;
-using Pix_API.Providers.ContainersProviders;
-using Pix_API.Providers.MultiplePoolProviders;
 using Pix_API.CoreComponents.ServerCommands;
-using Pix_API.Providers.SinglePoolProviders;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using System.Reflection;
 using Pix_API.CoreComponents;
 using Pix_API.Interfaces;
 using Ninject;
+using Newtonsoft.Json;
 
 namespace Pix_API
 {
@@ -26,14 +23,15 @@ namespace Pix_API
     {
         public static void Main(string[] args)
         {
+            var config = read_configuration();
             var kerner = new StandardKernel();
-            kerner.Load("./Pix_API.Providers.dll");
+            kerner.Load(config.Providers_lib);
 
             var server = new ConnectionRecever();
             var resolver = kerner.Get<APIServerResolver>();
 
             server.OnCommandReceved += (a, b, c) => OnCommand(a, b, c, resolver);
-            server.Start_Lisening("http://*:8080/");
+            server.Start_Lisening(config.server_host_ip);
         }
 
         private static void OnCommand(string method_name, string[] parameters,HttpListenerResponse response,APIServerResolver resolver)
@@ -58,6 +56,21 @@ namespace Pix_API
                 Console.WriteLine($"Exception occured: {ex.Message}");
                 if (System.Diagnostics.Debugger.IsAttached) throw;
             }
+        }
+        private static ServerConfiguration read_configuration()
+        {
+            if (!File.Exists("Config.cfg"))
+            {
+                var defaultConfiguration = new ServerConfiguration()
+                {
+                    Providers_lib = "Pix_API.Providers.Disk.dll",
+                    server_host_ip = "http://*:8080/"
+                };
+                File.WriteAllText("Config.cfg", JsonConvert.SerializeObject(defaultConfiguration));
+                return defaultConfiguration;
+            }
+            var file = File.ReadAllText("Config.cfg");
+            return JsonConvert.DeserializeObject<ServerConfiguration>(file);
         }
     }
 }

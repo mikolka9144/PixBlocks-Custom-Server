@@ -13,12 +13,12 @@ namespace Pix_API.Providers.MultiplePoolProviders
 
         public void AddOrUpdateComment(Comment comment, int user_id)
         {
-            AddObject(comment, user_id);
+            AddObject(comment, user_id);//TODO
         }
 
         public List<Comment> GetAllCommentsForUser(int user_id)
         {
-            return GetSingleObjectOrCreateNew(user_id);
+            return GetObjectOrCreateNew(user_id);
         }
     }
 

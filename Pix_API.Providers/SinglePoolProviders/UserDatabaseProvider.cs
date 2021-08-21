@@ -10,38 +10,41 @@ namespace Pix_API.Providers
 {
     public class UserDatabaseProvider:SinglePoolStorageProvider<User>,IUserDatabaseProvider
     {
+        private IdAssigner idAssigner;
+
         public UserDatabaseProvider(DataSaver<User>saver):base(saver)
         {
+            idAssigner = new IdAssigner(storage.Count());
         }
         public void AddUser(User user)
         {
-            user.SetupUser(storage.Count);
+            user.Id = idAssigner.NextEmptyId;
             AddSingleObject(user, user.Id.Value);
         }
 
         public bool ContainsUserWithEmail(string email)
         {
-            return storage.Any(s => s.Obj.Email == email);
+            return storage.Any(s => s.Email == email);
         }
 
         public bool ContainsUserWithLogin(string login)
         {
-            return storage.Any(s => s.Obj.Student_login == login);
+            return storage.Any(s => s.Student_login == login);
         }
 
         public List<User> GetAllUsersBelongingToClass(int classId)
         {
-            return storage.FindAll((arg) => arg.Obj.Student_studentsClassId == classId).Select(s => s.Obj).ToList();
+            return storage.Where((arg) => arg.Student_studentsClassId == classId).ToList();
         }
 
         public User GetUser(string EmailOrLogin)
         {
-            return storage.Find(s => s.Obj.Email == EmailOrLogin || s.Obj.Student_login == EmailOrLogin)?.Obj;
+            return storage.FirstOrDefault(s => s.Email == EmailOrLogin || s.Student_login == EmailOrLogin);
         }
 
         public User GetUser(int Id)
         {
-            return GetSingleObjectOrCreateNew(Id);
+            return GetSingleObject(Id);
         }
 
         public void UpdateUser(User user)
