@@ -11,6 +11,7 @@ using Pix_API.Providers.SinglePoolProviders;
 using Pix_API.Providers.StaticProviders;
 using Pix_API.Providers.ContainersProviders;
 using Pix_API.Providers.MultiplePoolProviders;
+using System.IO;
 
 namespace Pix_API.Providers.MongoDB
 {
@@ -20,7 +21,7 @@ namespace Pix_API.Providers.MongoDB
 
         public NinjectManifest()
         {
-            mongo = new MongoClient("mongodb://localhost:27017/");//TODO
+            mongo = new MongoClient(GetMongoAdressString());//TODO
         }
 
         public override void Load()
@@ -57,6 +58,14 @@ namespace Pix_API.Providers.MongoDB
             Bind<IBrandingProvider>().To<BrandingProvider>();
             Bind<ICountriesProvider>().To<CountriesProvider>();
             Bind<INotyficationProvider>().To<StaticNotyficationProvider>();
+        }
+        private string GetMongoAdressString()
+        {
+            if (!File.Exists("mongo_server_adress.cfg"))
+            {
+                File.WriteAllText("mongo_server_adress.cfg", "mongodb://localhost:27017/");
+            }
+            return File.ReadAllText("mongo_server_adress.cfg");
         }
     }
 }
