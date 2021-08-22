@@ -14,6 +14,8 @@ namespace Pix_API.Providers
         {
             // country_name,Code
             // Polska,PL
+            if(!File.Exists("countries.csv"))
+                File.WriteAllText("countries.csv", "country_name,Code\nPolska,PL\nAngia,EN");
             var raw_csv = File.ReadAllText("./countries.csv");
             var lines = raw_csv.Split('\n').Skip(1);
             lines = lines.Take(lines.Count() - 1);
