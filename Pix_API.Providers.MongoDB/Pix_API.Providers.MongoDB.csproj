@@ -99,8 +99,13 @@
     <Compile Include="Providers\MongoStudentClassExamsProvider.cs" />
     <Compile Include="Providers\MongoUserCommentsProvider.cs" />
     <Compile Include="Providers\MongoUserDatabaseProvider.cs" />
-    <Compile Include="Providers\UserIdBased\MongoToyShopProvider.cs" />
-    <Compile Include="Providers\UserIdBased\MongoSchoolsProvider.cs" />
+    <Compile Include="LastIndexHolder.cs" />
+    <Compile Include="MongoChampionshipProvider.cs" />
+    <Compile Include="MongoIdSaver_Base.cs" />
+    <Compile Include="MongoIndexSaver.cs" />
+    <Compile Include="MongoParentInfoProvider.cs" />
+    <Compile Include="MongoSchoolsProvider.cs" />
+    <Compile Include="MongoToyShopProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,22 +117,21 @@
     <None Include="Core\Compression\Snappy\lib\win\snappy32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pix_API.Providers\Pix_API.Providers.Disk.csproj">
-      <Project>{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}</Project>
+    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
+      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
+      <Name>Pix_API.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pix_API.Providers.Disk\Pix_API.Providers.Disk.csproj">
+      <Project>{D2107EDC-AC52-4CBF-8F31-DEA1CCE7C148}</Project>
       <Name>Pix_API.Providers.Disk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
-    <Folder Include="Providers\UserIdBased\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MongoDB.Libmongocrypt.1.2.2\build\MongoDB.Libmongocrypt.targets" Condition="Exists('..\packages\MongoDB.Libmongocrypt.1.2.2\build\MongoDB.Libmongocrypt.targets')" />

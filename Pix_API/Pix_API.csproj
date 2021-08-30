@@ -31,59 +31,42 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PixBlocks.Server.DataModels">
-      <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PixBlocks.Server.DataModels">
+      <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CoreComponents\APIServerResolver.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Other.cs" />
-    <Compile Include="CoreComponents\MainLogicConstructor.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\Comments.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\Exams.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\School.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\ToyShop.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\Questions\QuestionEdits.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\Questions\QuestionResults.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentClass_Student.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Containers\StudentsClass\StudentsClass_Teacher.cs" />
-    <Compile Include="CoreComponents\ConnectionRecever.cs" />
-    <Compile Include="ServerConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\packages.config" />
-    <None Include="countries.csv" />
     <None Include="packages.config" />
+    <None Include="countries.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CoreComponents\" />
-    <Folder Include="CoreComponents\ServerCommands\" />
-    <Folder Include="CoreComponents\ServerCommands\Containers\" />
-    <Folder Include="CoreComponents\ServerCommands\Containers\Questions\" />
-    <Folder Include="CoreComponents\ServerCommands\Containers\StudentsClass\" />
+    <Compile Include="ServerConfiguration.cs" />
+    <Compile Include="Interfaces\ICommandRepository.cs" />
+    <Compile Include="CoreComponents\ConnectionRecever.cs" />
+    <Compile Include="CoreComponents\ChampionshipAPICommands.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Main_Logic.cs" />
+    <Compile Include="APIServerResolver.cs" />
+    <Compile Include="MainClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Providers\Pix_API.Providers.csproj">
-      <Project>{7B4AFC5D-A451-483E-85F4-4F278B4A5D4D}</Project>
-      <Name>Pix_API.Providers.Disk</Name>
+    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
+      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
+      <Name>Pix_API.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pix_API.Providers.MongoDB\Pix_API.Providers.MongoDB.csproj">
       <Project>{916F4648-B186-421E-A044-78B7BCEBC0A3}</Project>
       <Name>Pix_API.Providers.MongoDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pix_API.Providers.Disk\Pix_API.Providers.Disk.csproj">
+      <Project>{D2107EDC-AC52-4CBF-8F31-DEA1CCE7C148}</Project>
+      <Name>Pix_API.Providers.Disk</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
