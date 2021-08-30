@@ -1,16 +1,17 @@
-﻿using System;
 using MongoDB.Bson;
+
 namespace Pix_API.Providers.MongoDB
 {
-    public class MongoIdBinder<T>
-    {
-        public MongoIdBinder(T obj)
-        {
-            this.Id = ObjectId.GenerateNewId();
-            Obj = obj;
-        }
+	public class MongoIdBinder<T>
+	{
+		public ObjectId Id { get; }
 
-        public ObjectId Id { get; }
-        public T Obj { get; }
-    }
+		public T Obj { get; }
+
+		public MongoIdBinder(T obj)
+		{
+			Id = ObjectId.GenerateNewId();
+			Obj = obj;
+		}
+	}
 }

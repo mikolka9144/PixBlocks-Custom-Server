@@ -1,68 +1,65 @@
-﻿using System;
 using System.Collections.Generic;
+using MongoDB.Driver;
 using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
-using MongoDB.Driver;
 
 namespace Pix_API.Providers.MongoDB
 {
-    internal class MongoStudentClassesProvider : IStudentClassProvider
-    {
-        private readonly IUserDatabaseProvider userDatabase;
-        private IMongoCollection<StudentsClass> db;
-        private IdAssigner assigner;
+	internal class MongoStudentClassesProvider : MongoIdSaver_Base<StudentsClass>, IStudentClassProvider
+	{
+		private readonly IUserDatabaseProvider userDatabase;
 
-        public MongoStudentClassesProvider(MongoClient client,IUserDatabaseProvider userDatabase)
-        {
-            db = client.GetDatabase("Pix").GetCollection<StudentsClass>("classes");
-            assigner = new IdAssigner(Convert.ToInt32(db.CountDocuments(sim => true)));
-            CreateIndexes();
-            this.userDatabase = userDatabase;
-        }
+		public MongoStudentClassesProvider(IMongoDatabase client, IMongoCollection<LastIndexHolder> index_collection, IUserDatabaseProvider databaseProvider)
+			: base(client, index_collection, "classes")
+		{
+			userDatabase = databaseProvider;
+		}
 
-        private void CreateIndexes()
-        {
-            var index = Builders<StudentsClass>.IndexKeys.Ascending(s => s.TeacherID);
-            db.Indexes.CreateOneAsync(new CreateIndexModel<StudentsClass>(index));
-        }
+		private void CreateIndexes()
+		{
+			IndexKeysDefinition<StudentsClass> keys = Builders<StudentsClass>.IndexKeys.Ascending((StudentsClass s) => s.TeacherID);
+			db.Indexes.CreateOneAsync(new CreateIndexModel<StudentsClass>(keys));
+		}
 
-        public async void AddClassForUser(StudentsClass studentsClass, int userId)
-        {
-            studentsClass.Id = assigner.NextEmptyId;
-            await db.InsertOneAsync(studentsClass);
-        }
+		public async void AddClassForUser(StudentsClass studentsClass, int userId)
+		{
+			studentsClass.Id = assigner.NextEmptyId;
+			await db.InsertOneAsync(studentsClass);
+		}
 
-        public void EditClassForUser(StudentsClass studentsClass, int userId)
-        {
-            db.ReplaceOneAsync(s => s.Id == studentsClass.Id,studentsClass);
-        }
+		public void EditClassForUser(StudentsClass studentsClass, int userId)
+		{
+			db.ReplaceOneAsync((StudentsClass s) => s.Id == studentsClass.Id, studentsClass);
+		}
 
-        public List<StudentsClass> GetClassesForUser(int Id)
-        {
-            return db.FindSync(s => s.TeacherID == Id).ToList();
-        }
+		public List<StudentsClass> GetClassesForUser(int Id)
+		{
+			return db.FindSync((StudentsClass s) => s.TeacherID == Id).ToList();
+		}
 
-        public StudentsClass GetStudentsClassByGlobalId(int classId)
-        {
-            return db.FindSync(sim => sim.Id == classId).FirstOrDefault();
-        }
+		public StudentsClass GetStudentsClassByGlobalId(int classId)
+		{
+			return db.FindSync((StudentsClass sim) => sim.Id == (int?)classId).FirstOrDefault();
+		}
 
-        public StudentsClass GetStudentsClassById(int userId, int classId)
-        {
-            var student_class = db.FindSync(sim => sim.Id == classId).FirstOrDefault();
-            if (student_class.TeacherID == userId) return student_class;
-            return null;
-        }
+		public StudentsClass GetStudentsClassById(int userId, int classId)
+		{
+			StudentsClass studentsClass = db.FindSync((StudentsClass sim) => sim.Id == (int?)classId).FirstOrDefault();
+			if (studentsClass.TeacherID == userId)
+			{
+				return studentsClass;
+			}
+			return null;
+		}
 
-        public List<User> GetStudentsInClassForUser(int userID, int classID)
-        {
-            return userDatabase.GetAllUsersBelongingToClass(classID);
-        }
+		public List<User> GetStudentsInClassForUser(int userID, int classID)
+		{
+			return userDatabase.GetAllUsersBelongingToClass(classID);
+		}
 
-        public async void RemoveClassForUser(StudentsClass studentsClass, int userId)
-        {
-            var update = Builders<StudentsClass>.Update.Set(s => s.IsDeleted, true);
-            await db.UpdateOneAsync(sim => sim.Id == studentsClass.Id, update);
-        }
-    }
+		public async void RemoveClassForUser(StudentsClass studentsClass, int userId)
+		{
+			await db.DeleteOneAsync((StudentsClass sim) => sim.Id == studentsClass.Id);
+		}
+	}
 }

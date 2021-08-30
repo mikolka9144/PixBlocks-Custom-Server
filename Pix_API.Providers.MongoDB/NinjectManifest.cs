@@ -1,71 +1,46 @@
-﻿using System;
-using Ninject;
+using System.IO;
+using MongoDB.Driver;
 using Ninject.Modules;
 using Pix_API.Interfaces;
-using MongoDB.Driver;
-using System.Collections.Generic;
-using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
-using PixBlocks.Server.DataModels.DataModels;
-using PixBlocks.Server.DataModels.DataModels.Championsships;
-using Pix_API.Providers.SinglePoolProviders;
 using Pix_API.Providers.StaticProviders;
-using Pix_API.Providers.ContainersProviders;
-using Pix_API.Providers.MultiplePoolProviders;
-using System.IO;
 
 namespace Pix_API.Providers.MongoDB
 {
-    public class NinjectManifest:NinjectModule
-    {
-        private MongoClient mongo;
+	public class NinjectManifest : NinjectModule
+	{
+		private MongoClient mongo;
 
-        public NinjectManifest()
-        {
-            mongo = new MongoClient(GetMongoAdressString());//TODO
-        }
+		public NinjectManifest()
+		{
+			mongo = new MongoClient(GetMongoAdressString());
+		}
 
-        public override void Load()
-        {
-            Bind<MongoClient>().ToConstant(mongo);
+		public override void Load()
+		{
+			Bind<IMongoDatabase>().ToConstant(mongo.GetDatabase("Pix"));
+			Bind<IMongoCollection<LastIndexHolder>>().ToConstant(mongo.GetDatabase("Pix").GetCollection<LastIndexHolder>("indexes"));
+			Bind<IUserDatabaseProvider>().To<MongoUserDatabaseProvider>().InSingletonScope();
+			Bind<IQuestionEditsProvider>().To<MongoQuestionEditsProvider>().InSingletonScope();
+			Bind<IQuestionResultsProvider>().To<MongoQuestionResultProvider>().InSingletonScope();
+			Bind<IStudentClassProvider>().To<MongoStudentClassesProvider>().InSingletonScope();
+			Bind<IStudentClassExamsProvider>().To<MongoStudentClassExamsProvider>().InSingletonScope();
+			Bind<IUserCommentsProvider>().To<MongoUserCommentsProvider>().InSingletonScope();
+			Bind<IToyShopProvider>().To<MongoToyShopProvider>().InSingletonScope();
+			Bind<ISchoolProvider>().To<MongoSchoolsProvider>().InSingletonScope();
+			Bind<IParentInfoHolder>().To<MongoParentInfoProvider>().InSingletonScope();
+			Bind<IChampionshipsMetadataProvider>().To<MongoChampionshipProvider>();
+			Bind<IBrandingProvider>().To<BrandingProvider>();
+			Bind<ICountriesProvider>().To<CountriesProvider>();
+			Bind<INotyficationProvider>().To<StaticNotyficationProvider>();
+		}
 
-            var question_result_saver = new DiskDataSaver<List<QuestionResult>>("./QuestionResults/");
-            var studentClassesSaver = new DiskDataSaver<List<StudentsClass>>("./Classes/");
-            var comments_saver = new DiskDataSaver<List<Comment>>("./Comments/");
-            var student_class_exams_saver = new DiskDataSaver<ServerExam>("./Exams/");
-            var toyShop_saver = new DiskDataSaver<ToyShopData>("./ToyShops/");
-            var schools_saver = new DiskDataSaver<School>("./Schools/");
-            var championshipsMetadata_saver = new DiskDataSaver<Championship>("./Championships/");
-
-
-            Bind<DataSaver<List<QuestionResult>>>().ToConstant(question_result_saver);
-            Bind<DataSaver<List<StudentsClass>>>().ToConstant(studentClassesSaver);
-            Bind<DataSaver<List<Comment>>>().ToConstant(comments_saver);
-            Bind<DataSaver<ServerExam>>().ToConstant(student_class_exams_saver);
-            Bind<DataSaver<School>>().ToConstant(schools_saver);
-            Bind<DataSaver<ToyShopData>>().ToConstant(toyShop_saver);
-            Bind<DataSaver<Championship>>().ToConstant(championshipsMetadata_saver);
-
-            Bind<IUserDatabaseProvider>().To<MongoUserDatabaseProvider>();
-            Bind<IQuestionEditsProvider>().To<MongoQuestionEditsProvider>();
-            Bind<IQuestionResultsProvider>().To<MongoQuestionResultProvider>();
-            Bind<IStudentClassProvider>().To<MongoStudentClassesProvider>();
-            Bind<IStudentClassExamsProvider>().To<MongoStudentClassExamsProvider>();
-            Bind<IUserCommentsProvider>().To<MongoUserCommentsProvider>();
-            Bind<IToyShopProvider>().To<MongoToyShopProvider>();
-            Bind<ISchoolProvider>().To<MongoSchoolsProvider>();
-
-            Bind<IChampionshipsMetadataProvider>().To<ChampionshipProvider>();
-            Bind<IBrandingProvider>().To<BrandingProvider>();
-            Bind<ICountriesProvider>().To<CountriesProvider>();
-            Bind<INotyficationProvider>().To<StaticNotyficationProvider>();
-        }
-        private string GetMongoAdressString()
-        {
-            if (!File.Exists("mongo_server_adress.cfg"))
-            {
-                File.WriteAllText("mongo_server_adress.cfg", "mongodb://localhost:27017/");
-            }
-            return File.ReadAllText("mongo_server_adress.cfg");
-        }
-    }
+		private string GetMongoAdressString()
+		{
+			if (!File.Exists("mongo_server_adress.cfg"))
+			{
+				File.WriteAllText("mongo_server_adress.cfg", "mongodb://localhost:27017/");
+			}
+			return File.ReadAllText("mongo_server_adress.cfg");
+		}
+	}
 }
