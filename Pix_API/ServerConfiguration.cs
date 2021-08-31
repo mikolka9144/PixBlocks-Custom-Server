@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -11,7 +12,7 @@ namespace Pix_API
 
 		public string Providers_lib;
 
-		public static ServerConfiguration read_configuration()
+		public static ServerConfiguration Read_configuration()
 		{
 			if (!File.Exists("Config.cfg"))
 			{
@@ -22,7 +23,8 @@ namespace Pix_API
 					championship_server_host_ip = "http://*:8081/"
 				};
 				File.WriteAllText("Config.cfg", JsonConvert.SerializeObject(serverConfiguration));
-				return serverConfiguration;
+                Console.WriteLine("New Configuration has been created. Make sure that settings are set correctly and restart server.");
+                Environment.Exit(0);
 			}
 			return JsonConvert.DeserializeObject<ServerConfiguration>(File.ReadAllText("Config.cfg"));
 		}
