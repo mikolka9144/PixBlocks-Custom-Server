@@ -12,14 +12,17 @@ namespace Pix_API
 	{
 		public static void Main(string[] args)
 		{
-			ServerConfiguration serverConfiguration = ServerConfiguration.read_configuration();
-			StandardKernel standardKernel = new StandardKernel();
-			standardKernel.Load(serverConfiguration.Providers_lib);
+           
+			ServerConfiguration serverConfiguration = ServerConfiguration.Read_configuration();
+			StandardKernel kernel = new StandardKernel();
+			kernel.Load(serverConfiguration.Providers_lib);
 
-			var resolver = new APIServerResolver(standardKernel.Get<Main_Logic>(), standardKernel.Get<IUserDatabaseProvider>());
+            var security = kernel.Get<SecurityChecks>();
+
+            var resolver = new APIServerResolver(kernel.Get<Main_Logic>(), kernel.Get<IUserDatabaseProvider>(),security);
 			var connectionRecever = new ConnectionRecever(serverConfiguration.server_host_ip, resolver);
 
-			var championship_resolver = new APIServerResolver(standardKernel.Get<Main_Logic>(), standardKernel.Get<IUserDatabaseProvider>());
+			var championship_resolver = new APIServerResolver(kernel.Get<Main_Logic>(), kernel.Get<IUserDatabaseProvider>(),security);
 			ConnectionRecever championship_server = new ConnectionRecever(serverConfiguration.championship_server_host_ip, resolver);
 
 			Task.Run(() => championship_server.Start_Lisening_Action());

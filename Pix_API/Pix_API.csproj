@@ -46,10 +46,23 @@
     <Compile Include="ServerConfiguration.cs" />
     <Compile Include="Interfaces\ICommandRepository.cs" />
     <Compile Include="CoreComponents\ConnectionRecever.cs" />
-    <Compile Include="CoreComponents\ChampionshipAPICommands.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Main_Logic.cs" />
     <Compile Include="APIServerResolver.cs" />
     <Compile Include="MainClass.cs" />
+    <Compile Include="CoreComponents\MainLogicConstructor.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Other.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Comments.cs" />
+    <Compile Include="CoreComponents\ChampionshipServerCommands\ChampionshipAPICommands.cs" />
+    <Compile Include="SecurityChecks.cs" />
+    <Compile Include="CoreComponents\ServerCommands\UserResources\EditedQuestionCode.cs" />
+    <Compile Include="CoreComponents\ServerCommands\UserResources\ParentInfo.cs" />
+    <Compile Include="CoreComponents\ServerCommands\UserResources\ToyShop.cs" />
+    <Compile Include="CoreComponents\ServerCommands\UserResources\QuestionResult.cs" />
+    <Compile Include="CoreComponents\ServerCommands\StudentClasses\StudentClass_Student.cs" />
+    <Compile Include="CoreComponents\ServerCommands\StudentClasses\StudentClass_Teacher.cs" />
+    <Compile Include="CoreComponents\ServerCommands\StudentClasses\Exams.cs" />
+    <Compile Include="CoreComponents\ServerCommands\StudentClasses\School.cs" />
+    <Compile Include="CoreComponents\ServerCommands\Branding\Champinships.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
@@ -69,5 +82,25 @@
       <Name>Pix_API.Providers.Disk</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CoreComponents\ChampionshipServerCommands\" />
+    <Folder Include="CoreComponents\ServerCommands\UserResources\" />
+    <Folder Include="CoreComponents\ServerCommands\StudentClasses\" />
+    <Folder Include="CoreComponents\ServerCommands\Branding\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="80" TabsToSpaces="True" scope="text/plain" />
+          <DotNetNamingPolicy ResourceNamePolicy="FileFormatDefault" DirectoryNamespaceAssociation="PrefixedHierarchical" />
+          <TextStylePolicy FileWidth="120" TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" EolMarker="Native" TabsToSpaces="True" NoTabsAfterNonTabs="True" scope="text/x-fsharp" />
+          <FSharpFormattingPolicy scope="text/x-fsharp">
+            <DefaultFormat IndentOnTryWith="False" ReorderOpenDeclaration="False" SpaceAfterComma="True" SpaceAfterSemicolon="True" SpaceAroundDelimiter="True" SpaceBeforeArgument="True" SpaceBeforeColon="True" __added="0" />
+          </FSharpFormattingPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>
