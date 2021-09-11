@@ -15,7 +15,6 @@ namespace Pix_API.CoreComponents.ServerCommands
 
         public List<Championship> GetAllActiveChampionships(AuthorizeData authorize)
         {
-            databaseProvider.GetUser(authorize.UserId);
             return championshipsProvider.GetAllChampionships();
         }
     }

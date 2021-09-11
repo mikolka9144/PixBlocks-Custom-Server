@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Pix_API.Interfaces;
 
 namespace Pix_API.CoreComponents.ServerCommands
@@ -19,8 +20,9 @@ namespace Pix_API.CoreComponents.ServerCommands
         private readonly IBrandingProvider brandingProvider;
         private readonly IParentInfoHolder parentInfoProvider;
         private readonly SecurityChecks security;
+        private readonly List<IAbstractUser> abstractUsers;
 
-        public Main_Logic(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider, IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider, INotyficationProvider notyficationProvider, IChampionshipsMetadataProvider championshipsProvider, IStudentClassProvider studentClassProvider, IStudentClassExamsProvider studentClassExamsProvider, IUserCommentsProvider userCommentsProvider, ISchoolProvider schoolProvider, IBrandingProvider brandingProvider, IParentInfoHolder parentInfoProvider,SecurityChecks security)
+        public Main_Logic(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider, IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider, INotyficationProvider notyficationProvider, IChampionshipsMetadataProvider championshipsProvider, IStudentClassProvider studentClassProvider, IStudentClassExamsProvider studentClassExamsProvider, IUserCommentsProvider userCommentsProvider, ISchoolProvider schoolProvider, IBrandingProvider brandingProvider, IParentInfoHolder parentInfoProvider,SecurityChecks security,List<IAbstractUser> abstractUsers)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -36,6 +38,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             this.brandingProvider = brandingProvider;
             this.parentInfoProvider = parentInfoProvider;
             this.security = security;
+            this.abstractUsers = abstractUsers;
         }
     }
 }

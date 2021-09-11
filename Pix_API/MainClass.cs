@@ -16,14 +16,18 @@ namespace Pix_API
 			ServerConfiguration serverConfiguration = ServerConfiguration.Read_configuration();
 			StandardKernel kernel = new StandardKernel();
 			kernel.Load(serverConfiguration.Providers_lib);
+            kernel.Bind<ICommandRepository>().To<Main_Logic>();
+            kernel.Bind<IAbstractUser>().To<ChampionshipsUser>();
 
-            var security = kernel.Get<SecurityChecks>();
+            var resolver = kernel.Get<APIServerResolver>();
+            var connectionRecever = new ConnectionRecever(serverConfiguration.server_host_ip, resolver);
 
-            var resolver = new APIServerResolver(kernel.Get<Main_Logic>(), kernel.Get<IUserDatabaseProvider>(),security);
-			var connectionRecever = new ConnectionRecever(serverConfiguration.server_host_ip, resolver);
+            kernel.Unbind<ICommandRepository>();
+            kernel.Unbind<IAbstractUser>();
+            kernel.Bind<ICommandRepository>().To<ChampionshipAPICommands>();
 
-			var championship_resolver = new APIServerResolver(kernel.Get<Main_Logic>(), kernel.Get<IUserDatabaseProvider>(),security);
-			ConnectionRecever championship_server = new ConnectionRecever(serverConfiguration.championship_server_host_ip, resolver);
+            var championship_resolver = kernel.Get<APIServerResolver>();
+			ConnectionRecever championship_server = new ConnectionRecever(serverConfiguration.championship_server_host_ip, championship_resolver);
 
 			Task.Run(() => championship_server.Start_Lisening_Action());
 			connectionRecever.Start_Lisening_Action();

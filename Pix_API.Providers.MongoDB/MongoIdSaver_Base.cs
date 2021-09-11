@@ -8,7 +8,7 @@ namespace Pix_API.Providers.MongoDB
 
 		protected IdAssigner assigner;
 
-		public MongoIdSaver_Base(IMongoDatabase client, IMongoCollection<LastIndexHolder> index_collection, string collectionName)
+        protected MongoIdSaver_Base(IMongoDatabase client, IMongoCollection<LastIndexHolder> index_collection, string collectionName)
 		{
 			db = client.GetCollection<T>(collectionName);
 			assigner = new IdAssigner(new MongoIndexSaver(index_collection, collectionName));

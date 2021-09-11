@@ -5,14 +5,14 @@ using Pix_API.Interfaces;
 using Pix_API.Providers.BaseClasses;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoQuestionEditsProvider : MongoIdSaver_Base<IdObjectBinder<EditedQuestionCode>>, IQuestionEditsProvider
 	{
 		public MongoQuestionEditsProvider(IMongoDatabase client, IMongoCollection<LastIndexHolder> index_collection)
 			: base(client, index_collection, "questonEdits")
 		{
-			IndexKeysDefinition<IdObjectBinder<EditedQuestionCode>> keys = Builders<IdObjectBinder<EditedQuestionCode>>.IndexKeys.Ascending((IdObjectBinder<EditedQuestionCode> s) => s.Obj.UserId);
+			var keys = Builders<IdObjectBinder<EditedQuestionCode>>.IndexKeys.Ascending((IdObjectBinder<EditedQuestionCode> s) => s.Obj.UserId);
 			db.Indexes.CreateOne(new CreateIndexModel<IdObjectBinder<EditedQuestionCode>>(keys));
 		}
 

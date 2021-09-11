@@ -5,7 +5,7 @@ using MongoDB.Driver;
 using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoUserCommentsProvider : MongoIdSaver_Base<MongoIdBinder<Comment>>, IUserCommentsProvider
 	{

@@ -24,7 +24,7 @@ namespace Pix_API.Providers
 		{
 			if (!questionCode.ID.HasValue)
 			{
-				questionCode.ID = base.storage.Count();
+				questionCode.ID = storage.Count();
 			}
 			AddOrUpdateObject(questionCode, Id, AreEqual);
 		}

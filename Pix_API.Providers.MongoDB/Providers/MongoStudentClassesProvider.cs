@@ -3,7 +3,7 @@ using MongoDB.Driver;
 using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoStudentClassesProvider : MongoIdSaver_Base<StudentsClass>, IStudentClassProvider
 	{
@@ -21,10 +21,10 @@ namespace Pix_API.Providers.MongoDB
 			db.Indexes.CreateOneAsync(new CreateIndexModel<StudentsClass>(keys));
 		}
 
-		public async void AddClassForUser(StudentsClass studentsClass, int userId)
+		public void AddClassForUser(StudentsClass studentsClass, int userId)
 		{
 			studentsClass.Id = assigner.NextEmptyId;
-			await db.InsertOneAsync(studentsClass);
+            db.InsertOneAsync(studentsClass);
 		}
 
 		public void EditClassForUser(StudentsClass studentsClass, int userId)

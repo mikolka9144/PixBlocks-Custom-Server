@@ -3,13 +3,16 @@ using MongoDB.Driver;
 using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoUserDatabaseProvider : MongoIdSaver_Base<User>, IUserDatabaseProvider
 	{
 		public MongoUserDatabaseProvider(IMongoDatabase client, IMongoCollection<LastIndexHolder> index_collection)
 			: base(client, index_collection, "users")
 		{
+            var key = Builders<User>.IndexKeys.Ascending(s => s.CountryId);
+            var keys_holder = new CreateIndexModel<User>(key);
+            db.Indexes.CreateOne(keys_holder);
 		}
 
 		public async void AddUser(User user)
@@ -30,10 +33,15 @@ namespace Pix_API.Providers.MongoDB
 
 		public List<User> GetAllUsersBelongingToClass(int classId)
 		{
-			return db.Find((User s) => s.Student_studentsClassId == (int?)classId).ToList();
-		}
+			return db.Find((User s) => s.Student_studentsClassId == classId).ToList();
+        }
 
-		public User GetUser(string EmailOrLogin)
+        public List<User> GetAllUsersInCountry(int value)
+        {
+            return db.Find(s => s.CountryId == value).ToList();
+        }
+
+        public User GetUser(string EmailOrLogin)
 		{
 			return db.Find((User s) => s.Email == EmailOrLogin || s.Student_login == EmailOrLogin).FirstOrDefault();
 		}

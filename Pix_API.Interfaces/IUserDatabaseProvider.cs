@@ -20,5 +20,6 @@ namespace Pix_API.Interfaces
 		bool ContainsUserWithLogin(string login);
 
 		List<User> GetAllUsersBelongingToClass(int classId);
-	}
+        List<User> GetAllUsersInCountry(int value);
+    }
 }

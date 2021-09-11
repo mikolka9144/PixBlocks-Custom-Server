@@ -100,12 +100,12 @@
     <Compile Include="Providers\MongoUserCommentsProvider.cs" />
     <Compile Include="Providers\MongoUserDatabaseProvider.cs" />
     <Compile Include="LastIndexHolder.cs" />
-    <Compile Include="MongoChampionshipProvider.cs" />
     <Compile Include="MongoIdSaver_Base.cs" />
     <Compile Include="MongoIndexSaver.cs" />
-    <Compile Include="MongoParentInfoProvider.cs" />
-    <Compile Include="MongoSchoolsProvider.cs" />
-    <Compile Include="MongoToyShopProvider.cs" />
+    <Compile Include="Providers\UserIdBased\MongoParentInfoProvider.cs" />
+    <Compile Include="Providers\UserIdBased\MongoSchoolsProvider.cs" />
+    <Compile Include="Providers\UserIdBased\MongoToyShopProvider.cs" />
+    <Compile Include="Providers\MongoChampionshipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />
+    <Folder Include="Providers\UserIdBased\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MongoDB.Libmongocrypt.1.2.2\build\MongoDB.Libmongocrypt.targets" Condition="Exists('..\packages\MongoDB.Libmongocrypt.1.2.2\build\MongoDB.Libmongocrypt.targets')" />
