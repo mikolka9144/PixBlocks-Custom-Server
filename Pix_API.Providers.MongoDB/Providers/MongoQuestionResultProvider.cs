@@ -5,7 +5,7 @@ using Pix_API.Interfaces;
 using Pix_API.Providers.BaseClasses;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoQuestionResultProvider : MongoIdSaver_Base<IdObjectBinder<QuestionResult>>, IQuestionResultsProvider
 	{
@@ -25,7 +25,7 @@ namespace Pix_API.Providers.MongoDB
 			else
 			{
 				IdObjectBinder<QuestionResult> replacement = new IdObjectBinder<QuestionResult>(questionResult.ID.Value, questionResult);
-				await db.ReplaceOneAsync((IdObjectBinder<QuestionResult> s) => (int?)s.Id == questionResult.ID && s.Obj.UserID == UserId, replacement);
+				await db.ReplaceOneAsync((IdObjectBinder<QuestionResult> s) => s.Id == questionResult.ID && s.Obj.UserID == UserId, replacement);
 			}
 		}
 

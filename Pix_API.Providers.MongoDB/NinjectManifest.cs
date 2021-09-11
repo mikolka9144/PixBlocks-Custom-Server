@@ -1,19 +1,17 @@
+using System;
 using System.IO;
 using MongoDB.Driver;
 using Ninject.Modules;
 using Pix_API.Interfaces;
+using Pix_API.Providers.MongoDB.Providers;
 using Pix_API.Providers.StaticProviders;
 
 namespace Pix_API.Providers.MongoDB
 {
 	public class NinjectManifest : NinjectModule
 	{
-		private MongoClient mongo;
+		private static MongoClient mongo = new MongoClient(GetMongoAdressString());
 
-		public NinjectManifest()
-		{
-			mongo = new MongoClient(GetMongoAdressString());
-		}
 
 		public override void Load()
 		{
@@ -34,12 +32,14 @@ namespace Pix_API.Providers.MongoDB
 			Bind<INotyficationProvider>().To<StaticNotyficationProvider>();
 		}
 
-		private string GetMongoAdressString()
+		private static string GetMongoAdressString()
 		{
 			if (!File.Exists("mongo_server_adress.cfg"))
 			{
 				File.WriteAllText("mongo_server_adress.cfg", "mongodb://localhost:27017/");
-			}
+                Console.WriteLine("New MongoDB adress file has been created. Make sure that adress is correct and restart server.");
+                Environment.Exit(0);
+            }
 			return File.ReadAllText("mongo_server_adress.cfg");
 		}
 	}

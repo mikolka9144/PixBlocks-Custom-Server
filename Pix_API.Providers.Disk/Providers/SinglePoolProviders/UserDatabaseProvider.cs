@@ -35,9 +35,14 @@ namespace Pix_API.Providers
 		public List<User> GetAllUsersBelongingToClass(int classId)
 		{
 			return base.storage.Where((User arg) => arg.Student_studentsClassId == classId).ToList();
-		}
+        }
 
-		public User GetUser(string EmailOrLogin)
+        public List<User> GetAllUsersInCountry(int value)
+        {
+            return storage.Where(s => s.CountryId == value).ToList();
+        }
+
+        public User GetUser(string EmailOrLogin)
 		{
 			return base.storage.FirstOrDefault((User s) => s.Email == EmailOrLogin || s.Student_login == EmailOrLogin);
 		}

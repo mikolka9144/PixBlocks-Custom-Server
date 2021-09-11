@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.DBModels;
 using PixBlocks.Server.DataModels.DataModels.Woocommerce;
@@ -8,6 +9,7 @@ namespace Pix_API.CoreComponents.ServerCommands
 {
     public partial class Main_Logic
     {
+
         public List<Countrie> GetAllCountries(object _)
         {
             return countriesProvider.GetAllCountries();
@@ -32,22 +34,42 @@ namespace Pix_API.CoreComponents.ServerCommands
 
         public UserAuthorizeResult AuthorizeUser(string loginOrEmail, string password, bool md5, LicenseData licenseData)
         {
-            User user = databaseProvider.GetUser(loginOrEmail);
-            if (user != null)
+
+            var potentialAnstractUser = abstractUsers.FirstOrDefault(s => s.login == loginOrEmail);
+            if (potentialAnstractUser != null)
             {
-                string text = Utills.ConvertPasswordToMD5(password);
-                bool flag = password == user.Student_explicitPassword && user.Student_isStudent;
-                if (user.Md5Password == text || flag)
+                if (potentialAnstractUser.password == password)
                 {
-                    user.RegisterLogin();
-                    databaseProvider.UpdateUser(user);
+                    var user_index = abstractUsers.IndexOf(potentialAnstractUser) + 1;
                     return new UserAuthorizeResult
                     {
-                        User = user,
+                        User = potentialAnstractUser.GenerateUser(-user_index),
                         IsPasswordCorrect = true,
-                        PixBlocksLicense = new PixBlocksLicense(LicenseType.Free),
-                        SchoolLogoInBase64 = brandingProvider.GetBase64LogoForUser(user.Id.Value)
+                        PixBlocksLicense = new PixBlocksLicense(LicenseType.Free)
                     };
+                }
+            }
+            else
+            {
+                User user = databaseProvider.GetUser(loginOrEmail);
+                if (user != null)
+                {
+                    string text = Utills.ConvertPasswordToMD5(password);
+
+
+                    bool flag = password == user.Student_explicitPassword && user.Student_isStudent;
+                    if (user.Md5Password == text || flag)
+                    {
+                        user.RegisterLogin();
+                        databaseProvider.UpdateUser(user);
+                        return new UserAuthorizeResult
+                        {
+                            User = user,
+                            IsPasswordCorrect = true,
+                            PixBlocksLicense = new PixBlocksLicense(LicenseType.Free),
+                            SchoolLogoInBase64 = brandingProvider.GetBase64LogoForUser(user.Id.Value)
+                        };
+                    }
                 }
             }
             return new UserAuthorizeResult
@@ -58,7 +80,7 @@ namespace Pix_API.CoreComponents.ServerCommands
 
         public bool StudentsLoginsCheckAvaible(string studentLogin)
         {
-            return !databaseProvider.ContainsUserWithLogin(studentLogin);
+            return !abstractUsers.Any(s => s.login == studentLogin && !databaseProvider.ContainsUserWithLogin(studentLogin));
         }
     }
 }

@@ -31,12 +31,12 @@ namespace Pix_API.Providers.ContainersProviders
 
 		public List<ServerExam> GetAllExamsInClass(int class_id)
 		{
-			return base.storage.Where((ServerExam s) => s.Exam_metadata.StudentsClassId == class_id).ToList();
+			return storage.Where((ServerExam s) => s.Exam_metadata.StudentsClassId == class_id).ToList();
 		}
 
 		public List<ServerExam> GetChampionshipExams(int championshipId)
 		{
-			return base.storage.Where((ServerExam s) => s.Exam_metadata.ChampionshipId.HasValue && s.Exam_metadata.ChampionshipId.Value == championshipId).ToList();
+			return storage.Where((ServerExam s) => s.Exam_metadata.ChampionshipId.HasValue && s.Exam_metadata.ChampionshipId.Value == championshipId).ToList();
 		}
 
 		public ServerExam GetExam(int exam_id)
@@ -46,7 +46,7 @@ namespace Pix_API.Providers.ContainersProviders
 
 		public void RemoveAllExamsInClass(int class_id)
 		{
-			foreach (ServerExam item in base.storage.Where((ServerExam s) => s.Exam_metadata.StudentsClassId == class_id))
+			foreach (ServerExam item in storage.Where((ServerExam s) => s.Exam_metadata.StudentsClassId == class_id))
 			{
 				RemoveObject(item.Id);
 			}

@@ -63,6 +63,8 @@
     <Compile Include="CoreComponents\ServerCommands\StudentClasses\Exams.cs" />
     <Compile Include="CoreComponents\ServerCommands\StudentClasses\School.cs" />
     <Compile Include="CoreComponents\ServerCommands\Branding\Champinships.cs" />
+    <Compile Include="Interfaces\IAbstractUser.cs" />
+    <Compile Include="ChampionshipsUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
@@ -87,6 +89,7 @@
     <Folder Include="CoreComponents\ServerCommands\UserResources\" />
     <Folder Include="CoreComponents\ServerCommands\StudentClasses\" />
     <Folder Include="CoreComponents\ServerCommands\Branding\" />
+    <Folder Include="AbstractUsers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -3,7 +3,7 @@ using MongoDB.Driver;
 using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Providers.MongoDB.Providers
 {
 	internal class MongoStudentClassExamsProvider : MongoIdSaver_Base<ServerExam>, IStudentClassExamsProvider
 	{

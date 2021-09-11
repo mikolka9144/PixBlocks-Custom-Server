@@ -15,46 +15,60 @@ namespace Pix_API
 
         private readonly IUserDatabaseProvider userDatabaseProvider;
         private readonly SecurityChecks security;
+        private readonly List<IAbstractUser> abstractUsers;
         private readonly Type logic_type;
 
-        public APIServerResolver(ICommandRepository logic, IUserDatabaseProvider userDatabaseProvider, SecurityChecks security)
+        public APIServerResolver(ICommandRepository logic, IUserDatabaseProvider userDatabaseProvider, SecurityChecks security,List<IAbstractUser> abstractUsers)
         {
             this.logic = logic;
             this.userDatabaseProvider = userDatabaseProvider;
             this.security = security;
+            this.abstractUsers = abstractUsers;
             logic_type = logic.GetType();
         }
 
         public string Execute_API_Method(string name, string[] parameters)
         {
-            if (logic_type.GetMethod(name) == null)
+            MethodInfo method = logic_type.GetMethod(name);
+            if (method is null)
             {
                 Console.WriteLine("method " + name + " not implemented");
                 return "";
             }
-            MethodInfo method = logic_type.GetMethod(name);
             object[] array = ParseParameters(parameters, method.GetParameters());
-            if (!CallerhasPermissionToRun(method, array))
+
+            if (method.GetParameters().Last().ParameterType == typeof(AuthorizeData))
             {
-                return "";
+                AuthorizeData authorizeData = array.Last() as AuthorizeData;
+                if (authorizeData.UserId < 0)
+                {
+                    var index = authorizeData.UserId + 1;
+                    var abstract_user = abstractUsers[-index];
+                    if (abstract_user.password != authorizeData.PasswordMD5) return "";
+
+                    var user_method = abstract_user.GetType().GetMethod(name);
+                    if(user_method is null)
+                    {
+                        Console.WriteLine("method " + name + " not implemented for " + abstract_user.GetType().Name);
+                        return "";
+                    }
+                    return ExecuteMethod(abstract_user,user_method, array);
+                }
+                if (!security.IsAuthorizeValid(authorizeData)) return "";
             }
+
+            return ExecuteMethod(logic,method, array);
+        }
+
+        private string ExecuteMethod(ICommandRepository repositoryObject,MethodInfo method, object[] array)
+        {
             Stopwatch stopwatch = new Stopwatch();
-            Console.Write("method " + name + " was called");
+            Console.Write("method " + method.Name + " in "+ method.ReflectedType.Name +" was called");
             stopwatch.Start();
-            object value = method.Invoke(logic, array);
+            object value = method.Invoke(repositoryObject, array);
             stopwatch.Stop();
             Console.WriteLine($" and done in {stopwatch.ElapsedMilliseconds} ms");
             return JsonConvert.SerializeObject(value);
-        }
-
-        private bool CallerhasPermissionToRun(MethodInfo method, object[] method_arguments)
-        {
-            if (method.GetParameters().Last().ParameterType == typeof(AuthorizeData))
-            {
-                AuthorizeData authorizeData = method_arguments.Last() as AuthorizeData;
-                return security.IsAuthorizeValid(authorizeData);
-            }
-            return true;
         }
 
         private object[] ParseParameters(string[] parameters, ParameterInfo[] parameters_types)

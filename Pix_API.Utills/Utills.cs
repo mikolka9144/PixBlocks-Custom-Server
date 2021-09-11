@@ -32,17 +32,6 @@ namespace Pix_API
 			exam.CreationDate = DateTime.Now;
 		}
 
-		public static bool IsExamCreatedByUser(this IStudentClassProvider classProvider, Exam exam, int UserId)
-		{
-			int studentsClassId = exam.StudentsClassId;
-			return classProvider.IsClassBelongsToUser(UserId, studentsClassId);
-		}
-
-		public static bool IsClassBelongsToUser(this IStudentClassProvider classProvider, int userId, int classId)
-		{
-			return classProvider.GetClassesForUser(userId).Any((StudentsClass s) => s.Id == classId);
-		}
-
 		public static void RegisterLogin(this User user)
 		{
 			user.LoginsCounter++;
