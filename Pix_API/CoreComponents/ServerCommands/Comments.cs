@@ -9,7 +9,7 @@ namespace Pix_API.CoreComponents.ServerCommands
     {
         public List<Comment> GetAllCommentsFromStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
             List<Comment> list = new List<Comment>();
             {
@@ -24,7 +24,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         public Comment AddOrUpdateComment(Comment comment, AuthorizeData authorize)
         {
             User user = databaseProvider.GetUser(comment.UserID);
-            if (!security.IsClassBelongsToUser(authorize.UserId, user.Student_studentsClassId.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, user.Student_studentsClassId.Value)) return null;
 
             userCommentsProvider.AddOrUpdateComment(comment, comment.UserID);
             return comment;
@@ -33,7 +33,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         public List<Comment> GetAllCommentsForUser(User user, AuthorizeData authorize)
         {
             User user2 = databaseProvider.GetUser(user.Id.Value);
-            if (!security.IsClassBelongsToUser(authorize.UserId, user2.Student_studentsClassId.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, user2.Student_studentsClassId.Value)) return null;
 
             return userCommentsProvider.GetAllCommentsForUser(user.Id.Value);
         }

@@ -19,10 +19,10 @@ namespace Pix_API.CoreComponents.ServerCommands
         private readonly ISchoolProvider schoolProvider;
         private readonly IBrandingProvider brandingProvider;
         private readonly IParentInfoHolder parentInfoProvider;
-        private readonly SecurityChecks security;
+        private readonly ServerUtills serverUtills;
         private readonly List<IAbstractUser> abstractUsers;
 
-        public Main_Logic(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider, IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider, INotyficationProvider notyficationProvider, IChampionshipsMetadataProvider championshipsProvider, IStudentClassProvider studentClassProvider, IStudentClassExamsProvider studentClassExamsProvider, IUserCommentsProvider userCommentsProvider, ISchoolProvider schoolProvider, IBrandingProvider brandingProvider, IParentInfoHolder parentInfoProvider,SecurityChecks security,List<IAbstractUser> abstractUsers)
+        public Main_Logic(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider, IQuestionResultsProvider questionResultsProvider, IQuestionEditsProvider questionEditsProvider, IToyShopProvider toyShopProvider, INotyficationProvider notyficationProvider, IChampionshipsMetadataProvider championshipsProvider, IStudentClassProvider studentClassProvider, IStudentClassExamsProvider studentClassExamsProvider, IUserCommentsProvider userCommentsProvider, ISchoolProvider schoolProvider, IBrandingProvider brandingProvider, IParentInfoHolder parentInfoProvider,ServerUtills security,List<IAbstractUser> abstractUsers)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
@@ -37,7 +37,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             this.schoolProvider = schoolProvider;
             this.brandingProvider = brandingProvider;
             this.parentInfoProvider = parentInfoProvider;
-            this.security = security;
+            this.serverUtills = security;
             this.abstractUsers = abstractUsers;
         }
     }

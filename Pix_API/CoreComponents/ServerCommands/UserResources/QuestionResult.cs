@@ -13,7 +13,7 @@ namespace Pix_API.CoreComponents.ServerCommands
             {
                 return questionResultsProvider.GetAllQuestionsReultsForUser(authorize.UserId);
             }
-            if (!security.IsClassBelongsToUser(authorize.UserId, user.Student_studentsClassId.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, user.Student_studentsClassId.Value)) return null;
 
             return questionResultsProvider.GetAllQuestionsReultsForUser(user.Id.Value);
         }

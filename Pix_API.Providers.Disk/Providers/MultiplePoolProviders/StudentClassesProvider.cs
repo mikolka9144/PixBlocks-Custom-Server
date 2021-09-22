@@ -53,9 +53,9 @@ namespace Pix_API.Providers.ContainersProviders
 			return userDatabase.GetAllUsersBelongingToClass(classId);
 		}
 
-		public void RemoveClassForUser(StudentsClass studentsClass, int userId)
+		public void RemoveClass(StudentsClass studentsClass)
 		{
-			GetObjectOrCreateNew(userId).RemoveAll((StudentsClass obj) => obj.Id == studentsClass.Id);
+			GetObjectOrCreateNew(studentsClass.TeacherID).RemoveAll((StudentsClass obj) => obj.Id == studentsClass.Id);
 		}
 	}
 }

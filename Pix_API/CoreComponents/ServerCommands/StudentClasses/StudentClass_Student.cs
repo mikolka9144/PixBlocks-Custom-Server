@@ -21,15 +21,10 @@ namespace Pix_API.CoreComponents.ServerCommands
             return user;
         }
 
-        public User RemoveUserFromStudentsClass(User userToRemove, AuthorizeData authorize)
+        public User RemoveUserFromStudentsClass(User userToRemove, AuthorizeData authorize) 
         {
             User user = databaseProvider.GetUser(authorize.UserId);
-            user.Student_studentsClassId = null;
-            user.Student_isStudent = false;
-            user.Student_isAssignedToStudentsClass = false;
-            user.Student_isAcceptedToStudentsClass = null;
-            databaseProvider.UpdateUser(user);
-            return user;
+            return security.RemoveUserFromClass(user); 
         }
     }
 }

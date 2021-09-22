@@ -14,9 +14,14 @@ namespace Pix_API.Providers
 		public ToyShopData GetToyShop(int Id)
 		{
 			return GetSingleObject(Id);
-		}
+        }
 
-		public void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id)
+        public void RemoveToyShop(int UserId)
+        {
+            RemoveObject(UserId);
+        }
+
+        public void SaveOrUpdateToyShop(ToyShopData toyShopData, int Id)
 		{
 			toyShopData.UserID = Id;
 			AddOrUpdateSingleObject(toyShopData, Id);

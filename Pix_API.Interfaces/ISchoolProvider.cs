@@ -9,5 +9,6 @@ namespace Pix_API.Interfaces
 		void UpdateSchool(School school, int UserOwner_Id);
 
 		School GetSchool(int UserOwner_Id);
-	}
+        void RemoveSchool(int userId);
+    }
 }

@@ -48,6 +48,8 @@
     <Compile Include="IToyShopProvider.cs" />
     <Compile Include="IUserCommentsProvider.cs" />
     <Compile Include="IUserDatabaseProvider.cs" />
+    <Compile Include="IAbstractUser.cs" />
+    <Compile Include="ICommandRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

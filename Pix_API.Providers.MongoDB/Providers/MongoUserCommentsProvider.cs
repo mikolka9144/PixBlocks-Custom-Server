@@ -32,6 +32,11 @@ namespace Pix_API.Providers.MongoDB.Providers
 		{
 			return (from s in db.FindSync((MongoIdBinder<Comment> sim) => sim.Obj.UserID == user_id).ToEnumerable()
 				select s.Obj).ToList();
-		}
-	}
+        }
+
+        public async void RemoveAllCommentsForUser(int userId)
+        {
+            await db.DeleteOneAsync(sim => sim.Obj.UserID == userId);
+        }
+    }
 }

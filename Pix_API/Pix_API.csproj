@@ -44,16 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ServerConfiguration.cs" />
-    <Compile Include="Interfaces\ICommandRepository.cs" />
     <Compile Include="CoreComponents\ConnectionRecever.cs" />
-    <Compile Include="APIServerResolver.cs" />
     <Compile Include="MainClass.cs" />
-    <Compile Include="CoreComponents\MainLogicConstructor.cs" />
     <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
     <Compile Include="CoreComponents\ServerCommands\Other.cs" />
     <Compile Include="CoreComponents\ServerCommands\Comments.cs" />
     <Compile Include="CoreComponents\ChampionshipServerCommands\ChampionshipAPICommands.cs" />
-    <Compile Include="SecurityChecks.cs" />
+    <Compile Include="ServerUtills.cs" />
     <Compile Include="CoreComponents\ServerCommands\UserResources\EditedQuestionCode.cs" />
     <Compile Include="CoreComponents\ServerCommands\UserResources\ParentInfo.cs" />
     <Compile Include="CoreComponents\ServerCommands\UserResources\ToyShop.cs" />
@@ -63,8 +60,9 @@
     <Compile Include="CoreComponents\ServerCommands\StudentClasses\Exams.cs" />
     <Compile Include="CoreComponents\ServerCommands\StudentClasses\School.cs" />
     <Compile Include="CoreComponents\ServerCommands\Branding\Champinships.cs" />
-    <Compile Include="Interfaces\IAbstractUser.cs" />
-    <Compile Include="ChampionshipsUser.cs" />
+    <Compile Include="AbstractUsers\ChampionshipsUser.cs" />
+    <Compile Include="CoreComponents\APIServerResolver.cs" />
+    <Compile Include="CoreComponents\ServerCommands\MainLogicConstructor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">

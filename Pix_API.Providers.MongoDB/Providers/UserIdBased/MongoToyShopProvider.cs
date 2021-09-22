@@ -18,9 +18,14 @@ namespace Pix_API.Providers.MongoDB
 		public ToyShopData GetToyShop(int UserId)
 		{
 			return db.FindSync((IdObjectBinder<ToyShopData> sim) => sim.Id == UserId).FirstOrDefault()?.Obj;
-		}
+        }
 
-		public async void SaveOrUpdateToyShop(ToyShopData toyShopData, int UserId)
+        public async void RemoveToyShop(int UserId)
+        {
+            await db.DeleteOneAsync(s => s.Id == UserId);
+        }
+
+        public async void SaveOrUpdateToyShop(ToyShopData toyShopData, int UserId)
 		{
 			toyShopData.ID = UserId;
 			if ((await db.FindAsync((IdObjectBinder<ToyShopData> sim) => sim.Id == UserId)).Any())

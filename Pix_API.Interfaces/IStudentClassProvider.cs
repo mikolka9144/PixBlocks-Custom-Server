@@ -15,7 +15,7 @@ namespace Pix_API.Interfaces
 
 		void EditClassForUser(StudentsClass studentsClass, int userId);
 
-		void RemoveClassForUser(StudentsClass studentsClass, int userId);
+		void RemoveClass(StudentsClass studentsClass);
 
 		List<User> GetStudentsInClassForUser(int userID, int classID);
 	}

@@ -7,5 +7,6 @@ namespace Pix_API.Interfaces
 		ToyShopData GetToyShop(int UserId);
 
 		void SaveOrUpdateToyShop(ToyShopData toyShopData, int UserId);
-	}
+        void RemoveToyShop(int UserId);
+    }
 }

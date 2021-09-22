@@ -8,5 +8,6 @@ namespace Pix_API.Interfaces
 		List<QuestionResult> GetAllQuestionsReultsForUser(int Id);
 
 		void AddOrUpdateQuestionResult(QuestionResult questionResult, int Id);
-	}
+        void RemoveAllQuestionResultsForUser(int userId);
+    }
 }
