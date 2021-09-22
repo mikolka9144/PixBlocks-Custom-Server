@@ -5,5 +5,6 @@ namespace Pix_API.Interfaces
 	public interface IParentInfoHolder
 	{
 		void AddOrUpdateParentInfoForUser(ParentInfo parentInfo, int User_Id);
-	}
+        void RemoveParentInfo(int userId);
+    }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Pix_API.CoreComponents
 {
@@ -27,7 +28,7 @@ namespace Pix_API.CoreComponents
 			{
 				HttpListenerContext context = httpListener.GetContext();
 				string method_name = context.Request.QueryString["me"];
-				string[] parameters = new string[7]
+				string[] parameters =
 				{
 					context.Request.QueryString["p1"],
 					context.Request.QueryString["p2"],
@@ -40,9 +41,12 @@ namespace Pix_API.CoreComponents
 				context.Response.ContentType = "application/json";
 				context.Response.ContentEncoding = Encoding.UTF8;
 				context.Response.SendChunked = false;
-				OnCommand(method_name, parameters, context.Response);
-				context.Response.Close();
-			}
+                Task.Run(() =>
+                {
+                    OnCommand(method_name, parameters, context.Response);
+                    context.Response.Close();
+                });
+            }
 		}
 
 		private void OnCommand(string method_name, string[] parameters, HttpListenerResponse response)
@@ -72,6 +76,7 @@ namespace Pix_API.CoreComponents
 					throw;
 				}
 			}
+
 		}
 	}
 }

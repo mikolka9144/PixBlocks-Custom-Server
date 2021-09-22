@@ -14,11 +14,11 @@ namespace Pix_API
         private readonly ICommandRepository logic;
 
         private readonly IUserDatabaseProvider userDatabaseProvider;
-        private readonly SecurityChecks security;
+        private readonly ServerUtills security;
         private readonly List<IAbstractUser> abstractUsers;
         private readonly Type logic_type;
 
-        public APIServerResolver(ICommandRepository logic, IUserDatabaseProvider userDatabaseProvider, SecurityChecks security,List<IAbstractUser> abstractUsers)
+        public APIServerResolver(ICommandRepository logic, IUserDatabaseProvider userDatabaseProvider, ServerUtills security,List<IAbstractUser> abstractUsers)
         {
             this.logic = logic;
             this.userDatabaseProvider = userDatabaseProvider;

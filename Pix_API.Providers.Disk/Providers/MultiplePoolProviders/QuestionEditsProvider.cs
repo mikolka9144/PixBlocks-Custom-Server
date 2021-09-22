@@ -37,6 +37,11 @@ namespace Pix_API.Providers
 		public EditedQuestionCode GetQuestionEditByGuid(int Id, string guid, int? examId)
 		{
 			return GetObjectOrCreateNew(Id).FirstOrDefault((EditedQuestionCode s) => s.QuesionGuid == guid && s.ExamId == examId);
-		}
-	}
+        }
+
+        public void RemoveQuestionCodesForUser(int userId)
+        {
+            RemoveObject(userId);
+        }
+    }
 }

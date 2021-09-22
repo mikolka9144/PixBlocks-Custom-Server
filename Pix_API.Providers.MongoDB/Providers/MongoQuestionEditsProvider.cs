@@ -27,7 +27,7 @@ namespace Pix_API.Providers.MongoDB.Providers
 			else
 			{
 				IdObjectBinder<EditedQuestionCode> replacement = new IdObjectBinder<EditedQuestionCode>(questionCode.ID.Value, questionCode);
-				await db.ReplaceOneAsync((IdObjectBinder<EditedQuestionCode> s) => (int?)s.Id == questionCode.ID && s.Obj.UserId == User_Id, replacement);
+				await db.ReplaceOneAsync((IdObjectBinder<EditedQuestionCode> s) => s.Id == questionCode.ID && s.Obj.UserId == User_Id, replacement);
 			}
 		}
 
@@ -40,6 +40,11 @@ namespace Pix_API.Providers.MongoDB.Providers
 		public EditedQuestionCode GetQuestionEditByGuid(int UserId, string guid, int? examId)
 		{
 			return db.FindSync((IdObjectBinder<EditedQuestionCode> sim) => sim.Obj.UserId == UserId && sim.Obj.QuesionGuid == guid && sim.Obj.ExamId == examId).FirstOrDefault()?.Obj;
-		}
-	}
+        }
+
+        public async void RemoveQuestionCodesForUser(int userId)
+        {
+            await db.DeleteOneAsync(s => s.Id == userId);
+        }
+    }
 }

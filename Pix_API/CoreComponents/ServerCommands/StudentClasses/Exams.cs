@@ -17,14 +17,14 @@ namespace Pix_API.CoreComponents.ServerCommands
 
         public List<ExamQuestion> GetAllQuestionsInAllExamsInStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
             return studentClassExamsProvider.GetAllExamsInClass(studentsClass.Id.Value).SelectMany((s) => s.questions).ToList();
         }
 
         public Exam AddNewExam(Exam exam, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, exam.StudentsClassId)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, exam.StudentsClassId)) return null;
 
             exam.SetupExam();
             studentClassExamsProvider.AddExam(new ServerExam(exam));
@@ -39,7 +39,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         public bool AddQuestionInExam(ExamQuestion examQuestion, AuthorizeData authorize)
         {
             int studentsClassId = studentClassExamsProvider.GetExam(examQuestion.ExamId).Exam_metadata.StudentsClassId;
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClassId)) return false;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClassId)) return false;
 
             studentClassExamsProvider.AddQuestionInExam(examQuestion, examQuestion.ExamId);
             return true;
@@ -48,7 +48,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         public bool DeleteQuestionInExam(ExamQuestion examQuestion, AuthorizeData authorize)
         {
             int studentsClassId = studentClassExamsProvider.GetExam(examQuestion.ExamId).Exam_metadata.StudentsClassId;
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClassId)) return false;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClassId)) return false;
 
             studentClassExamsProvider.RemoveQuestionInExam(examQuestion, examQuestion.ExamId);
             return true;
@@ -67,15 +67,21 @@ namespace Pix_API.CoreComponents.ServerCommands
             if (participant.ChampionshipId.HasValue)
             {
                 list.AddRange(from s in studentClassExamsProvider.GetChampionshipExams(participant.ChampionshipId.Value)
-                              select s.Exam_metadata);
+                              where s.Exam_metadata.IsActive select s.Exam_metadata );
             }
             return list;
         }
-
+        public List<int> GetAllActiveExamsIDs(AuthorizeData authorize)
+        {
+            var participant = databaseProvider.GetUser(authorize.UserId);
+            List<Exam> list = GetAllActiveExamsForStudent(participant,authorize);
+            
+            return list.Select(s => s.Id).ToList();
+        }
         public Exam UpdateOrDeleteExam(Exam exam, AuthorizeData authorize)
         {
             ServerExam exam2 = studentClassExamsProvider.GetExam(exam.Id);
-            if (!security.IsExamCreatedByUser(exam2.Exam_metadata, authorize.UserId)) return null;
+            if (!serverUtills.IsExamCreatedByUser(exam2.Exam_metadata, authorize.UserId)) return null;
 
             exam2.Exam_metadata = exam;
             studentClassExamsProvider.UpdateExam(exam2);

@@ -19,19 +19,7 @@ namespace Pix_API.CoreComponents.ServerCommands
         {
             if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
-            foreach (User item in databaseProvider.GetAllUsersBelongingToClass(studentsClass.Id.Value))
-            {
-                if (item.Email == null)
-                {
-                    databaseProvider.RemoveUser(item.Id.Value);
-                    continue;
-                }
-                item.Student_isStudent = false;
-                item.Student_studentsClassId = null;
-                databaseProvider.UpdateUser(item);
-            }
-            studentClassExamsProvider.RemoveAllExamsInClass(studentsClass.Id.Value);
-            studentClassProvider.RemoveClassForUser(studentsClass, authorize.UserId);
+            security.RemoveClass(studentsClass);
             return null;
         }
 

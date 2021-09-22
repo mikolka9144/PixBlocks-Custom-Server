@@ -17,6 +17,11 @@ namespace Pix_API.Providers.MongoDB
 		{
 			parentInfo.Id = User_Id;
 			db.InsertOne(parentInfo);
-		}
-	}
+        }
+
+        public async void RemoveParentInfo(int userId)
+        {
+            await db.DeleteOneAsync(s => s.Id == userId);
+        }
+    }
 }

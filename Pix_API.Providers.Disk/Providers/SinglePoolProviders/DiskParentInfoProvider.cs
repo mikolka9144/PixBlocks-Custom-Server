@@ -14,6 +14,11 @@ namespace Pix_API.Providers
 		public void AddOrUpdateParentInfoForUser(ParentInfo parentInfo, int User_Id)
 		{
 			AddOrUpdateSingleObject(parentInfo, User_Id);
-		}
-	}
+        }
+
+        public void RemoveParentInfo(int userId)
+        {
+            RemoveObject(userId);
+        }
+    }
 }

@@ -57,7 +57,7 @@ namespace Pix_API.Providers.MongoDB.Providers
 			return userDatabase.GetAllUsersBelongingToClass(classID);
 		}
 
-		public async void RemoveClassForUser(StudentsClass studentsClass, int userId)
+		public async void RemoveClass(StudentsClass studentsClass)
 		{
 			await db.DeleteOneAsync((StudentsClass sim) => sim.Id == studentsClass.Id);
 		}

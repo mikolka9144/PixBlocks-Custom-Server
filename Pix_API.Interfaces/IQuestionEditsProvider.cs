@@ -10,5 +10,6 @@ namespace Pix_API.Interfaces
 		List<EditedQuestionCode> GetAllQuestionCodes(int Id);
 
 		EditedQuestionCode GetQuestionEditByGuid(int Id, string guid, int? examId);
-	}
+        void RemoveQuestionCodesForUser(int userId);
+    }
 }

@@ -20,9 +20,14 @@ namespace Pix_API.Providers.SinglePoolProviders
 		public School GetSchool(int UserOwner_Id)
 		{
 			return base.storage.FirstOrDefault((School s) => s.Id == UserOwner_Id);
-		}
+        }
 
-		public void UpdateSchool(School school, int UserOwner_Id)
+        public void RemoveSchool(int userId)
+        {
+            RemoveObject(userId);
+        }
+
+        public void UpdateSchool(School school, int UserOwner_Id)
 		{
 			AddOrUpdateSingleObject(school, UserOwner_Id);
 		}

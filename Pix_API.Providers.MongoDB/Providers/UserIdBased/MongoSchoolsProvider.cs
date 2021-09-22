@@ -22,9 +22,14 @@ namespace Pix_API.Providers.MongoDB
 		public School GetSchool(int UserOwner_Id)
 		{
 			return db.FindSync((School sim) => sim.Id == UserOwner_Id).FirstOrDefault();
-		}
+        }
 
-		public async void UpdateSchool(School school, int UserOwner_Id)
+        public async void RemoveSchool(int userId)
+        {
+            await db.DeleteOneAsync(s => s.Id == userId);
+        }
+
+        public async void UpdateSchool(School school, int UserOwner_Id)
 		{
 			school.Id = UserOwner_Id;
 			await db.ReplaceOneAsync((School s) => s.Id == UserOwner_Id, school);

@@ -8,34 +8,22 @@ namespace Pix_API.CoreComponents.ServerCommands
     {
         public User UpdateOrDeleteUser(User user, AuthorizeData authorize)
         {
-            if (authorize.UserId == user.Id)
+            User server_user = databaseProvider.GetUser(user.Id.Value);
+            var IsAuthValid = user.Id == authorize.UserId;
+            if (IsAuthValid || serverUtills.IsClassBelongsToUser(authorize.UserId, server_user.Student_studentsClassId.Value))
             {
-                if (user.IsDeleted)
+                if (user.IsDeleted) { serverUtills.RemoveUserData(user); return null; }
+                if (user.ChampionshipId != server_user.ChampionshipId)
                 {
-                    databaseProvider.RemoveUser(user.Id.Value);
+                    user.ChampionshipDateAdd = DateTime.Now;
                 }
-                else
-                {
-                    databaseProvider.UpdateUser(user);
-                }
-            }
-            else
-            {
-                User user2 = databaseProvider.GetUser(user.Id.Value);
-                if (security.IsClassBelongsToUser(authorize.UserId, user2.Student_studentsClassId.Value))
-                {
-                    if (user.IsDeleted)
-                    {
-                        databaseProvider.RemoveUser(user.Id.Value);
-                    }
-                    else
-                    {
-                        databaseProvider.UpdateUser(user);
-                    }
-                }
+                databaseProvider.UpdateUser(user);
+
             }
             return user;
         }
+
+
         public List<Notification> GetNotificationForUser(string LanguageKey, AuthorizeData authorizeData)
         {
             User user = databaseProvider.GetUser(authorizeData.UserId);

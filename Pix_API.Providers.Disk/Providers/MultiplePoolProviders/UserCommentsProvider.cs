@@ -20,6 +20,11 @@ namespace Pix_API.Providers.MultiplePoolProviders
 		public List<Comment> GetAllCommentsForUser(int user_id)
 		{
 			return GetObjectOrCreateNew(user_id);
-		}
-	}
+        }
+
+        public void RemoveAllCommentsForUser(int userId)
+        {
+            RemoveObject(userId);
+        }
+    }
 }

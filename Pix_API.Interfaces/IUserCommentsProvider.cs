@@ -8,5 +8,6 @@ namespace Pix_API.Interfaces
 		List<Comment> GetAllCommentsForUser(int user_id);
 
 		void AddOrUpdateComment(Comment comment, int user_id);
-	}
+        void RemoveAllCommentsForUser(int userId);
+    }
 }

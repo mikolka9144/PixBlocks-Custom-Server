@@ -17,16 +17,18 @@ namespace Pix_API
         private readonly IQuestionResultsProvider questionResultsProvider;
         private readonly IStudentClassExamsProvider studentClassExamsProvider;
         private readonly IChampionshipsMetadataProvider championships;
+        private readonly ServerConfiguration configuration;
 
-        public ChampionshipsUser(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider,IQuestionResultsProvider questionResultsProvider,IStudentClassExamsProvider studentClassExamsProvider,IChampionshipsMetadataProvider championships)
+        public ChampionshipsUser(ICountriesProvider countriesProvider, IUserDatabaseProvider databaseProvider,IQuestionResultsProvider questionResultsProvider,IStudentClassExamsProvider studentClassExamsProvider,IChampionshipsMetadataProvider championships,ServerConfiguration configuration)
         {
             this.countriesProvider = countriesProvider;
             this.databaseProvider = databaseProvider;
             this.questionResultsProvider = questionResultsProvider;
             this.studentClassExamsProvider = studentClassExamsProvider;
             this.championships = championships;
+            this.configuration = configuration;
         }
-        public string password => "test";
+        public string password => configuration.ChampionshipUser_Password;
 
         public string login => "CHAMPIONSHIP";
 

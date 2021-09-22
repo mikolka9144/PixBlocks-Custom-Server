@@ -14,8 +14,10 @@ namespace Pix_API
 		{
            
 			ServerConfiguration serverConfiguration = ServerConfiguration.Read_configuration();
+
 			StandardKernel kernel = new StandardKernel();
 			kernel.Load(serverConfiguration.Providers_lib);
+            kernel.Bind<ServerConfiguration>().ToConstant(serverConfiguration).InSingletonScope();
             kernel.Bind<ICommandRepository>().To<Main_Logic>();
             kernel.Bind<IAbstractUser>().To<ChampionshipsUser>();
 
@@ -23,7 +25,6 @@ namespace Pix_API
             var connectionRecever = new ConnectionRecever(serverConfiguration.server_host_ip, resolver);
 
             kernel.Unbind<ICommandRepository>();
-            kernel.Unbind<IAbstractUser>();
             kernel.Bind<ICommandRepository>().To<ChampionshipAPICommands>();
 
             var championship_resolver = kernel.Get<APIServerResolver>();
