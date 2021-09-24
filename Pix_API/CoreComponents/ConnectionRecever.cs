@@ -4,6 +4,8 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
+using Pix_API.Utills;
 
 namespace Pix_API.CoreComponents
 {
@@ -12,18 +14,21 @@ namespace Pix_API.CoreComponents
 		private readonly string adress;
 
 		private readonly APIServerResolver resolver;
+        private readonly ILogger logger;
 
-		public ConnectionRecever(string adress, APIServerResolver resolver)
+        public ConnectionRecever(string adress, APIServerResolver resolver,LogFactory logger)
 		{
 			this.adress = adress;
 			this.resolver = resolver;
-		}
+            this.logger = logger.GetLogger(LogsNames.CONNECTION_RECEVER);
+        }
 
-		public void Start_Lisening_Action()
+        public void Start_Lisening_Action()
 		{
 			HttpListener httpListener = new HttpListener();
 			httpListener.Prefixes.Add(adress);
 			httpListener.Start();
+            logger.Info($"Lisning on {adress}");
 			while (true)
 			{
 				HttpListenerContext context = httpListener.GetContext();
@@ -61,7 +66,7 @@ namespace Pix_API.CoreComponents
 			catch (TargetInvocationException ex)
 			{
 				response.StatusCode = 500;
-				Console.WriteLine("Exception occured: " + ex.InnerException.Message);
+				logger.Error(ex,"Exception occured: ");
 				if (Debugger.IsAttached)
 				{
 					throw ex.InnerException;
@@ -70,8 +75,8 @@ namespace Pix_API.CoreComponents
 			catch (Exception ex2)
 			{
 				response.StatusCode = 500;
-				Console.WriteLine("Exception occured: " + ex2.Message);
-				if (Debugger.IsAttached)
+                logger.Error(ex2,"Exception occured: ");
+                if (Debugger.IsAttached)
 				{
 					throw;
 				}

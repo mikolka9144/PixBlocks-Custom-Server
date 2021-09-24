@@ -37,6 +37,19 @@
     <Reference Include="PixBlocks.Server.DataModels">
       <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.7.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -88,6 +101,9 @@
     <Folder Include="CoreComponents\ServerCommands\StudentClasses\" />
     <Folder Include="CoreComponents\ServerCommands\Branding\" />
     <Folder Include="AbstractUsers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Logger_config.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

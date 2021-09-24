@@ -38,6 +38,7 @@
     <Compile Include="Utills.cs" />
     <Compile Include="IdObjectBinder.cs" />
     <Compile Include="ILastIndexSaver.cs" />
+    <Compile Include="LogsNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
