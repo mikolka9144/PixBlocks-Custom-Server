@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers modules", "Provid
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{9410C098-071A-43C0-9688-E18AB0656853}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChamponshipMenagerApp", "ChamponshipMenagerApp\ChamponshipMenagerApp.csproj", "{FA5462AA-F6BE-42FD-894E-0229615553AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,18 @@ Global
 		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x64.Build.0 = Release|Any CPU
 		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x86.ActiveCfg = Release|Any CPU
 		{64F89E6E-B720-4228-BBD8-E1B34558DD52}.Release|x86.Build.0 = Release|Any CPU
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|Any CPU.Build.0 = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|x64.ActiveCfg = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|x64.Build.0 = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|x86.ActiveCfg = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Debug|x86.Build.0 = Debug|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|Any CPU.ActiveCfg = Release|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|Any CPU.Build.0 = Release|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|x64.ActiveCfg = Release|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|x64.Build.0 = Release|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|x86.ActiveCfg = Release|x86
+		{FA5462AA-F6BE-42FD-894E-0229615553AC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{916F4648-B186-421E-A044-78B7BCEBC0A3} = {B64F9E42-FC60-4484-9B1E-59A7A188E896}
