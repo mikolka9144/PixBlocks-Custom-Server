@@ -4,11 +4,8 @@ using Ninject;
 using Pix_API.CoreComponents;
 using Pix_API.CoreComponents.ServerCommands;
 using Pix_API.Interfaces;
-using Pix_API.Utills;
 using NLog;
-using System.IO;
 using NLog.Config;
-using Ninject.Parameters;
 using Ninject.Modules;
 
 namespace Pix_API

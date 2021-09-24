@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Xwt.Gtk.0.2.250\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.250\build\Xwt.Gtk.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{FA5462AA-F6BE-42FD-894E-0229615553AC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ChamponshipMenagerApp</RootNamespace>
+    <AssemblyName>ChamponshipMenagerApp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="PixBlocks.Server.DataModels">
+      <HintPath>..\..\PixBlocks-Custom-Server\packages\PixBlocks.Server.DataModels.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.106.12.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt">
+      <HintPath>..\packages\Xwt.0.2.250\lib\net472\Xwt.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk">
+      <HintPath>..\packages\Xwt.Gtk.0.2.250\lib\net472\Xwt.Gtk.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ChampionshipsAPI.cs" />
+    <Compile Include="ChampionshipListView.cs" />
+    <Compile Include="MockAPI.cs" />
+    <Compile Include="ChampionshipEditForm.cs" />
+    <Compile Include="LoginData Saver.cs" />
+    <Compile Include="Windows\LoginWindow.cs" />
+    <Compile Include="Windows\MainWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
