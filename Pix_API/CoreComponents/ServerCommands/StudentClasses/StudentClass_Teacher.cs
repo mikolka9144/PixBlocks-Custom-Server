@@ -9,7 +9,7 @@ namespace Pix_API.CoreComponents.ServerCommands
     {
         public StudentsClass EditStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
             studentClassProvider.EditClassForUser(studentsClass, authorize.UserId);
             return null;
@@ -17,22 +17,22 @@ namespace Pix_API.CoreComponents.ServerCommands
 
         public StudentsClass DeleteStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
-            security.RemoveClass(studentsClass);
+            serverUtills.RemoveClass(studentsClass);
             return null;
         }
 
         public List<User> GetAllStudentsInClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
             return studentClassProvider.GetStudentsInClassForUser(authorize.UserId, studentsClass.Id.Value);
         }
 
         public List<QuestionResult> GetAllResultsForStudentsClass(StudentsClass studentsClass, AuthorizeData authorize)
         {
-            if (!security.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
+            if (!serverUtills.IsClassBelongsToUser(authorize.UserId, studentsClass.Id.Value)) return null;
 
             List<QuestionResult> list = new List<QuestionResult>();
             {

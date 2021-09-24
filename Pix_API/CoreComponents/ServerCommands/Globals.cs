@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pix_API.Utills;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.DBModels;
 using PixBlocks.Server.DataModels.DataModels.Woocommerce;
@@ -54,7 +55,7 @@ namespace Pix_API.CoreComponents.ServerCommands
                 User user = databaseProvider.GetUser(loginOrEmail);
                 if (user != null)
                 {
-                    string text = Utills.ConvertPasswordToMD5(password);
+                    string text = Utills.Utills.ConvertPasswordToMD5(password);
 
 
                     bool flag = password == user.Student_explicitPassword && user.Student_isStudent;

@@ -6,7 +6,7 @@ using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API
+namespace Pix_API.Utills
 {
 	public static class Utills
 	{
