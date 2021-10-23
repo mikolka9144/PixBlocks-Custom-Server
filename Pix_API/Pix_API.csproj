@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Pix_API</RootNamespace>
     <AssemblyName>Pix_API</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,82 +25,53 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
+    <RunWithWarnings>true</RunWithWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Pix Server|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Pix Server</OutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="PixBlocks.Server.DataModels">
-      <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web" />
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.7.11\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="countries.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServerConfiguration.cs" />
-    <Compile Include="CoreComponents\ConnectionRecever.cs" />
     <Compile Include="MainClass.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Globals.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Other.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Comments.cs" />
-    <Compile Include="CoreComponents\ChampionshipServerCommands\ChampionshipAPICommands.cs" />
-    <Compile Include="ServerUtills.cs" />
-    <Compile Include="CoreComponents\ServerCommands\UserResources\EditedQuestionCode.cs" />
-    <Compile Include="CoreComponents\ServerCommands\UserResources\ParentInfo.cs" />
-    <Compile Include="CoreComponents\ServerCommands\UserResources\ToyShop.cs" />
-    <Compile Include="CoreComponents\ServerCommands\UserResources\QuestionResult.cs" />
-    <Compile Include="CoreComponents\ServerCommands\StudentClasses\StudentClass_Student.cs" />
-    <Compile Include="CoreComponents\ServerCommands\StudentClasses\StudentClass_Teacher.cs" />
-    <Compile Include="CoreComponents\ServerCommands\StudentClasses\Exams.cs" />
-    <Compile Include="CoreComponents\ServerCommands\StudentClasses\School.cs" />
-    <Compile Include="CoreComponents\ServerCommands\Branding\Champinships.cs" />
-    <Compile Include="AbstractUsers\ChampionshipsUser.cs" />
-    <Compile Include="CoreComponents\APIServerResolver.cs" />
-    <Compile Include="CoreComponents\ServerCommands\MainLogicConstructor.cs" />
+    <Compile Include="ConnectionRecever.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.Interfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pix_API.Providers.MongoDB\Pix_API.Providers.MongoDB.csproj">
-      <Project>{916F4648-B186-421E-A044-78B7BCEBC0A3}</Project>
-      <Name>Pix_API.Providers.MongoDB</Name>
+    <ProjectReference Include="..\PixBlocksChampionshipServer\PixBlocksChampionshipServer.csproj">
+      <Project>{304E0D0C-C4BD-45A9-AE27-1C443A38679E}</Project>
+      <Name>PixBlocksChampionshipServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pix_API.Providers.Disk\Pix_API.Providers.Disk.csproj">
-      <Project>{D2107EDC-AC52-4CBF-8F31-DEA1CCE7C148}</Project>
-      <Name>Pix_API.Providers.Disk</Name>
+    <ProjectReference Include="..\PixBlocksCommandResolver\PixBlocksCommandResolver.csproj">
+      <Project>{5374AE78-1F0A-4E2B-8BC1-BFEDB9FCB78F}</Project>
+      <Name>PixBlocksCommandResolver</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CoreComponents\ChampionshipServerCommands\" />
-    <Folder Include="CoreComponents\ServerCommands\UserResources\" />
-    <Folder Include="CoreComponents\ServerCommands\StudentClasses\" />
-    <Folder Include="CoreComponents\ServerCommands\Branding\" />
-    <Folder Include="AbstractUsers\" />
+    <ProjectReference Include="..\PixBlocksMainServer\PixBlocksMainServer.csproj">
+      <Project>{E56F0176-0047-4028-97A9-0E16601AF059}</Project>
+      <Name>PixBlocksMainServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PixApi.DiskProvider\PixApi.DiskProvider.csproj">
+      <Project>{0546D215-BE27-4873-9E7C-3510F6DD7EF4}</Project>
+      <Name>PixApi.DiskProvider</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Logger_config.cfg" />

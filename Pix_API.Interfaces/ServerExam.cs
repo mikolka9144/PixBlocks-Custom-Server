@@ -16,8 +16,12 @@ namespace Pix_API.Interfaces
 			Exam_metadata = exam;
 			questions = new List<ExamQuestion>();
 		}
-
-		public ServerExam()
+        public void set_Id(int Id)
+        {
+            this.Id = Id;
+            Exam_metadata.Id = Id;
+        }
+        public ServerExam()
 		{
 		}
 	}

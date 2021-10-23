@@ -2,40 +2,49 @@ using System;
 using System.Threading.Tasks;
 using Ninject;
 using Pix_API.CoreComponents;
-using Pix_API.CoreComponents.ServerCommands;
 using Pix_API.Interfaces;
 using NLog;
 using NLog.Config;
 using Ninject.Modules;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace Pix_API
 {
 	internal class MainClass
 	{
 		public static void Main(string[] args)
-		{
+        {
             var kernel = new StandardKernel();
             var serverConfiguration = ServerConfiguration.Read_configuration();
             kernel.Bind<ServerConfiguration>().ToConstant(serverConfiguration).InSingletonScope();
             kernel.Load<StartupModule>();
-			kernel.Load(serverConfiguration.Providers_lib);
+            kernel.Load(serverConfiguration.Providers_lib);
+            kernel.Load(serverConfiguration.ApiResolver);
 
-            var connectionRecever = create_Server(kernel, typeof(Main_Logic), serverConfiguration.server_host_ip);
-			var championship_server = create_Server(kernel, typeof(ChampionshipAPICommands), serverConfiguration.championship_server_host_ip);
+            List<ConnectionRecever> servers = Generate_servers(kernel, serverConfiguration);
 
-            Task.Run(() => championship_server.Start_Lisening_Action());
-			connectionRecever.Start_Lisening_Action();
-		}
-        private static ConnectionRecever create_Server(IKernel kernel,Type repo,string adress)
-        {
-            kernel.Bind<ICommandRepository>().To(repo);
-            kernel.Bind<string>().ToConstant(adress).WhenInjectedExactlyInto<ConnectionRecever>();
-            var connectionRecever = kernel.Get<ConnectionRecever>();
-            kernel.Unbind<ICommandRepository>();
-            kernel.Unbind<string>();
-            return connectionRecever;
+            foreach (var server in servers)
+            {
+                Task.Run(new Action(server.Start_Lisening_Action));
+            }
+            Thread.Sleep(Timeout.Infinite);
         }
 
+        private static List<ConnectionRecever> Generate_servers(StandardKernel kernel, ServerConfiguration serverConfiguration)
+        {
+            var servers = new List<ConnectionRecever>();
+            foreach (var item in serverConfiguration.servers)
+            {
+                kernel.Load(item.lib);
+                kernel.Bind<string>().ToConstant(item.host_ip).WhenInjectedExactlyInto<ConnectionRecever>();
+                servers.Add(kernel.Get<ConnectionRecever>());
+                kernel.Unbind<ICommandRepository>();
+                kernel.Unbind<string>();
+            }
+
+            return servers;
+        }
     }
     internal class StartupModule : NinjectModule
     {
@@ -47,7 +56,7 @@ namespace Pix_API
             log_repo.Configuration = LogManager.Configuration;
             //
             Bind<LogFactory>().ToConstant(log_repo);
-            Bind<IAbstractUser>().To<ChampionshipsUser>();
+
         }
     }
 }
