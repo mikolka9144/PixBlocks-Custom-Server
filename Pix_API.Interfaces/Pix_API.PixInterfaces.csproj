@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</ProjectGuid>
+    <ProjectGuid>{14A390F7-728B-461C-A97F-B841E4933EEF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Pix_API.Utills</RootNamespace>
-    <AssemblyName>Pix_API.Utills</AssemblyName>
+    <RootNamespace>Pix_API.Interfaces</RootNamespace>
+    <AssemblyName>Pix_API.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -18,7 +18,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <LangVersion>Default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -32,22 +31,30 @@
     <Reference Include="PixBlocks.Server.DataModels">
       <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAPIServerResolver.cs" />
-    <Compile Include="ICommandRepository.cs" />
-    <Compile Include="IdAssigner.cs" />
-    <Compile Include="IdObjectBinder.cs" />
-    <Compile Include="ILastIndexSaver.cs" />
-    <Compile Include="LogsNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerConfiguration.cs" />
+    <Compile Include="IChampionshipsMetadataProvider.cs" />
+    <Compile Include="ServerExam.cs" />
+    <Compile Include="INotyficationProvider.cs" />
+    <Compile Include="IBrandingProvider.cs" />
+    <Compile Include="ICountriesProvider.cs" />
+    <Compile Include="IParentInfoHolder.cs" />
+    <Compile Include="IQuestionEditsProvider.cs" />
+    <Compile Include="IQuestionResultsProvider.cs" />
+    <Compile Include="ISchoolProvider.cs" />
+    <Compile Include="IStudentClassExamsProvider.cs" />
+    <Compile Include="IStudentClassProvider.cs" />
+    <Compile Include="IToyShopProvider.cs" />
+    <Compile Include="IUserCommentsProvider.cs" />
+    <Compile Include="IUserDatabaseProvider.cs" />
+    <Compile Include="IAbstractUser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
+      <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
+      <Name>Pix_API.Utills</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
