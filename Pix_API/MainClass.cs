@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using Ninject;
-using Pix_API.CoreComponents;
-using Pix_API.Interfaces;
+using Pix_API.PixBlocks;
 using NLog;
 using NLog.Config;
 using Ninject.Modules;
 using System.Collections.Generic;
 using System.Threading;
+using Pix_API.Base.Utills;
 
 namespace Pix_API
 {

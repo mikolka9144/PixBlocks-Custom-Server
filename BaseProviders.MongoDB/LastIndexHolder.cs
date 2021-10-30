@@ -1,6 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Base.MongoDB
 {
 	public class LastIndexHolder
 	{

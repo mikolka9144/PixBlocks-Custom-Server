@@ -1,10 +1,10 @@
 using System;
 using MongoDB.Driver;
-using Pix_API.Interfaces;
-using Pix_API.Providers.BaseClasses;
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.PixBlocks.MongoDB
 {
 	internal class MongoToyShopProvider : IToyShopProvider
 	{

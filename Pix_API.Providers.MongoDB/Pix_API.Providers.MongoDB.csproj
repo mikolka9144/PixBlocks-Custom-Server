@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{916F4648-B186-421E-A044-78B7BCEBC0A3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Pix_API.Providers.MongoDB</RootNamespace>
+    <RootNamespace>Pix_API.PixBlocks.MongoDB</RootNamespace>
     <AssemblyName>Pix_API.Providers.MongoDB</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
@@ -88,6 +88,17 @@
     <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\MongoDB.Driver.2.13.2\lib\net452\MongoDB.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.7.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,11 +130,15 @@
     </ProjectReference>
     <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixInterfaces.csproj">
       <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.PixInterfaces</Name>
+      <Name>Pix_API.PixBlocks.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\BaseProviders.MongoDB\BaseProviders.MongoDB.csproj">
       <Project>{031956FC-4F58-4A1E-9C8E-0464DCA7CDB3}</Project>
       <Name>BaseProviders.MongoDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PixApi.DiskProvider\Pix_API.PixBlocks.Disk.csproj">
+      <Project>{0546D215-BE27-4873-9E7C-3510F6DD7EF4}</Project>
+      <Name>Pix_API.PixBlocks.Disk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Base.Providers.ContainersProviders;
-using Pix_API.Interfaces;
+using Pix_API.Base.Disk;
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 
-namespace Pix_API.Providers.StaticProviders
+namespace Pix_API.PixBlocks.Disk
 {
 	public class ChampionshipProvider : SinglePoolStorageProvider<Championship>, IChampionshipsMetadataProvider
 	{

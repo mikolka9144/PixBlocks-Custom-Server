@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Pix_API.Interfaces;
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.Interfaces;
 
-namespace Pix_API.CoreComponents.ServerCommands
+namespace Pix_API.PixBlocks.MainServer
 {
     public partial class Main_Logic:ICommandRepository
     {

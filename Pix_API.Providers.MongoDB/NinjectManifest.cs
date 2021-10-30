@@ -2,19 +2,23 @@ using System;
 using System.IO;
 using MongoDB.Driver;
 using Ninject.Modules;
-using Pix_API.Interfaces;
-using Pix_API.Providers.MongoDB.Providers;
-using Pix_API.Providers.StaticProviders;
+using Pix_API.Base.MongoDB;
+using Pix_API.PixBlocks.Disk;
+using Pix_API.PixBlocks.Interfaces;
+using Pix_API.PixBlocks.MongoDB.Providers;
+using Ninject;
+using NLog;
+using Pix_API.Base.Utills;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.PixBlocks.MongoDB
 {
 	public class NinjectManifest : NinjectModule
 	{
-		private static MongoClient mongo = new MongoClient(GetMongoAdressString());
-
-
 		public override void Load()
 		{
+            var logger = Kernel.Get<LogFactory>();
+            var mongo = new MongoClient(GetMongoAdressString(logger.GetLogger(LogsNames.PROVIDER)));
+
 			Bind<IMongoDatabase>().ToConstant(mongo.GetDatabase("Pix"));
 			Bind<IMongoCollection<LastIndexHolder>>().ToConstant(mongo.GetDatabase("Pix").GetCollection<LastIndexHolder>("indexes"));
 			Bind<IUserDatabaseProvider>().To<MongoUserDatabaseProvider>().InSingletonScope();
@@ -32,12 +36,12 @@ namespace Pix_API.Providers.MongoDB
 			Bind<INotyficationProvider>().To<StaticNotyficationProvider>();
 		}
 
-		private static string GetMongoAdressString()
+		private static string GetMongoAdressString(Logger logger)
 		{
 			if (!File.Exists("mongo_server_adress.cfg"))
 			{
 				File.WriteAllText("mongo_server_adress.cfg", "mongodb://localhost:27017/");
-                Console.WriteLine("New MongoDB adress file has been created. Make sure that adress is correct and restart server.");
+                logger.Info("New MongoDB adress file has been created. Make sure that adress is correct and restart server.");
                 Environment.Exit(0);
             }
 			return File.ReadAllText("mongo_server_adress.cfg");

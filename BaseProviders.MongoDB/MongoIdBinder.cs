@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.PixBlocks.MongoDB
 {
 	public class MongoIdBinder<T>
 	{

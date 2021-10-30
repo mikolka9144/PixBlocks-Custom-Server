@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Pix_API.Providers;
-using Pix_API.Providers.BaseClasses;
 
-namespace Base.Providers.ContainersProviders
+namespace Pix_API.Base.Disk
 {
 	public abstract class MultiplePoolStorageProvider<T> : SinglePoolStorageProvider<List<T>>
 	{

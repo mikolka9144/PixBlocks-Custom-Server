@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Pix_API.Utills</RootNamespace>
+    <RootNamespace>Pix_API.Base.Utills</RootNamespace>
     <AssemblyName>Pix_API.Utills</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>

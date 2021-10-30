@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Pix_API.Interfaces;
-using Pix_API.Utills;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API.CoreComponents.ServerCommands
+namespace Pix_API.PixBlocks.MainServer
 {
     public partial class Main_Logic
     {

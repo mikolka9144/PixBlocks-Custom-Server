@@ -1,6 +1,7 @@
 using MongoDB.Driver;
+using Pix_API.Base.Utills;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.Base.MongoDB
 {
 	public abstract class MongoIdSaver_Base<T>
 	{

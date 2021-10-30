@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Base.Providers.ContainersProviders;
-using Pix_API.Interfaces;
-using Pix_API.Providers.BaseClasses;
-using Pix_API.Utills;
+using Pix_API.Base.Disk;
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API.Providers.ContainersProviders
+namespace Pix_API.PixBlocks.Disk
 {
 	public class StudentClassExamsProvider : SinglePoolStorageProvider<ServerExam>, IStudentClassExamsProvider
 	{

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Pix_API.Providers.BaseClasses;
+using Pix_API.Base.Utills;
 
-namespace Pix_API.Providers
+namespace Pix_API.Base.Disk
 {
 	public abstract class DataSaver<T>
 	{

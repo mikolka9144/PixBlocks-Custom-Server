@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ninject.Modules;
-using Pix_API.Interfaces;
-using Pix_API.Providers.ContainersProviders;
-using Pix_API.Providers.MultiplePoolProviders;
-using Pix_API.Providers.SinglePoolProviders;
-using Pix_API.Providers.StaticProviders;
+using Pix_API.Base.Disk;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers
+namespace Pix_API.PixBlocks.Disk
 {
     public class NinfectManifest : NinjectModule
     {

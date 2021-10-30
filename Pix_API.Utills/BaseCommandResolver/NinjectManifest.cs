@@ -1,7 +1,7 @@
-﻿using System;
-using Ninject.Modules;
-using Pix_API.CoreComponents;
-using Pix_API;
+﻿using Ninject.Modules;
+using Pix_API.Base.CommandResolver;
+using Pix_API.Base.Utills;
+
 namespace BaseCommandResolver
 {
     public class NinjectManifest:NinjectModule

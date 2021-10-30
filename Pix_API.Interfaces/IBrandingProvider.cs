@@ -1,4 +1,4 @@
-namespace Pix_API.Interfaces
+namespace Pix_API.PixBlocks.Interfaces
 {
 	public interface IBrandingProvider
 	{

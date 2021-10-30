@@ -1,9 +1,9 @@
-﻿using System;
+﻿
 using Ninject.Modules;
-using Pix_API.CoreComponents;
-using Pix_API;
-using Pix_API.Interfaces;
-namespace PixBlocksCommandResolver
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.Interfaces;
+
+namespace Pix_API.PixBlocks.CommandResolver
 {
     public class NinjectManifest:NinjectModule
     {

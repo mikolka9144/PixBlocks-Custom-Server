@@ -1,12 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5374AE78-1F0A-4E2B-8BC1-BFEDB9FCB78F}</ProjectGuid>
+    <ProjectGuid>{973FB1F3-6307-45C9-B0FF-0B792AB8E76C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PixBlocksCommandResolver</RootNamespace>
-    <AssemblyName>PixBlocksCommandResolver</AssemblyName>
+    <RootNamespace>Pix_API.ChecklistReviewerApp.Disk</RootNamespace>
+    <AssemblyName>ChecklistReviewerApp.Disk</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -28,42 +28,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="PixBlocks.Server.DataModels">
-      <HintPath>..\packages\PixBlocks.Server.DataModels.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.4.7.11\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractUsers\ChampionshipsUser.cs" />
-    <Compile Include="APIServerResolver.cs" />
-    <Compile Include="NinjectManifest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileUsersProvider.cs" />
+    <Compile Include="MemoryTokenProvider.cs" />
+    <Compile Include="NinjectManifest.cs" />
+    <Compile Include="FileAreaToCheckMatadata.cs" />
+    <Compile Include="DiskReportSubmisions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixInterfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.PixInterfaces</Name>
+    <ProjectReference Include="ChecklistReviewerApp.Interfaces\ChecklistReviewerApp.Interfaces.csproj">
+      <Project>{4FEA4669-6D25-48AC-8006-EAE5F8300459}</Project>
+      <Name>ChecklistReviewerApp.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PixBlocksMainServer\PixBlocksMainServer.csproj">
-      <Project>{E56F0176-0047-4028-97A9-0E16601AF059}</Project>
-      <Name>PixBlocksMainServer</Name>
+    <ProjectReference Include="..\BaseProviders.Disk\BaseProviders.Disk.csproj">
+      <Project>{1588F27D-CA8E-4A4D-91C8-19BBE7C2EB84}</Project>
+      <Name>BaseProviders.Disk</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
@@ -73,6 +57,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

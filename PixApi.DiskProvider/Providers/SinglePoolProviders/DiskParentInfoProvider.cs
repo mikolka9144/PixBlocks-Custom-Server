@@ -1,8 +1,8 @@
-using Base.Providers.ContainersProviders;
-using Pix_API.Interfaces;
+using Pix_API.Base.Disk;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 
-namespace Pix_API.Providers
+namespace Pix_API.PixBlocks.Disk
 {
 	public class DiskParentInfoProvider : SinglePoolStorageProvider<ParentInfo>, IParentInfoHolder
 	{

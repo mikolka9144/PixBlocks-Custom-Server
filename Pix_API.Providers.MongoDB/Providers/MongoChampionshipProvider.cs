@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using MongoDB.Driver;
-using Pix_API.Interfaces;
+using Pix_API.Base.MongoDB;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.PixBlocks.MongoDB.Providers
 {
 	internal class MongoChampionshipProvider : MongoIdSaver_Base<Championship>, IChampionshipsMetadataProvider
 	{

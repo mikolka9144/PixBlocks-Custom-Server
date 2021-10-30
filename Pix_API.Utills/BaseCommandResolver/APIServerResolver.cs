@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Pix_API.Interfaces;
-using Pix_API.Utills;
 using NLog;
 using System;
-using Pix_API.CoreComponents;
 using Newtonsoft.Json;
+using System.Linq;
+using Pix_API.Base.Utills;
 
-namespace Pix_API
+namespace Pix_API.Base.CommandResolver
 {
     public class APIServerResolver:IAPIServerResolver
     {
@@ -24,7 +23,7 @@ namespace Pix_API
             logic_type = logic.GetType();
         }
 
-        public string Execute_API_Method(string name, string[] parameters)
+        public string Execute_API_Method(string name, string[] parameters,string body)
         {
             MethodInfo method = logic_type.GetMethod(name);
             if (method is null)
@@ -32,8 +31,8 @@ namespace Pix_API
                 log.Warn("method " + name + " not implemented");
                 return "";
             }
-            object[] array = ParseParameters(parameters, method.GetParameters());
-            return ExecuteMethod(logic,method, array);
+            object[] array = ParseParameters(parameters,body, method.GetParameters());
+            return ExecuteMethod(logic,method, array).Replace("\n","");
         }
 
         private string ExecuteMethod(ICommandRepository repositoryObject,MethodInfo method, object[] array)
@@ -47,14 +46,18 @@ namespace Pix_API
             return JsonConvert.SerializeObject(value);
         }
 
-        private object[] ParseParameters(string[] parameters, ParameterInfo[] parameters_types)
+        private object[] ParseParameters(string[] parameters,string body, ParameterInfo[] parameters_types)
         {
             List<object> list = new List<object>();
             for (int i = 0; i < parameters_types.Length; i++)
             {
                 Type parameterType = parameters_types[i].ParameterType;
-                object item = JsonConvert.DeserializeObject(parameters[i], parameterType);
-                list.Add(item);
+                if (parameterType != typeof(string)) throw new InvalidCastException("argument MUST be 'String'");
+                if (parameters_types[i].CustomAttributes.Any(s => s.AttributeType == typeof(FromBody))){
+                    list.Add(body);
+                }
+                else list.Add(parameters[i]);
+               
             }
             return list.ToArray();
         }

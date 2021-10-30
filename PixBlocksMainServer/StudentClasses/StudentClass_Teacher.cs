@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.CoreComponents.ServerCommands
+namespace Pix_API.PixBlocks.MainServer
 {
     public partial class Main_Logic
     {
