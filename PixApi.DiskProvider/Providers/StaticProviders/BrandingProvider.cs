@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using Pix_API.Interfaces;
+using Pix_API.PixBlocks.Interfaces;
 
-namespace Pix_API.Providers.StaticProviders
+namespace Pix_API.PixBlocks.Disk
 {
 	public class BrandingProvider : IBrandingProvider
 	{

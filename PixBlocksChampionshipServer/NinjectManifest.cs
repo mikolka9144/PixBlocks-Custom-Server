@@ -1,6 +1,6 @@
 ﻿using System;
 using Ninject.Modules;
-using Pix_API.CoreComponents;
+using Pix_API.PixBlocks;
 using Pix_API.Interfaces;
 namespace PixBlocksChampionshipServer
 {

@@ -1,4 +1,4 @@
-namespace Pix_API
+namespace Pix_API.Base.Utills
 {
 	public interface ILastIndexSaver
 	{

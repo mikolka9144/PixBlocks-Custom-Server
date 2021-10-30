@@ -3,14 +3,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
-using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
-using Pix_API.Utills;
 using NLog;
 using System;
-using Pix_API.CoreComponents;
+using Pix_API.PixBlocks.Interfaces;
+using Pix_API.PixBlocks.MainServer;
+using Pix_API.Base.Utills;
 
-namespace Pix_API
+namespace Pix_API.PixBlocks.CommandResolver
 {
     public class APIServerResolver:IAPIServerResolver
     {
@@ -32,7 +32,7 @@ namespace Pix_API
             logic_type = logic.GetType();
         }
 
-        public string Execute_API_Method(string name, string[] parameters)
+        public string Execute_API_Method(string name, string[] parameters,string body)
         {
             MethodInfo method = logic_type.GetMethod(name);
             if (method is null)

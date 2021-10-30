@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Base.Providers.ContainersProviders;
-using Pix_API.Interfaces;
-using Pix_API.Providers.ContainersProviders;
+using Pix_API.Base.Disk;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers.MultiplePoolProviders
+namespace Pix_API.PixBlocks.Disk
 {
 	public class UserCommentsProvider : MultiplePoolStorageProvider<Comment>, IUserCommentsProvider
 	{

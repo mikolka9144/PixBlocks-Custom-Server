@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B422F6D6-DC82-435B-B37E-1D72D4004EE8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BaseCommandResolver</RootNamespace>
+    <RootNamespace>Pix_API.Base.CommandResolver</RootNamespace>
     <AssemblyName>BaseCommandResolver</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>

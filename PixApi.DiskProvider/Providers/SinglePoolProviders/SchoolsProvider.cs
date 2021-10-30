@@ -1,9 +1,9 @@
 using System.Linq;
-using Pix_API.Interfaces;
+using Pix_API.Base.Disk;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
-using Base.Providers.ContainersProviders;
 
-namespace Pix_API.Providers.SinglePoolProviders
+namespace Pix_API.PixBlocks.Disk
 {
 	public class SchoolsProvider : SinglePoolStorageProvider<School>, ISchoolProvider
 	{

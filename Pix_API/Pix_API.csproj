@@ -56,21 +56,25 @@
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PixBlocksChampionshipServer\PixBlocksChampionshipServer.csproj">
-      <Project>{304E0D0C-C4BD-45A9-AE27-1C443A38679E}</Project>
-      <Name>PixBlocksChampionshipServer</Name>
+    <ProjectReference Include="..\Pix_API.Utills\BaseCommandResolver\Server.Base.CommandResolver.csproj">
+      <Project>{B422F6D6-DC82-435B-B37E-1D72D4004EE8}</Project>
+      <Name>Server.Base.CommandResolver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PixBlocksCommandResolver\PixBlocksCommandResolver.csproj">
-      <Project>{5374AE78-1F0A-4E2B-8BC1-BFEDB9FCB78F}</Project>
-      <Name>PixBlocksCommandResolver</Name>
+    <ProjectReference Include="..\ChecklistReviewerApp.Disk\ChecklistReviewerApp.MainServer\ChecklistReviewerApp.MainServer.csproj">
+      <Project>{C33B23BA-68D6-4136-8E57-C142F5F8C793}</Project>
+      <Name>ChecklistReviewerApp.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PixBlocksMainServer\PixBlocksMainServer.csproj">
-      <Project>{E56F0176-0047-4028-97A9-0E16601AF059}</Project>
-      <Name>PixBlocksMainServer</Name>
+    <ProjectReference Include="..\ChecklistReviewerApp.Disk\ChecklistReviewerApp.Disk.csproj">
+      <Project>{973FB1F3-6307-45C9-B0FF-0B792AB8E76C}</Project>
+      <Name>ChecklistReviewerApp.Disk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PixApi.DiskProvider\PixApi.DiskProvider.csproj">
-      <Project>{0546D215-BE27-4873-9E7C-3510F6DD7EF4}</Project>
-      <Name>PixApi.DiskProvider</Name>
+    <ProjectReference Include="..\ChecklistReviewerApp.Disk\ChecklistReviewerApp.Interfaces\ChecklistReviewerApp.Interfaces.csproj">
+      <Project>{4FEA4669-6D25-48AC-8006-EAE5F8300459}</Project>
+      <Name>ChecklistReviewerApp.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BaseProviders.Disk\BaseProviders.Disk.csproj">
+      <Project>{1588F27D-CA8E-4A4D-91C8-19BBE7C2EB84}</Project>
+      <Name>BaseProviders.Disk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

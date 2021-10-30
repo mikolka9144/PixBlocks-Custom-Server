@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 
-namespace Pix_API.Interfaces
+namespace Pix_API.PixBlocks.Interfaces
 {
 	public interface IChampionshipsMetadataProvider
 	{

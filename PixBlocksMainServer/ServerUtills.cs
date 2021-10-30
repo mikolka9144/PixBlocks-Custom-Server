@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Pix_API.Interfaces;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API
+namespace Pix_API.PixBlocks.MainServer
 {
     public class ServerUtills
     {

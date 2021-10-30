@@ -1,8 +1,9 @@
 using MongoDB.Driver;
-using Pix_API.Interfaces;
+
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 
-namespace Pix_API.Providers.MongoDB
+namespace Pix_API.PixBlocks.MongoDB
 {
 	internal class MongoParentInfoProvider : IParentInfoHolder
 	{

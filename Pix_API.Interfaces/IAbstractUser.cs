@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Pix_API.Base.Utills;
 using PixBlocks.Server.DataModels.DataModels;
 
-namespace Pix_API.Interfaces
+namespace Pix_API.PixBlocks.Interfaces
 {
     public interface IAbstractUser:ICommandRepository
     {

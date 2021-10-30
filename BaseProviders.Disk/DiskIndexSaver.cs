@@ -1,7 +1,8 @@
 using System;
 using System.IO;
+using Pix_API.Base.Utills;
 
-namespace Pix_API.Providers
+namespace Pix_API.Base.Disk
 {
 	public class DiskIndexSaver : ILastIndexSaver
 	{

@@ -3,7 +3,7 @@ using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 
-namespace Pix_API.CoreComponents
+namespace Pix_API.PixBlocks
 {
 	public class ChampionshipAPICommands : ICommandRepository
 	{

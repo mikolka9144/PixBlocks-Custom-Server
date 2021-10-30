@@ -2,11 +2,10 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Pix_API.Interfaces;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API.Utills
+namespace Pix_API.PixBlocks.MainServer
 {
 	public static class Utills
 	{

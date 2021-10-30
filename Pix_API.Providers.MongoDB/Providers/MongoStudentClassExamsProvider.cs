@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using MongoDB.Driver;
-using Pix_API.Interfaces;
-using Pix_API.Utills;
+using Pix_API.Base.MongoDB;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 
-namespace Pix_API.Providers.MongoDB.Providers
+namespace Pix_API.PixBlocks.MongoDB.Providers
 {
 	internal class MongoStudentClassExamsProvider : MongoIdSaver_Base<ServerExam>, IStudentClassExamsProvider
 	{

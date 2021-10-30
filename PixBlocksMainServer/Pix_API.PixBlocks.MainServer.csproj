@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E56F0176-0047-4028-97A9-0E16601AF059}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PixBlocksMainServer</RootNamespace>
+    <RootNamespace>Pix_API.PixBlocks.MainServer</RootNamespace>
     <AssemblyName>PixBlocksMainServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
@@ -60,13 +60,13 @@
     <Folder Include="UserResources\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixInterfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.PixInterfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixBlocks.Interfaces.csproj">
+      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
+      <Name>Pix_API.PixBlocks.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

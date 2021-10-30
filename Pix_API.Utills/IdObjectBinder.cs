@@ -1,4 +1,4 @@
-namespace Pix_API.Providers.BaseClasses
+namespace Pix_API.Base.Utills
 {
 	public class IdObjectBinder<T>
 	{

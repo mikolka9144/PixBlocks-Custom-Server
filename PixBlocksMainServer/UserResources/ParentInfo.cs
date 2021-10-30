@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Pix_API.Interfaces;
-using PixBlocks.Server.DataModels.DataModels;
-using PixBlocks.Server.DataModels.DataModels.Championsships;
-using PixBlocks.Server.DataModels.DataModels.DBModels;
-using PixBlocks.Server.DataModels.DataModels.ExamInfo;
-using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
-using PixBlocks.Server.DataModels.DataModels.Woocommerce;
 
-namespace Pix_API.CoreComponents.ServerCommands
+using PixBlocks.Server.DataModels.DataModels;
+
+using PixBlocks.Server.DataModels.DataModels.DBModels;
+
+
+namespace Pix_API.PixBlocks.MainServer
 {
 	public partial class Main_Logic 
 	{

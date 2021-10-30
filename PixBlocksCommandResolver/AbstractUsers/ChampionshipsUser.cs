@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Pix_API.CoreComponents.ServerCommands;
-using Pix_API.Interfaces;
-using Pix_API.Utills;
 using PixBlocks.Server.DataModels.DataModels;
 using PixBlocks.Server.DataModels.DataModels.Championsships;
 using PixBlocks.Server.DataModels.DataModels.DBModels;
 using PixBlocks.Server.DataModels.DataModels.ExamInfo;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
+using Pix_API.PixBlocks.Interfaces;
+using Pix_API.Base.Utills;
+using Pix_API.PixBlocks.MainServer;
 
-namespace Pix_API
+namespace Pix_API.PixBlocks.CommandResolver
 {
     internal class ChampionshipsUser : IAbstractUser
     {

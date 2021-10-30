@@ -1,6 +1,6 @@
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Interfaces
+namespace Pix_API.PixBlocks.Interfaces
 {
 	public interface IToyShopProvider
 	{

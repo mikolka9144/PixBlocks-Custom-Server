@@ -1,9 +1,8 @@
-using Base.Providers.ContainersProviders;
-using Pix_API.Interfaces;
-using Pix_API.Providers.BaseClasses;
+using Pix_API.Base.Disk;
+using Pix_API.PixBlocks.Interfaces;
 using PixBlocks.Server.DataModels.DataModels.UserProfileInfo;
 
-namespace Pix_API.Providers
+namespace Pix_API.PixBlocks.Disk
 {
 	public class ToyShopProvider : SinglePoolStorageProvider<ToyShopData>, IToyShopProvider
 	{

@@ -1,9 +1,8 @@
-using Pix_API.Providers;
-using Pix_API.Providers.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
+using Pix_API.Base.Utills;
 
-namespace Base.Providers.ContainersProviders
+namespace Pix_API.Base.Disk
 {
 	public class SinglePoolStorageProvider<T>
 	{

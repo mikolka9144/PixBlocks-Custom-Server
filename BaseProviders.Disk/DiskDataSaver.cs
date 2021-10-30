@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Pix_API.Providers.BaseClasses;
+using Pix_API.Base.Utills;
 
-namespace Pix_API.Providers
+namespace Pix_API.Base.Disk
 {
 	public class DiskDataSaver<T> : DataSaver<T>
 	{
