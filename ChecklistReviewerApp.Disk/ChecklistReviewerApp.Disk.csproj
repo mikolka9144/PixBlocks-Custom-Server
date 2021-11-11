@@ -39,6 +39,7 @@
     <Compile Include="NinjectManifest.cs" />
     <Compile Include="FileAreaToCheckMatadata.cs" />
     <Compile Include="DiskReportSubmisions.cs" />
+    <Compile Include="DiskReportObjects.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ChecklistReviewerApp.Interfaces\ChecklistReviewerApp.Interfaces.csproj">

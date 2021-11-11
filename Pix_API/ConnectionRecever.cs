@@ -68,10 +68,13 @@ namespace Pix_API.PixBlocks
         {
             try
             {
-                string text = resolver.Execute_API_Method(method_name, parameters, body);
-
-                byte[] bytes = Encoding.UTF8.GetBytes(text);
-                response.OutputStream.Write(bytes, 0, bytes.Length);
+                var result = resolver.Execute_API_Method(method_name, parameters, body);
+                if (result.wasFound)
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(result.result);
+                    response.OutputStream.Write(bytes, 0, bytes.Length);
+                }
+                else response.StatusCode = 404;
             }
             catch (TargetInvocationException ex)
             {

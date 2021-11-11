@@ -10,5 +10,6 @@ namespace Pix_API.ChecklistReviewerApp.Interfaces.Models
         public string login;
         public string passwordHash;
         public List<int> areasToCheckIds;
+        public bool IsAdmin;
     }
 }
