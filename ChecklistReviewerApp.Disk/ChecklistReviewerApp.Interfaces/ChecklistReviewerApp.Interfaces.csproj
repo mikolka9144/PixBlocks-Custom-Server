@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Pix_API.ChecklistReviewerApp.Interfaces</RootNamespace>
     <AssemblyName>ChecklistReviewerApp.Interfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,10 +35,12 @@
     <Compile Include="IObjectReportSubmissions.cs" />
     <Compile Include="ITokenProvider.cs" />
     <Compile Include="IUsersProvider.cs" />
-    <Compile Include="Models\AreaToCheck.cs" />
+    <Compile Include="Models\ClientAreaToCheck.cs" />
     <Compile Include="Models\ObjectInArea.cs" />
     <Compile Include="Models\ReportForObject.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ServerAreaToCheck.cs" />
+    <Compile Include="IAreaObjectsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
