@@ -4,6 +4,7 @@ using Pix_API.Base.Utills;
 using Pix_API.ChecklistReviewerApp.Interfaces;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 using Pix_API.ChecklistReviewerApp.Disk;
+using System;
 
 namespace Pix_API.ChecklistReviewerApp.MainServer
 {
@@ -45,13 +46,37 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
             }
             return areas;
         }
-        public void Send_reports(string token,[FromBody] AreaReport report)
+        public void Send_reports(string token,[FromBody] ClientAreaReport report)
         {
             var userId = tokenProvider.GetUserForToken(token);
-            reportsProvider.SubmitReport(report, userId);
+            reportsProvider.SubmitReport(ConvertReport(report,userId));
             var user = usersProvider.GetUser(userId);
             user.areasToCheckIds.Remove(report.AreaId);
             usersProvider.UpdateUser(user);
+        }
+        private ServerAreaReport ConvertReport(ClientAreaReport report,int UserID)
+        {
+            var area = areaProvider.GetArea(report.AreaId);
+            var user = usersProvider.GetUser(UserID);
+            var res = new ServerAreaReport
+            {
+                AreaName = area.name,
+                Objects = new List<ServerObjectReport>(),
+                CreationTime = DateTime.Now,
+                Creator = user.login
+            };
+            foreach (var item in report.Objects)
+            {
+                var server_obj = objectsProvider.GetObject(item.ObjectId);
+                var obj = new ServerObjectReport
+                {
+                    description = item.description,
+                    imageBase64 = item.imageBase64,
+                    ObjectName = server_obj.name
+                };
+                res.Objects.Add(obj);
+            }
+            return res;
         }
     }
 }

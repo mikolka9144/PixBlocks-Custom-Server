@@ -18,7 +18,6 @@ namespace Pix_API.Base.Utills
 			{
                 ServerConfiguration serverConfiguration = new ServerConfiguration
                 {
-                    Providers_lib = "PixApi.DiskProvider.dll",
                     servers = new List<ServerInstanceConfiguration>
                     {
                         new ServerInstanceConfiguration
@@ -26,11 +25,6 @@ namespace Pix_API.Base.Utills
 
                             host_ip = "http://*:8080/"
                         },
-                        new ServerInstanceConfiguration
-                        {
-
-                            host_ip = "http://*:8081/"
-                        }
                     },
                     ApiResolver = "BaseCommandResolver.dll"
 				};

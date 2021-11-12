@@ -20,6 +20,12 @@ namespace AdministrationApp
             new User{Id = 1,login = "bbbbb",passwordHash = "rjgheuirfhju"},
             new User{Id = 4,login = "miko",passwordHash = "rjgheuirfhju"}
         };
+        private List<ServerAreaReport> reports = new List<ServerAreaReport>
+        {
+            new ServerAreaReport{Id = 0, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue},
+            new ServerAreaReport{Id = 3, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue}
+
+        };
         private List<ObjectInArea> objects = new List<ObjectInArea>();
         private int i = 5;
         private int Bi = 5;
@@ -45,7 +51,7 @@ namespace AdministrationApp
 
         public void RemoveReport(ClientAreaToCheck area)
         {
-            areas.RemoveAll(s => s.Id == area.Id);
+
         }
 
         public ObjectInArea GetObject(int Id)
@@ -56,55 +62,55 @@ namespace AdministrationApp
         public ObjectInArea AddObject(ObjectInArea area)
         {
             area.Id = Bi++;
-            objects.Add(area);
             return area;
         }
 
         public void RemoveObject(int Id)
         {
-            objects.RemoveAll(s => s.Id == Id);
+
         }
 
         public void UpdateObject(ObjectInArea area)
         {
-            objects.RemoveAll(s => s.Id == area.Id);
-            objects.Add(area); 
+           
         }
 
         public ServerAreaToCheck AddArea(ServerAreaToCheck obj)
         {
             obj.Id = i++;
-            areas.Add(obj);
             return obj;
         }
 
-        public void EditReport(ServerAreaToCheck obj)
+        public void EditArea(ServerAreaToCheck obj)
         {
-            areas.RemoveAll(s => s.Id == obj.Id);
-            areas.Add(obj);
         }
 
-        public void RemoveReport(int areaId)
+        public void RemoveArea(int areaId)
         {
-            areas.RemoveAll(s => s.Id == areaId);
         }
 
         public void EditUser(User user)
         {
-            RemoveUser(user);
-            users.Add(user);
-        }
 
-        public void RemoveUser(User user)
-        {
-            users.RemoveAll(s => s.Id == user.Id);
         }
         private int x = 5;
         public User AddUser(User user)
         {
             user.Id = x++;
-            users.Add(user);
             return user;
+        }
+
+        public List<ServerAreaReport> GetAllReports()
+        {
+            return reports.ToList();
+        }
+
+        public void RemoveReport(int id)
+        {
+        }
+
+        public void RemoveUser(int Id)
+        {
         }
     }
 }

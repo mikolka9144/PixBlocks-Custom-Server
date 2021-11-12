@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 
 namespace Pix_API.ChecklistReviewerApp.Interfaces
 {
     public interface IObjectReportSubmissions
     {
-        void SubmitReport(AreaReport report, int UserId);
+        List<ServerAreaReport> GetAllReports();
+        void SubmitReport(ServerAreaReport report);
+        void RemoveReport(int Id);
     }
 }

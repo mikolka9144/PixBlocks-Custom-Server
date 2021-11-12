@@ -11,18 +11,19 @@ namespace AdministrationApp
 
         List<User> GetAllUsers();
         List<ServerAreaToCheck> GetAllAreasToCheck();
-
+        List<ServerAreaReport> GetAllReports();
         ObjectInArea GetObject(int Id);
         ObjectInArea AddObject(ObjectInArea area);
         void RemoveObject(int Id);
         void UpdateObject(ObjectInArea area);
 
         ServerAreaToCheck AddArea(ServerAreaToCheck obj);
-        void EditReport(ServerAreaToCheck obj);
-        void RemoveReport(int areaId);
+        void EditArea(ServerAreaToCheck obj);
+        void RemoveArea(int areaId);
 
         void EditUser(User user);
-        void RemoveUser(User user);
+        void RemoveReport(int id);
+        void RemoveUser(int Id);
         User AddUser(User user);
     }
 }

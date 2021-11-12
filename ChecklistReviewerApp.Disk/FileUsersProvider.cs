@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Pix_API.Base.Disk;
 using Pix_API.Base.Utills;
 using Pix_API.ChecklistReviewerApp.Interfaces;
@@ -21,6 +22,11 @@ namespace Pix_API.ChecklistReviewerApp.Disk
             AddSingleObject(user, user.Id);
         }
 
+        public List<User> GetAllUsers()
+        {
+            return storage.ToList();
+        }
+
         public User GetUser(string login) => storage.FirstOrDefault(s => s.login == login);
 
         public User GetUser(int Id) => GetSingleObject(Id);
@@ -30,6 +36,11 @@ namespace Pix_API.ChecklistReviewerApp.Disk
             var user = storage.First(s => s.Id == UserId);
             user.areasToCheckIds.Remove(AreaId);
             AddOrUpdateSingleObject(user, user.Id);
+        }
+
+        public void RemoveUser(int Id)
+        {
+            RemoveObject(Id);
         }
 
         public void UpdateUser(User user)

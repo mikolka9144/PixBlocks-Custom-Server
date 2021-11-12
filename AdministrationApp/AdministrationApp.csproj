@@ -64,6 +64,9 @@
     <Compile Include="Controls\Panels\AreasTab.cs" />
     <Compile Include="Windows\UserEditForm.cs" />
     <Compile Include="Controls\AreaPicker.cs" />
+    <Compile Include="API\CachedAPI.cs" />
+    <Compile Include="Controls\ReportsTable.cs" />
+    <Compile Include="Controls\Panels\ReportsTab.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -17,7 +17,6 @@ namespace AdministrationApp.Controls
             file.Filters.Add(new FileDialogFilter("Pictures", "*.png", "*.jpg"));
             file.FileChanged += (sender, e) => {
                 var base_image = Image.FromFile(file.FileName);
-                Console.WriteLine(file.FileName);
                 image.Image = Utills.TransformImage(base_image);
             };
             PackStart(image);

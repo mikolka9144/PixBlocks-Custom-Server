@@ -35,15 +35,18 @@
     <Compile Include="IObjectReportSubmissions.cs" />
     <Compile Include="ITokenProvider.cs" />
     <Compile Include="IUsersProvider.cs" />
-    <Compile Include="Models\ClientAreaToCheck.cs" />
     <Compile Include="Models\ObjectInArea.cs" />
-    <Compile Include="Models\ReportForObject.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\ServerAreaToCheck.cs" />
     <Compile Include="IAreaObjectsProvider.cs" />
+    <Compile Include="Models\AreaToCheck\ClientAreaToCheck.cs" />
+    <Compile Include="Models\AreaToCheck\ServerAreaToCheck.cs" />
+    <Compile Include="Models\AreaReport\ClientAreaReport.cs" />
+    <Compile Include="Models\AreaReport\ServerAreaReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Models\AreaToCheck\" />
+    <Folder Include="Models\AreaReport\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
