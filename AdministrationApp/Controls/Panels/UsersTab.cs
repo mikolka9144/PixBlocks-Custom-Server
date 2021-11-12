@@ -10,14 +10,16 @@ namespace AdministrationApp.Windows
     {
         private UsersTable users = new UsersTable();
         private readonly IAPIClient client;
-        private readonly List<ServerAreaToCheck> areas;
 
-        public UsersTab(IAPIClient client,List<ServerAreaToCheck> areas)
+        public UsersTab(IAPIClient client)
         {
             PackStart(users,true);
             PackEnd(Button_Box());
             this.client = client;
-            this.areas = areas;
+            foreach (var item in client.GetAllUsers())
+            {
+                users.AddUser(item);
+            }
         }
         private HBox Button_Box()
         {
@@ -34,7 +36,7 @@ namespace AdministrationApp.Windows
                 var user = users.GetSelectedObject();
                 if (user != null)
                 {
-                    new UserEditForm(areas).ExposeUserForEditing(user, (obj) =>
+                    new UserEditForm(client.GetAllAreasToCheck()).ExposeUserForEditing(user, (obj) =>
                     {
                         client.EditUser(obj);
                         users.UpdateUser(obj);
@@ -50,7 +52,7 @@ namespace AdministrationApp.Windows
             button.Clicked += delegate {
                 var user = users.GetSelectedObject();
                 users.RemoveUser(user);
-                client.RemoveUser(user);
+                client.RemoveUser(user.Id);
             };
             return button;
         }
@@ -58,7 +60,7 @@ namespace AdministrationApp.Windows
         {
             var button = new Button("Add user");
             button.Clicked += delegate {
-                new UserEditForm(areas).CreateNewUser((obj) =>
+                new UserEditForm(client.GetAllAreasToCheck()).CreateNewUser((obj) =>
                 {
                     var userWithUpdatedID = client.AddUser(obj);
                     users.AddUser(userWithUpdatedID);

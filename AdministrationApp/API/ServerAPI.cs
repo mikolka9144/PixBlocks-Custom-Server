@@ -25,7 +25,7 @@ namespace AdministrationApp.API
             return obj;
         }
 
-        public void EditReport(ServerAreaToCheck obj)
+        public void EditArea(ServerAreaToCheck obj)
         {
             SendRequest<object>("EditReport", new Parameter[0], obj);
         }
@@ -39,7 +39,9 @@ namespace AdministrationApp.API
 
         public List<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var res = SendRequest<List<User>>("GetAllUsers", new Parameter[0]
+            );
+            return res;
         }
 
         public ObjectInArea GetObject(int Id)
@@ -99,7 +101,7 @@ namespace AdministrationApp.API
             });
         }
 
-        public void RemoveReport(int areaId)
+        public void RemoveArea(int areaId)
         {
             var res = SendRequest<string>("RemoveReport", new[]
             {
@@ -130,17 +132,37 @@ namespace AdministrationApp.API
 
         public void EditUser(User user)
         {
-            throw new NotImplementedException();
+            SendRequest<object>("EditUser", new Parameter[0], user);
         }
 
-        public void RemoveUser(User user)
+        public void RemoveUser(int userId)
         {
-            throw new NotImplementedException();
+            var res = SendRequest<string>("RemoveUser", new[]
+            {
+                new Parameter("userId", userId,ParameterType.QueryString),
+            });
         }
 
         public User AddUser(User user)
         {
-            throw new NotImplementedException();
+            var res = SendRequest<int>("AddUser", new Parameter[0], user);
+            user.Id = res;
+            return user;
+        }
+
+        public List<ServerAreaReport> GetAllReports()
+        {
+            var res = SendRequest<List<ServerAreaReport>>("GetAllReports", new Parameter[0]
+            );
+            return res;
+        }
+
+        public void RemoveReport(int id)
+        {
+            var res = SendRequest<string>("RemoveReport", new[]
+            {
+                new Parameter("userId", id,ParameterType.QueryString),
+            });
         }
     }
 

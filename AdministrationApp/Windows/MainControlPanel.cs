@@ -12,10 +12,10 @@ namespace AdministrationApp
         {
             Closed += MainControlPanel_Closed;
 
-            var areas = client.GetAllAreasToCheck();
             var tabs = new Notebook();
-            tabs.Add(new AreasTab(client,areas),"Areas");
-            tabs.Add(new UsersTab(client, areas), "Users");
+            tabs.Add(new AreasTab(client),"Areas");
+            tabs.Add(new UsersTab(client), "Users");
+            tabs.Add(new ReportsTab(client), "Reports");
             Content = tabs;
             this.client = client;
         }

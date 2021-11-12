@@ -50,7 +50,7 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
             objectsProvider.RemoveObject(Id);
         }
 
-        public void RemoveReport(string token,int areaId)
+        public void RemoveArea(string token,int areaId)
         {
             ThrowIsUserIsntAdmin(token);
             areaProvider.RemoveArea(areaId);
@@ -67,9 +67,43 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
             var user = usersProvider.GetUser(userId);
             return user.IsAdmin;
         }
+
+        public List<User> GetAllUsers(string token)
+        {
+            ThrowIsUserIsntAdmin(token);
+            return usersProvider.GetAllUsers();
+        }
+        public void EditUser(string token,[FromBody] User user)
+        {
+            ThrowIsUserIsntAdmin(token);
+            usersProvider.UpdateUser(user);
+        }
+
+        public void RemoveUser(string token,int userId)
+        {
+            ThrowIsUserIsntAdmin(token);
+            usersProvider.RemoveUser(userId);
+        }
+
+        public int AddUser(string token,[FromBody]User user)
+        {
+            ThrowIsUserIsntAdmin(token);
+            usersProvider.AddUser(user);
+            return user.Id;
+        }
+        public List<ServerAreaReport> GetAllReports(string token)
+        {
+            ThrowIsUserIsntAdmin(token);
+            return reportsProvider.GetAllReports();
+        }
+        public void RemoveReport(string token, int Id)
+        {
+            ThrowIsUserIsntAdmin(token);
+            reportsProvider.RemoveReport(Id);
+        }
         private void ThrowIsUserIsntAdmin(string token)
         {
-            if(!IsAdmin(token)) throw new SecurityException("Non-admin user called a Admin olny command");
+            if (!IsAdmin(token)) throw new SecurityException("Non-admin user called a Admin olny command");
         }
     }
 }

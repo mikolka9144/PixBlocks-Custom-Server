@@ -12,7 +12,7 @@ namespace Pix_API.ChecklistReviewerApp.Disk
         {
             var user_saver = new DiskDataSaver<User>("./users");
             var area_saver = new DiskDataSaver<ServerAreaToCheck>("./areas");
-            var report_saver = new DiskDataSaver<List<AreaReport>>("./reports");
+            var report_saver = new DiskDataSaver<ServerAreaReport>("./reports");
             var objects_saver = new DiskDataSaver<ObjectInArea>("./objects");
             Bind<IUsersProvider>().ToConstant(new FileUsersProvider(user_saver, new DiskIndexSaver("users.index")));
             Bind<IAreaToCheckMetadataProvider>().ToConstant(new FileAreaToCheckMatadata(area_saver, new DiskIndexSaver("areas.index")));

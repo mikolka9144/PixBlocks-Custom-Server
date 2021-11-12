@@ -7,8 +7,8 @@ namespace AdministrationApp
 {
     public class AreasTable:TreeView
     {
-        internal static DataField<string> Name = new DataField<string>();
-        internal static DataField<int> Id = new DataField<int>();
+        private DataField<string> Name = new DataField<string>();
+        private DataField<int> Id = new DataField<int>();
         private List<TerrainDescriptor> Terrain = new List<TerrainDescriptor>();
         private TreeStore store;
         public AreasTable(List<ServerAreaToCheck> areas)
@@ -29,7 +29,7 @@ namespace AdministrationApp
             var terrain = Terrain.FirstOrDefault(s => s.Name == area.terrain);
             if(terrain == null)
             {
-                terrain = new TerrainDescriptor(area.terrain, store.AddNode());
+                terrain = new TerrainDescriptor(area.terrain, store.AddNode(),Name,Id);
                 Terrain.Add(terrain);
             }
             terrain.AddArea(area);
@@ -60,16 +60,21 @@ namespace AdministrationApp
 
     class TerrainDescriptor
     {
-        public TerrainDescriptor(string name,TreeNavigator navigator)
+        private readonly IDataField<string> nameField;
+        private readonly IDataField<int> idField;
+
+        public TerrainDescriptor(string name, TreeNavigator navigator, IDataField<string> NameField, IDataField<int> IdField)
         {
-            Name = name;
+            this.Name = name;
             Navigator = navigator;
-            navigator.SetValues(AreasTable.Name, name,AreasTable.Id,-1);
+            nameField = NameField;
+            idField = IdField;
+            navigator.SetValues(NameField, name,IdField,-1);
         }
         public void AddArea(ServerAreaToCheck area)
         {
             var child = Navigator.AddChild();
-            child.SetValues(AreasTable.Name, area.name,AreasTable.Id,area.Id);
+            child.SetValues(nameField, area.name,idField,area.Id);
             areas.Add(new AreaDescriptor(area, child.Clone()));
             Navigator.MoveToParent();
         }

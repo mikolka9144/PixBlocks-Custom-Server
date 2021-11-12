@@ -84,7 +84,7 @@ namespace AdministrationApp
             button.Clicked += delegate {
                 var area = objectsInArea.GetSelectedObject();
                 objectsInArea.RemoveObject(area);
-                client.RemoveReport(area.Id);
+                client.RemoveArea(area.Id);
             };
             return button;
         }

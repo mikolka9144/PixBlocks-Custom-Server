@@ -10,9 +10,9 @@ namespace AdministrationApp.Controls.Panels
         private AreasTable areasTable;
         private readonly IAPIClient client;
 
-        public AreasTab(IAPIClient client,List<ServerAreaToCheck> areas)
+        public AreasTab(IAPIClient client)
         {
-            areasTable = new AreasTable(areas);
+            areasTable = new AreasTable(client.GetAllAreasToCheck());
             PackStart(areasTable, true);
             PackEnd(Button_Box());
             this.client = client;
@@ -35,7 +35,7 @@ namespace AdministrationApp.Controls.Panels
                     var previousTerrain = area.terrain;
                     new AreaEditForm(client).ExposeAreaForEditing(area, (obj) =>
                     {
-                        client.EditReport(obj);
+                        client.EditArea(obj);
                         areasTable.EditArea(obj, previousTerrain);
                     });
                 }
@@ -49,7 +49,7 @@ namespace AdministrationApp.Controls.Panels
             button.Clicked += delegate {
                 var area = areasTable.GetSelectedArea();
                 areasTable.RemoveArea(area);
-                client.RemoveReport(area.Id);
+                client.RemoveArea(area.Id);
             };
             return button;
         }
