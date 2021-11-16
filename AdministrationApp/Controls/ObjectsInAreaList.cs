@@ -6,20 +6,20 @@ using System.Linq;
 using AdministrationApp.Controls;
 namespace AdministrationApp
 {
-    public class ObjectsInAreaList:ObjectsList<ObjectInArea>
+    public class ObjectsInAreaList:ObjectsList<ServerObjectInArea>
     {
-        public void AddObject(ObjectInArea area)
+        public void AddObject(ServerObjectInArea area)
         {
             AddObject(area, area.name);
         }
-        public void RemoveObject(ObjectInArea area)
+        public void RemoveObject(ServerObjectInArea area)
         {
             RemoveObject(s =>
             {
                 return s.Id == area.Id;
             });
         }
-        public void EditObject(ObjectInArea area)
+        public void EditObject(ServerObjectInArea area)
         {
             RemoveObject(area);
             Items.Insert(0, area, area.name);
@@ -28,7 +28,7 @@ namespace AdministrationApp
 
         public List<int> GetAllObjectsIDs()
         {
-            return Items.Cast<ObjectInArea>().Select(s => s.Id).ToList();
+            return Items.Cast<ServerObjectInArea>().Select(s => s.Id).ToList();
         }
     }
 }

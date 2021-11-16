@@ -5,9 +5,9 @@ namespace Pix_API.ChecklistReviewerApp.Disk
 {
     public interface IAreaObjectsProvider
     {
-        ObjectInArea GetObject(int Id);
-        int AddObject(ObjectInArea area);
+        ServerObjectInArea GetObject(int Id);
+        int AddObject(ServerObjectInArea area);
         void RemoveObject(int Id);
-        void UpdateObject(ObjectInArea area);
+        void UpdateObject(ServerObjectInArea area);
     }
 }

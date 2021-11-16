@@ -2,10 +2,17 @@
 namespace Pix_API.ChecklistReviewerApp.Interfaces.Models
 {
     [Serializable]
-    public class ObjectInArea
+    public class ClientObjectInArea
     {
-        public int Id;
-        public string name;
+        public int Id { get; set; }
+        public string name { get; set; }
         public string image;
     }
+    [Serializable]
+    public class ServerObjectInArea
+    {
+        public int Id { get; set; }
+        public string name { get; set; }
+        public int ImageId;
+    }//TODO
 }

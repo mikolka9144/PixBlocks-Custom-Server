@@ -31,7 +31,7 @@ namespace ChamponshipMenagerApp
             boxController.PackStart(password_box);
 
             var Login_Btn = new Button("Login");
-            Login_Btn.Clicked += (sender, e) => Login(new CachedAPI());
+            Login_Btn.Clicked += (sender, e) => Login(new ServerAPI());
             boxController.PackEnd(Login_Btn);
 
             var Test_Btn = new Button("Test UI");

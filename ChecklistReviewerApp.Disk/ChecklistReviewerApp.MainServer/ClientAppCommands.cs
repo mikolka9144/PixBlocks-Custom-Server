@@ -12,17 +12,19 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
     {
         private readonly ITokenProvider tokenProvider;
         private readonly IUsersProvider usersProvider;
-        private readonly IAreaToCheckMetadataProvider areaProvider;
+        private readonly IAreaMetadataProvider areaProvider;
         private readonly IObjectReportSubmissions reportsProvider;
         private readonly IAreaObjectsProvider objectsProvider;
+        private readonly IImageManager imageManager;
 
-        public ClientAppCommands(ITokenProvider tokenProvider,IUsersProvider usersProvider,IAreaToCheckMetadataProvider areaProvider,IObjectReportSubmissions reportsProvider,IAreaObjectsProvider objectsProvider)
+        public ClientAppCommands(ITokenProvider tokenProvider,IUsersProvider usersProvider,IAreaMetadataProvider areaProvider,IObjectReportSubmissions reportsProvider,IAreaObjectsProvider objectsProvider,IImageManager imageManager)
         {
             this.tokenProvider = tokenProvider;
             this.usersProvider = usersProvider;
             this.areaProvider = areaProvider;
             this.reportsProvider = reportsProvider;
             this.objectsProvider = objectsProvider;
+            this.imageManager = imageManager;
         }
         public string Get_token(string login,string passwordHash)
         {
@@ -40,43 +42,19 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
             foreach (var item in user.areasToCheckIds)
             {
                 var ServerArea = areaProvider.GetArea(item);
-                var objs = new List<ObjectInArea>();
-                ServerArea.ObjectsInArea.ForEach(s => objs.Add(objectsProvider.GetObject(s)));
-                areas.Add(new ClientAreaToCheck(ServerArea, objs));
+                areas.Add(ServerArea.ConvertAreaToClient(objectsProvider, imageManager));
             }
             return areas;
         }
         public void Send_reports(string token,[FromBody] ClientAreaReport report)
         {
             var userId = tokenProvider.GetUserForToken(token);
-            reportsProvider.SubmitReport(ConvertReport(report,userId));
             var user = usersProvider.GetUser(userId);
+            reportsProvider.SubmitReport(report.ConvertReport(user.login,areaProvider,objectsProvider,imageManager));
+
             user.areasToCheckIds.Remove(report.AreaId);
             usersProvider.UpdateUser(user);
         }
-        private ServerAreaReport ConvertReport(ClientAreaReport report,int UserID)
-        {
-            var area = areaProvider.GetArea(report.AreaId);
-            var user = usersProvider.GetUser(UserID);
-            var res = new ServerAreaReport
-            {
-                AreaName = area.name,
-                Objects = new List<ServerObjectReport>(),
-                CreationTime = DateTime.Now,
-                Creator = user.login
-            };
-            foreach (var item in report.Objects)
-            {
-                var server_obj = objectsProvider.GetObject(item.ObjectId);
-                var obj = new ServerObjectReport
-                {
-                    description = item.description,
-                    imageBase64 = item.imageBase64,
-                    ObjectName = server_obj.name
-                };
-                res.Objects.Add(obj);
-            }
-            return res;
-        }
+
     }
 }

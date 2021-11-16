@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Pix_API.ChecklistReviewerApp.Disk
 {
-    public class FileAreaToCheckMatadata : SinglePoolStorageProvider<ServerAreaToCheck>, IAreaToCheckMetadataProvider
+    public class FileAreaToCheckMatadata : SinglePoolStorageProvider<ServerAreaToCheck>, IAreaMetadataProvider
     {
         IdAssigner idAssigner;
         public FileAreaToCheckMatadata(DataSaver<ServerAreaToCheck> saver,ILastIndexSaver index_saver) : base(saver)
@@ -15,11 +15,10 @@ namespace Pix_API.ChecklistReviewerApp.Disk
             idAssigner = new IdAssigner(index_saver);
         }
 
-        public int AddArea(ServerAreaToCheck area)
+        public void AddArea(ServerAreaToCheck area)
         {
             area.Id = idAssigner.NextEmptyId;
             AddSingleObject(area, area.Id);
-            return area.Id;
         }
 
         public void EditArea(ServerAreaToCheck area)

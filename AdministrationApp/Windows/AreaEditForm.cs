@@ -5,6 +5,8 @@ using Xwt.Drawing;
 using System.IO;
 using AdministrationApp.Controls;
 using AdministrationApp.Windows;
+using AdministrationApp.Models;
+
 namespace AdministrationApp
 {
     public class AreaEditForm:Dialog
@@ -14,12 +16,13 @@ namespace AdministrationApp
         private TextEntry terrainBox = new TextEntry();
 
         private ObjectsInAreaList objectsInArea = new ObjectsInAreaList();
-        private Action<ServerAreaToCheck> OnSave;
+        private Action<AdminAreaToCheck> OnSave;
         private ImageSelector Image = new ImageSelector();
         private readonly IAPIClient client;
 
         public AreaEditForm(IAPIClient client)
         {
+            Title = "Edit area";
             var box = new VBox();
             box.PackStart(new Label("Name"));
             box.PackStart(nameBox);
@@ -36,7 +39,7 @@ namespace AdministrationApp
             this.client = client;
         }
 
-        public void ExposeAreaForEditing(ServerAreaToCheck area,Action<ServerAreaToCheck> onSubmit)
+        public void ExposeAreaForEditing(AdminAreaToCheck area,Action<AdminAreaToCheck> onSubmit)
         {
             AreaID = area.Id;
             nameBox.Text = area.name;
@@ -48,7 +51,7 @@ namespace AdministrationApp
             }
             CreateNewArea(onSubmit);
         }
-        public void CreateNewArea(Action<ServerAreaToCheck> onSubmit)
+        public void CreateNewArea(Action<AdminAreaToCheck> onSubmit)
         {
             OnSave = onSubmit;
             Show();
@@ -63,15 +66,15 @@ namespace AdministrationApp
         }
         private Button Edit_Button()
         {
-            var button = new Button("Edit area");
+            var button = new Button("Edit object");
             button.Clicked += delegate {
                 var obj = objectsInArea.GetSelectedObject();
                 if (obj != null)
                 {
-                    new ObjectEditForm().ModifyObject(obj, (obj2) =>
+                    new ObjectEditForm().ModifyObject(obj,client.GetImage(obj.ImageId), (obj2) =>
                     {
-                        client.UpdateObject(obj2);
-                        objectsInArea.EditObject(obj2);
+                        var serverObj = client.UpdateObject(obj2);
+                        objectsInArea.EditObject(serverObj);
                     });
                 }
 
@@ -80,17 +83,17 @@ namespace AdministrationApp
         }
         private Button Remove_Button()
         {
-            var button = new Button("Remove area");
+            var button = new Button("Remove object");
             button.Clicked += delegate {
                 var area = objectsInArea.GetSelectedObject();
                 objectsInArea.RemoveObject(area);
-                client.RemoveArea(area.Id);
+                client.RemoveObject(area.Id);
             };
             return button;
         }
         private Button Add_Button()
         {
-            var button = new Button("Add area");
+            var button = new Button("Add object");
             button.Clicked += delegate {
                 new ObjectEditForm().CreateNewObject( (obj) =>
                 {
@@ -111,7 +114,7 @@ namespace AdministrationApp
         {
             var btn = new Button("Save");
             btn.Clicked += delegate {
-                var area = new ServerAreaToCheck()
+                var area = new AdminAreaToCheck()
                 {
                     Id = AreaID,
                     image = Utills.GetBase64FromImage(Image.Image),

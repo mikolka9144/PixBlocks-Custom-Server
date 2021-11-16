@@ -18,6 +18,11 @@ namespace Pix_API.ChecklistReviewerApp.Disk
 
         public List<ServerAreaReport> GetAllReports() => storage.ToList();
 
+        public ServerAreaReport GetReport(int id)
+        {
+            return GetSingleObject(id);
+        }
+
         public void RemoveReport(int Id)
         {
             RemoveObject(Id);

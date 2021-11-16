@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 using System.Linq;
+using AdministrationApp.Models;
 
 namespace AdministrationApp
 {
@@ -22,11 +23,11 @@ namespace AdministrationApp
         };
         private List<ServerAreaReport> reports = new List<ServerAreaReport>
         {
-            new ServerAreaReport{Id = 0, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue},
-            new ServerAreaReport{Id = 3, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue}
+            new ServerAreaReport{Id = 0, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue.ToString()},
+            new ServerAreaReport{Id = 3, AreaName = "test",Creator = "",CreationTime = DateTime.MinValue.ToString()}
 
         };
-        private List<ObjectInArea> objects = new List<ObjectInArea>();
+        private List<ServerObjectInArea> objects = new List<ServerObjectInArea>();
         private int i = 5;
         private int Bi = 5;
 
@@ -54,12 +55,12 @@ namespace AdministrationApp
 
         }
 
-        public ObjectInArea GetObject(int Id)
+        public ServerObjectInArea GetObject(int Id)
         {
             return objects.FirstOrDefault(s => s.Id == Id);
         }
 
-        public ObjectInArea AddObject(ObjectInArea area)
+        public ClientObjectInArea AddObject(ClientObjectInArea area)
         {
             area.Id = Bi++;
             return area;
@@ -70,10 +71,6 @@ namespace AdministrationApp
 
         }
 
-        public void UpdateObject(ObjectInArea area)
-        {
-           
-        }
 
         public ServerAreaToCheck AddArea(ServerAreaToCheck obj)
         {
@@ -81,9 +78,7 @@ namespace AdministrationApp
             return obj;
         }
 
-        public void EditArea(ServerAreaToCheck obj)
-        {
-        }
+
 
         public void RemoveArea(int areaId)
         {
@@ -111,6 +106,40 @@ namespace AdministrationApp
 
         public void RemoveUser(int Id)
         {
+        }
+
+        public void UpdateObject(ClientObjectInArea area)
+        {
+        }
+
+        public void EditArea(ClientAreaToCheck obj)
+        {
+
+        }
+
+        public string GetImage(int ImageId)
+        {
+            return "";
+        }
+
+        ServerObjectInArea IAPIClient.AddObject(ClientObjectInArea area)
+        {
+            throw new NotImplementedException();
+        }
+
+        ServerObjectInArea IAPIClient.UpdateObject(ClientObjectInArea area)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ServerAreaToCheck AddArea(AdminAreaToCheck obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ServerAreaToCheck EditArea(AdminAreaToCheck obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

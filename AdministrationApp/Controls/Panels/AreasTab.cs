@@ -33,10 +33,10 @@ namespace AdministrationApp.Controls.Panels
                 if (area != null)
                 {
                     var previousTerrain = area.terrain;
-                    new AreaEditForm(client).ExposeAreaForEditing(area, (obj) =>
+                    new AreaEditForm(client).ExposeAreaForEditing(area.ToAdmin(client), (obj) =>
                     {
-                        client.EditArea(obj);
-                        areasTable.EditArea(obj, previousTerrain);
+                        var serverObj = client.EditArea(obj);
+                        areasTable.EditArea(serverObj, previousTerrain);
                     });
                 }
 

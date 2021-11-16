@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AdministrationApp.Models;
 
 namespace Pix_API.ChecklistReviewerApp.Interfaces.Models
 {
@@ -8,7 +9,7 @@ namespace Pix_API.ChecklistReviewerApp.Interfaces.Models
         public int Id;
         public string name;
         public string terrain;
-        public string image;
+        public int imageId;
         public List<int> ObjectsInArea;
     }
 }
