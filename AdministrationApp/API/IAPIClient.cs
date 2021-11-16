@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
+using AdministrationApp.Models;
 
 namespace AdministrationApp
 {
@@ -8,22 +9,24 @@ namespace AdministrationApp
     {
         bool LoginToServer(string text, string password);
         bool IsServerOnline();
+        string GetImage(int ImageId);
 
         List<User> GetAllUsers();
         List<ServerAreaToCheck> GetAllAreasToCheck();
         List<ServerAreaReport> GetAllReports();
-        ObjectInArea GetObject(int Id);
-        ObjectInArea AddObject(ObjectInArea area);
+        ServerObjectInArea GetObject(int Id);
+        ServerObjectInArea AddObject(ClientObjectInArea area);
         void RemoveObject(int Id);
-        void UpdateObject(ObjectInArea area);
+        ServerObjectInArea UpdateObject(ClientObjectInArea area);
 
-        ServerAreaToCheck AddArea(ServerAreaToCheck obj);
-        void EditArea(ServerAreaToCheck obj);
+        ServerAreaToCheck AddArea(AdminAreaToCheck obj);
+        ServerAreaToCheck EditArea(AdminAreaToCheck obj);
         void RemoveArea(int areaId);
 
         void EditUser(User user);
         void RemoveReport(int id);
         void RemoveUser(int Id);
         User AddUser(User user);
+
     }
 }

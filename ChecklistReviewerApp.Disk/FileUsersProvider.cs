@@ -9,16 +9,16 @@ namespace Pix_API.ChecklistReviewerApp.Disk
 {
     public class FileUsersProvider:SinglePoolStorageProvider<User>,IUsersProvider 
     {
-        private readonly IdAssigner saver;
+        private readonly IdAssigner idSaver;
 
         public FileUsersProvider(DataSaver<User> saver, ILastIndexSaver index_saver) : base(saver)
         {
-            this.saver = new IdAssigner(index_saver);
+            idSaver = new IdAssigner(index_saver);
         }
 
         public void AddUser(User user)
         {
-            user.Id = saver.NextEmptyId;
+            user.Id = idSaver.NextEmptyId;
             AddSingleObject(user, user.Id);
         }
 

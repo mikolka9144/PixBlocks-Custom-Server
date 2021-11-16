@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Xwt.Gtk.0.2.251\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.251\build\Xwt.Gtk.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C33B23BA-68D6-4136-8E57-C142F5F8C793}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Pix_API.ChecklistReviewerApp.MainServer</RootNamespace>
-    <AssemblyName>ChecklistReviewerApp.MainServer</AssemblyName>
+    <ProjectGuid>{219E82A2-DA68-42B7-97B4-51785B0CEE88}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AdministrationApp.Linux</RootNamespace>
+    <AssemblyName>AdministrationApp.Linux</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,45 +18,39 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Ninject">
-      <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    <Reference Include="Xwt">
+      <HintPath>..\..\packages\Xwt.0.2.251\lib\net472\Xwt.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="UrlBase64">
-      <HintPath>..\..\packages\UrlBase64.0.1.2\lib\net40\UrlBase64.dll</HintPath>
+    <Reference Include="Xwt.Gtk">
+      <HintPath>..\..\packages\Xwt.Gtk.0.2.251\lib\net472\Xwt.Gtk.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClientAppCommands.cs" />
-    <Compile Include="NinjectManifest.cs" />
-    <Compile Include="ServerCommands.cs" />
-    <Compile Include="Converters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChecklistReviewerApp.Interfaces\ChecklistReviewerApp.Interfaces.csproj">
+    <ProjectReference Include="..\AdministrationApp.csproj">
+      <Project>{CE1D2636-B114-4938-B008-5D39A9855290}</Project>
+      <Name>AdministrationApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ChecklistReviewerApp.Disk\ChecklistReviewerApp.Interfaces\ChecklistReviewerApp.Interfaces.csproj">
       <Project>{4FEA4669-6D25-48AC-8006-EAE5F8300459}</Project>
       <Name>ChecklistReviewerApp.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Pix_API.Utills\Pix_API.Utills.csproj">
-      <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
-      <Name>Pix_API.Utills</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

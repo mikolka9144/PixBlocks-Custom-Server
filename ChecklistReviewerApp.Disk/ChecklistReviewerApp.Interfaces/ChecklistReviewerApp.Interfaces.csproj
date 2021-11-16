@@ -31,22 +31,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IAreaToCheckMetadataProvider.cs" />
+    <Compile Include="IAreaMetadataProvider.cs" />
     <Compile Include="IObjectReportSubmissions.cs" />
     <Compile Include="ITokenProvider.cs" />
     <Compile Include="IUsersProvider.cs" />
     <Compile Include="Models\ObjectInArea.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="IAreaObjectsProvider.cs" />
-    <Compile Include="Models\AreaToCheck\ClientAreaToCheck.cs" />
-    <Compile Include="Models\AreaToCheck\ServerAreaToCheck.cs" />
-    <Compile Include="Models\AreaReport\ClientAreaReport.cs" />
-    <Compile Include="Models\AreaReport\ServerAreaReport.cs" />
+    <Compile Include="Models\Client\ClientAreaReport.cs" />
+    <Compile Include="Models\Client\ClientAreaToCheck.cs" />
+    <Compile Include="Models\Admin\ServerAreaReport.cs" />
+    <Compile Include="Models\Admin\ServerAreaToCheck.cs" />
+    <Compile Include="IImageManager.cs" />
+    <Compile Include="Models\IArea.cs" />
+    <Compile Include="Models\Client\AdminAreaToCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Models\AreaToCheck\" />
-    <Folder Include="Models\AreaReport\" />
+    <Folder Include="Models\Client\" />
+    <Folder Include="Models\Admin\" />
+    <Folder Include="Models\Server\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

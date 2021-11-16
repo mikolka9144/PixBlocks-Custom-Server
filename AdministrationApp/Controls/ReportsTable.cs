@@ -27,7 +27,7 @@ namespace AdministrationApp.Controls
         {
             var index = DataStore.AddRow();
             Reports.Add(report);
-            DataStore.SetValues(index, CreatorName, report.Creator, AreaName, report.AreaName, CreationDate, report.CreationTime);
+            DataStore.SetValues(index, CreatorName, report.Creator, AreaName, report.AreaName, CreationDate, DateTime.Parse(report.CreationTime));
         }
         public void RemoveReport(ServerAreaReport report)
         {

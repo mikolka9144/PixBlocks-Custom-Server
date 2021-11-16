@@ -19,6 +19,7 @@ namespace AdministrationApp.Windows
 
         public UserEditForm(List<ServerAreaToCheck> areas)
         {
+            Title = "Edit user";
             AreaSelector = new AreaSelector();
             this.areas = areas;
 

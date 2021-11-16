@@ -8,14 +8,14 @@ namespace Pix_API.ChecklistReviewerApp.Interfaces.Models
     {
         public string ObjectName;
         public string description;
-        public string imageBase64;
+        public int ImageId;
     }
     [Serializable]
     public class ServerAreaReport
     {
         public int Id;
         public string Creator;
-        public DateTime CreationTime;
+        public string CreationTime;
         public string AreaName;
         public List<ServerObjectReport> Objects;
     }

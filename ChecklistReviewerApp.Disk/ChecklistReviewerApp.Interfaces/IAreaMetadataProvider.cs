@@ -4,10 +4,10 @@ using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 
 namespace Pix_API.ChecklistReviewerApp.Interfaces
 {
-    public interface IAreaToCheckMetadataProvider
+    public interface IAreaMetadataProvider
     {
         ServerAreaToCheck GetArea(int Id);
-        int AddArea(ServerAreaToCheck area);
+        void AddArea(ServerAreaToCheck area);
         void EditArea(ServerAreaToCheck area);
         List<ServerAreaToCheck> GetAllAreas();
         void RemoveArea(int Id);

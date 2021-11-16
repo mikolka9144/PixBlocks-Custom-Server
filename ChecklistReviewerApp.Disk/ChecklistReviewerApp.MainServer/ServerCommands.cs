@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Pix_API.Base.Utills;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 using System.Security;
+using AdministrationApp.Models;
 
 namespace Pix_API.ChecklistReviewerApp.MainServer
 {
@@ -12,24 +13,30 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
         /// Adds the area.
         /// </summary>
         /// <returns>The Id of added Area.</returns>
-        public int AddArea(string token,[ FromBody] ServerAreaToCheck obj)
+        public ServerAreaToCheck AddArea(string token,[ FromBody] AdminAreaToCheck obj)
         {
             ThrowIsUserIsntAdmin(token);
-            var ID = areaProvider.AddArea(obj);
-            return ID;
+            var serverArea = obj.ConvertToServer(imageManager,null);
+            areaProvider.AddArea(serverArea);
+            return serverArea;
         }
 
-        public int AddObject(string token,[FromBody] ObjectInArea area)
+        public ServerObjectInArea AddObject(string token,[FromBody] ClientObjectInArea area)
         {
             ThrowIsUserIsntAdmin(token);
-            var ID = objectsProvider.AddObject(area);
-            return ID;
+            var serverObject = area.ConvertToServer(imageManager.UploadBase64(area.image));
+            var ID = objectsProvider.AddObject(serverObject);
+            serverObject.Id = ID;
+            return serverObject;
         }
 
-        public void EditReport(string token,[FromBody] ServerAreaToCheck obj)
+        public ServerAreaToCheck EditArea(string token,[FromBody] AdminAreaToCheck obj)
         {
             ThrowIsUserIsntAdmin(token);
-            areaProvider.EditArea(obj);
+            var currentServerArea = areaProvider.GetArea(obj.Id);
+            var serverArea = obj.ConvertToServer(imageManager,currentServerArea.imageId);
+            areaProvider.EditArea(serverArea);
+            return serverArea;
         }
 
         public List<ServerAreaToCheck> GetAllAreasToCheck(string token)
@@ -38,7 +45,7 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
             return areaProvider.GetAllAreas();
         }
 
-        public ObjectInArea GetObject(string token,int Id)
+        public ServerObjectInArea GetObject(string token,int Id)
         {
             ThrowIsUserIsntAdmin(token);
             return objectsProvider.GetObject(Id);
@@ -47,19 +54,24 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
         public void RemoveObject(string token, int Id)
         {
             ThrowIsUserIsntAdmin(token);
+            imageManager.RemoveImage(objectsProvider.GetObject(Id).ImageId);
             objectsProvider.RemoveObject(Id);
         }
 
         public void RemoveArea(string token,int areaId)
         {
             ThrowIsUserIsntAdmin(token);
+            imageManager.RemoveImage(areaProvider.GetArea(areaId).imageId);
             areaProvider.RemoveArea(areaId);
         }
 
-        public void UpdateObject(string token,[FromBody] ObjectInArea obj)
+        public ServerObjectInArea UpdateObject(string token,[FromBody] ClientObjectInArea obj)
         {
             ThrowIsUserIsntAdmin(token);
-            objectsProvider.UpdateObject(obj);
+            var serverObj = objectsProvider.GetObject(obj.Id);
+            imageManager.EditImage(serverObj.ImageId, obj.image);
+            objectsProvider.UpdateObject(obj.ConvertToServer(serverObj.ImageId));
+            return serverObj;
         }
         public bool IsAdmin(string token)
         {
@@ -99,7 +111,17 @@ namespace Pix_API.ChecklistReviewerApp.MainServer
         public void RemoveReport(string token, int Id)
         {
             ThrowIsUserIsntAdmin(token);
+            var report = reportsProvider.GetReport(Id);
+            foreach (var item in report.Objects)
+            {
+                imageManager.RemoveImage(item.ImageId);
+            }
             reportsProvider.RemoveReport(Id);
+        }
+        public string GetImage(string token,int ImageId)
+        {
+            ThrowIsUserIsntAdmin(token);
+            return imageManager.GetBase64Image(ImageId);
         }
         private void ThrowIsUserIsntAdmin(string token)
         {

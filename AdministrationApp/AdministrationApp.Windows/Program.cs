@@ -1,18 +1,19 @@
 ﻿using System;
-using Xwt;
 using ChamponshipMenagerApp;
+using Xwt;
 
-namespace AdministrationApp
+namespace AdministrationApp.Windows
 {
     class MainClass
     {
-
         public static void Main(string[] args)
         {
-            Application.Initialize(ToolkitType.Gtk);
+            Application.Initialize(ToolkitType.Wpf);
 
-            var window = new LoginWindow();
-            window.Size = new Size(400, 400);
+            var window = new LoginWindow
+            {
+                Size = new Size(400, 400)
+            };
             window.Show();
             Application.Run();
             window.Dispose();

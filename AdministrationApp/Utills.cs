@@ -1,6 +1,9 @@
 ﻿using Xwt.Drawing;
 using System.IO;
 using NeoSmart.Utils;
+using Pix_API.ChecklistReviewerApp.Interfaces.Models;
+using AdministrationApp.Models;
+
 namespace AdministrationApp
 {
     public static class Utills
@@ -23,6 +26,17 @@ namespace AdministrationApp
             image.Save(stream,ImageFileType.Jpeg);
             var base64 = UrlBase64.Encode(stream.ToArray());
             return base64;
+        }
+        public static AdminAreaToCheck ToAdmin(this ServerAreaToCheck area,IAPIClient client)
+        {
+            return new AdminAreaToCheck
+            {
+                Id = area.Id,
+                image = client.GetImage(area.imageId),
+                name = area.name,
+                ObjectsInArea = area.ObjectsInArea,
+                terrain = area.terrain
+            };
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Pix_API.ChecklistReviewerApp.Interfaces
         List<ServerAreaReport> GetAllReports();
         void SubmitReport(ServerAreaReport report);
         void RemoveReport(int Id);
+        ServerAreaReport GetReport(int id);
     }
 }

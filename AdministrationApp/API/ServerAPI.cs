@@ -3,50 +3,43 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using Pix_API.ChecklistReviewerApp.Interfaces.Models;
 using RestSharp;
+using AdministrationApp.Models;
 
 namespace AdministrationApp.API
 {
     public class ServerAPI : IAPIClient
     {
-        private const string ADRESS = "localhost:8080";
+        private const string ADRESS = "10.10.50.200:8080";
         private string token = "";
         private RestClient client;
-        public ServerAreaToCheck AddArea(ServerAreaToCheck area)
+        public ServerAreaToCheck AddArea(AdminAreaToCheck area)
         {
-            var res = SendRequest<int>("AddArea", new Parameter[0],area);
-            area.Id = res;
-            return area;
+            return SendRequest<ServerAreaToCheck>("AddArea", new Parameter[0], area);
         }
 
-        public ObjectInArea AddObject(ObjectInArea obj)
+        public ServerObjectInArea AddObject(ClientObjectInArea obj)
         {
-            var res = SendRequest<int>("AddObject", new Parameter[0], obj);
-            obj.Id = res;
-            return obj;
+            return SendRequest<ServerObjectInArea>("AddObject", new Parameter[0], obj);
         }
 
-        public void EditArea(ServerAreaToCheck obj)
+        public ServerAreaToCheck EditArea(AdminAreaToCheck obj)
         {
-            SendRequest<object>("EditReport", new Parameter[0], obj);
+            return SendRequest<ServerAreaToCheck>("EditArea", new Parameter[0], obj);
         }
 
         public List<ServerAreaToCheck> GetAllAreasToCheck()
         {
-            var res = SendRequest<List<ServerAreaToCheck>>("GetAllAreasToCheck", new Parameter[0]
-            );
-            return res;
+            return SendRequest<List<ServerAreaToCheck>>("GetAllAreasToCheck", new Parameter[0]);
         }
 
         public List<User> GetAllUsers()
         {
-            var res = SendRequest<List<User>>("GetAllUsers", new Parameter[0]
-            );
-            return res;
+            return SendRequest<List<User>>("GetAllUsers", new Parameter[0]);
         }
 
-        public ObjectInArea GetObject(int Id)
+        public ServerObjectInArea GetObject(int Id)
         {
-            return SendRequest<ObjectInArea>("GetObject", new[]
+            return SendRequest<ServerObjectInArea>("GetObject", new[]
             {
                 new Parameter("Id", Id,ParameterType.QueryString),
             });
@@ -68,13 +61,13 @@ namespace AdministrationApp.API
         public bool LoginToServer(string text, string password)
         {
             client = new RestClient($"http://{ADRESS}/");
-            var res = SendRequest<string>("Get_token", new[] 
+            var res = SendRequest<string>("Get_token", new[]
             {
                 new Parameter("login", text,ParameterType.QueryString),
                 new Parameter("passwordHash",password,ParameterType.QueryString)
             }
-            ,null,false);
-            if (res != null) 
+            , null, false);
+            if (res != null)
                 if (IsTokenAdmin(res))
                 {
                     token = res;
@@ -85,17 +78,16 @@ namespace AdministrationApp.API
 
         private bool IsTokenAdmin(string token2)
         {
-            var res = SendRequest<bool>("IsAdmin", new[]
+            return SendRequest<bool>("IsAdmin", new[]
             {
                 new Parameter("token", token2,ParameterType.QueryString)
             }
-            ,null,false);
-            return res;
+            , null, false);
         }
 
         public void RemoveObject(int Id)
         {
-            var res = SendRequest<string>("RemoveObject", new[]
+            SendRequest<string>("RemoveObject", new[]
             {
                 new Parameter("Id", Id,ParameterType.QueryString),
             });
@@ -103,28 +95,28 @@ namespace AdministrationApp.API
 
         public void RemoveArea(int areaId)
         {
-            var res = SendRequest<string>("RemoveReport", new[]
+            SendRequest<string>("RemoveArea", new[]
             {
                 new Parameter("areaId", areaId,ParameterType.QueryString),
             });
         }
 
-        public void UpdateObject(ObjectInArea area)
+        public ServerObjectInArea UpdateObject(ClientObjectInArea area)//TODO
         {
-            SendRequest<object>("UpdateObject", new Parameter[0],area);
+            return SendRequest<ServerObjectInArea>("UpdateObject", new Parameter[0], area);
         }
         private T SendRequest<T>(RestRequest request)
         {
             var response = client.Post(request);
             if (!response.IsSuccessful) return default(T);
             return SimpleJson.DeserializeObject<T>(response.Content);
-          
+
         }
-        private T SendRequest<T>(string command,IEnumerable<Parameter> extra_parameters,object body = null,bool IncludeToken = true)
+        private T SendRequest<T>(string command, IEnumerable<Parameter> extra_parameters, object body = null, bool IncludeToken = true)
         {
             var req = new RestRequest();
-            req.Parameters.Add(new Parameter("command", command,ParameterType.QueryString));
-            if(IncludeToken) req.Parameters.Add(new Parameter("token", token, ParameterType.QueryString));
+            req.Parameters.Add(new Parameter("command", command, ParameterType.QueryString));
+            if (IncludeToken) req.Parameters.Add(new Parameter("token", token, ParameterType.QueryString));
             req.Parameters.AddRange(extra_parameters);
             req.AddJsonBody(body);
             return SendRequest<T>(req);
@@ -137,7 +129,7 @@ namespace AdministrationApp.API
 
         public void RemoveUser(int userId)
         {
-            var res = SendRequest<string>("RemoveUser", new[]
+            SendRequest<string>("RemoveUser", new[]
             {
                 new Parameter("userId", userId,ParameterType.QueryString),
             });
@@ -159,12 +151,17 @@ namespace AdministrationApp.API
 
         public void RemoveReport(int id)
         {
-            var res = SendRequest<string>("RemoveReport", new[]
+            SendRequest<string>("RemoveReport", new[]
             {
                 new Parameter("userId", id,ParameterType.QueryString),
             });
         }
+        public string GetImage( int ImageId)
+        {
+            return SendRequest<string>("GetImage", new[]
+            {
+                new Parameter("ImageId", ImageId,ParameterType.QueryString),
+            });
+        }
     }
-
-
 }

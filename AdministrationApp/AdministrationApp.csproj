@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CE1D2636-B114-4938-B008-5D39A9855290}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>AdministrationApp</RootNamespace>
     <AssemblyName>AdministrationApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -44,9 +44,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserTable.cs" />
     <Compile Include="API\IAPIClient.cs" />
     <Compile Include="API\MockAPI.cs" />
     <Compile Include="API\ServerAPI.cs" />
@@ -64,9 +62,9 @@
     <Compile Include="Controls\Panels\AreasTab.cs" />
     <Compile Include="Windows\UserEditForm.cs" />
     <Compile Include="Controls\AreaPicker.cs" />
-    <Compile Include="API\CachedAPI.cs" />
     <Compile Include="Controls\ReportsTable.cs" />
     <Compile Include="Controls\Panels\ReportsTab.cs" />
+    <Compile Include="Controls\UserTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,6 +80,7 @@
     <Folder Include="Controls\" />
     <Folder Include="Windows\" />
     <Folder Include="Controls\Panels\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

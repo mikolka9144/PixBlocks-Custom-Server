@@ -8,20 +8,20 @@ namespace AdministrationApp.Controls
 {
     public class AreaSelector : TreeView
     {
-        internal DataField<string> Name = new DataField<string>();
-        internal DataField<bool> IsSelected = new DataField<bool>();
-        private List<TerrainDescriptor> Terrain = new List<TerrainDescriptor>();
+        internal DataField<string> NameField = new DataField<string>();
+        internal DataField<bool> IsSelectedField = new DataField<bool>();
+        private List<TerrainDescriptor> TerrainField = new List<TerrainDescriptor>();
         private CheckBoxCellView ChechedView;
         private TreeStore store;
         public AreaSelector()
         {
-            ChechedView = new CheckBoxCellView(IsSelected)
+            ChechedView = new CheckBoxCellView(IsSelectedField)
             {
                 Editable = true
             };
-            store = new TreeStore(Name,IsSelected);
+            store = new TreeStore(NameField,IsSelectedField);
             DataSource = store;
-            Columns.Add("Name", Name).CanResize = true;
+            Columns.Add("Name", NameField).CanResize = true;
             Columns.Add(new ListViewColumn("Checked", ChechedView));
 
 
@@ -35,18 +35,18 @@ namespace AdministrationApp.Controls
         }
         private void AddArea(ServerAreaToCheck area,bool checkArea)
         {
-            var terrain = Terrain.FirstOrDefault(s => s.Name == area.terrain);
+            var terrain = TerrainField.FirstOrDefault(s => s.Name == area.terrain);
             if (terrain == null)
             {
-                terrain = new TerrainDescriptor(area.terrain, store.AddNode(),Name,IsSelected);
-                Terrain.Add(terrain);
+                terrain = new TerrainDescriptor(area.terrain, store.AddNode(),NameField,IsSelectedField);
+                TerrainField.Add(terrain);
             }
             terrain.AddArea(area,checkArea);
         }
 
         public List<ServerAreaToCheck> GetCheckedAreas()
         {
-            return Terrain.SelectMany(s => s.areas)
+            return TerrainField.SelectMany(s => s.areas)
                 .Where(s => s.IsChecked())
                 .Select(s => s.Area)
                 .ToList();

@@ -54,10 +54,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixInterfaces.csproj">
-      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
-      <Name>Pix_API.PixBlocks.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BaseProviders.Disk\BaseProviders.Disk.csproj">
       <Project>{1588F27D-CA8E-4A4D-91C8-19BBE7C2EB84}</Project>
       <Name>BaseProviders.Disk</Name>
@@ -65,6 +61,10 @@
     <ProjectReference Include="..\Pix_API.Utills\Pix_API.Utills.csproj">
       <Project>{64F89E6E-B720-4228-BBD8-E1B34558DD52}</Project>
       <Name>Pix_API.Utills</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pix_API.Interfaces\Pix_API.PixBlocks.Interfaces.csproj">
+      <Project>{14A390F7-728B-461C-A97F-B841E4933EEF}</Project>
+      <Name>Pix_API.PixBlocks.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

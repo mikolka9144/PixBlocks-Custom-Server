@@ -11,8 +11,12 @@ namespace AdministrationApp
         public MainControlPanel(IAPIClient client)
         {
             Closed += MainControlPanel_Closed;
-
-            var tabs = new Notebook();
+            Title = "Admin panel";
+            var tabs = new Notebook()
+            {
+                MinWidth = 150,
+                MinHeight = 150
+            };
             tabs.Add(new AreasTab(client),"Areas");
             tabs.Add(new UsersTab(client), "Users");
             tabs.Add(new ReportsTab(client), "Reports");
